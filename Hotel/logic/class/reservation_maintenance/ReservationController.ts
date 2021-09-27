@@ -1,7 +1,9 @@
 import DTOPassenger from "../../../shared/entity/DTOPassenger";
+import DTOReservation from "../../../shared/entity/DTOReservation";
 import IReservationController from "../../interfaces/IReservationController";
 import LGetReservation from "./maintenance/LGetReservation";
 import LRegisterHotelReservation from "./maintenance/LRegisterHotelReservation";
+import LRegisterOnlineReservation from "./maintenance/LRegisterOnlineReservation";
 
 export class ReservationController implements IReservationController{
 
@@ -43,11 +45,43 @@ export class ReservationController implements IReservationController{
     const lreservation=await LRegisterHotelReservation.getInstance().closeReservation();
     return lreservation
    }
-   saveReservation=async(reservationdate:Date,arrivaldate:Date,departuredate:Date)=>
+   saveReservation=async(dtoreservation:DTOReservation)=>
    {
-    const result=await LRegisterHotelReservation.getInstance().saveReservation(reservationdate,arrivaldate,departuredate);
+    const result=await LRegisterHotelReservation.getInstance().saveReservation(dtoreservation);
     return result
    }
+//************************** ONLINE RESERVATION ******************************** */
+
+  startReservation=async()=>
+  {
+    const startr=await LRegisterOnlineReservation.getInstance().startReservation();
+     return startr   
+  }
+  registerOnlineReservationDetail=async(numberrom:number)=>
+  {
+   const ldetailr=await LRegisterOnlineReservation.getInstance().registerReservationDetail(numberrom);
+   return ldetailr   
+  }
+  getReservationinProgress=()=>
+  {
+   const getr= LRegisterOnlineReservation.getInstance().objreservation;
+   return getr   
+  }
+  removeOnlineReservationDetail=async(numberrom:number)=> 
+  {
+   const result=await LRegisterOnlineReservation.getInstance().removeReservationDetail(numberrom);
+   return result 
+  }
+  closeOnlineReservation=async()=>
+  {
+    const lreservation=await LRegisterOnlineReservation.getInstance().closeReservation();
+    return lreservation
+  }
+  saveOnlineReservation=async(dtoreservation:DTOReservation)=>
+  {
+   const result=await LRegisterOnlineReservation.getInstance().saveReservation(dtoreservation);
+   return result
+  }
 
 //    //***************** GET RESERVATION ***************** */
 

@@ -135,12 +135,15 @@ class LogicReservation {
         }
         this.total = vtotal;
     };
-    save = async (reservationdate, arrivaldate, departuredate) => {
-        this.reservationdate = reservationdate;
-        this.arrivaldate = arrivaldate;
-        this.departuredate = departuredate;
-        this.processtatus = "Confirmed";
-        this.confirmationstatus = "Confirmed";
+    save = async (dtreservation) => {
+        for (let logicdr of this.listDetailReservation) {
+            if (logicdr.lroom.statee === "Inactive") {
+                throw new logicexception_1.LogicException("A room in the reservation detail is inactive and cannot be reserved");
+            }
+        }
+        this.reservationdate = dtreservation.reservationdate;
+        this.arrivaldate = dtreservation.arrivaldate;
+        this.departuredate = dtreservation.departuredate;
         let havereservrdetails = this.haveDetailR();
         if (havereservrdetails) {
             let dtoreservation = this.getDTO();

@@ -36,7 +36,7 @@ arraydetailreservation.push(dtodetailreservation1);
 arraydetailreservation.push(dtodetailreservation2);
 
 let dtoreservation=new DTOReservation(0,"December17, 2020","December 17, 2020",
-"December 17, 2020","Confirmed","Confirmed","Hotel",546,"6789798",arraydetailreservation)
+"December 17, 2020","Confirmed","Confirmed","Hotel",546,"6789798",arraydetailreservation);
 
 //*********************************** USER MAINTENACE **************** */
 
@@ -144,42 +144,100 @@ let dtoreservation=new DTOReservation(0,"December17, 2020","December 17, 2020",
 // });
 
 //******************************* RESERVATION MAINTENANCE ************************ */
-// HOTEL
+// ******** HOTEL **************
 
-let registerReservation=async()=>
-{
-    let enterp=await FactoryLogic.ReservationController().enterPassenger("6789798");
-    console.log(enterp);
-    if(enterp===false)
-    {
-    let p=await FactoryLogic.ReservationController().registerPassenger(dtpassenger);
-     console.log(p);
-    }
-    let objreservation= LRegisterHotelReservation.getInstance().objreservation;
-    console.log(objreservation);
-    let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(1);
-    console.log(regdetailr);
-    let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
-    console.log(regdetailr1);
-    let regdetailr2=await FactoryLogic.ReservationController().registerReservationDetail(3);
-    console.log(regdetailr2);
-    // let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
-    // console.log(regdetailr6);
+// let registerReservation=async()=>
+// {
+//     let enterp=await FactoryLogic.ReservationController().enterPassenger("6789798");
+//     console.log(enterp);
+//     if(enterp===false)
+//     {
+//     let p=await FactoryLogic.ReservationController().registerPassenger(dtpassenger);
+//      console.log(p);
+//     }
+//     let listreservation= await FactoryLogic.RoomController().getLActiveSortRooms();
+//     console.log(listreservation);
+//     let objreservation= LRegisterHotelReservation.getInstance().objreservation;
+//     console.log(objreservation);
+//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(1);
+//     console.log(regdetailr);
+//     // let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
+//     // console.log(regdetailr1);
+//     // let regdetailr2=await FactoryLogic.ReservationController().registerReservationDetail(3);
+//     // console.log(regdetailr2);
+//     // let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
+//     // console.log(regdetailr6);
    
-    let closer=await FactoryLogic.ReservationController().closeReservation();
-    console.log(closer);
-    let objreservation1= LRegisterHotelReservation.getInstance().objreservation;
-    console.log(objreservation1);
-    let saver=await FactoryLogic.ReservationController().saveReservation
-    (dtoreservation.reservationdate,dtoreservation.arrivaldate,dtoreservation.departuredate);
-    console.log(saver);
+//     let closer=await FactoryLogic.ReservationController().closeReservation();
+//     console.log(closer);
+//     let objreservation1= LRegisterHotelReservation.getInstance().objreservation;
+//     console.log(objreservation1);
+//     let saver=await FactoryLogic.ReservationController().saveReservation
+//     (dtoreservation);
+//     console.log(saver);
    
   
-}
+// }
 
-registerReservation().then(
+// registerReservation().then(
 
-)
+// )
+
+// ******** ONLINE ******************
+
+// let registerReservation=async()=>
+// {
+//     let start=await FactoryLogic.ReservationController().startReservation();
+//     console.log(start);
+   
+  
+//     let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(1);
+//     console.log(regdetailr);
+    
+//     let objreservation= FactoryLogic.ReservationController().getReservationinProgress();
+//     console.log(objreservation);
+//     // let regdetailr1=await FactoryLogic.ReservationController().registerOnlineReservationDetail(2);
+//     // console.log(regdetailr1);
+//     // let regdetailr2=await FactoryLogic.ReservationController().registerOnlineReservationDetail(3);
+//     // console.log(regdetailr2);
+//     // let regdetailr6=await FactoryLogic.ReservationController().removeOnlineReservationDetail(3);
+//     // console.log(regdetailr6);
+   
+//     let closer=await FactoryLogic.ReservationController().closeOnlineReservation();
+//     console.log(closer);
+//     let login=await FactoryLogic.PassengerController().loginPassenger("45678622","Passenger123456");
+//     console.log(login);
+//     dtoreservation.idcardpassenger=login._idcard;
+//     let saver=await FactoryLogic.ReservationController().saveOnlineReservation(dtoreservation);
+
+//     console.log(saver);
+   
+  
+// }
+
+// registerReservation().then(
+
+// )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //****************************************************************************** */
 // let dtpassenger1=new DTOPassenger("2456465",
@@ -224,18 +282,18 @@ registerReservation().then(
 
 // )
 // //****************************************************************** */
-// let dtoroom1=new DTORoom(3,
+// let dtoroom1=new DTORoom(85,
 //   "Individual","Individual",
-//   "Accomodation1","Description1",50.55,"Active","img.jpg");
-//   let dtoroom2=new DTORoom(3,
+//   "Accomodation1","Description1",50.55,"Active","img6.jpg");
+//   let dtoroom2=new DTORoom(85,
 //     "Double","Double",
-//     "Accomodation2","Description2",70.55,"Active","img1.jpg");
-//     let dtoroom3=new DTORoom(3,
+//     "Accomodation2","Description2",70.55,"Active","img5.jpg");
+//     let dtoroom3=new DTORoom(85,
 //       "Triple","Queen Size",
-//       "Accomodation3","Description3",90.55,"Active","img2.jpg");
-//   let dtoroom4=new DTORoom(3,
+//       "Accomodation3","Description3",90.55,"Active","img7.jpg");
+//   let dtoroom4=new DTORoom(85,
 //         "Bedroom","Double",
-//         "Accomodation4","Description4",110.55,"Active","img3.jpg");
+//         "Accomodation4","Description4",110.55,"Active","img8.jpg");
 //  let arrayrooms=[];
 //  arrayrooms.push(dtoroom1);
 //  arrayrooms.push(dtoroom2);

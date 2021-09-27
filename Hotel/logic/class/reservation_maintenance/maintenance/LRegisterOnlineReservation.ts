@@ -1,25 +1,21 @@
 import { FactoryData } from "../../../../data/FactoryData";
-import DTOPassenger from "../../../../shared/entity/DTOPassenger";
 import DTOReservation from "../../../../shared/entity/DTOReservation";
 import { LogicException } from "../../../../shared/exceptions/logicexception";
-
 import LogicReservation from "../../business_class/LReservation";
-import { InstanceLogicClass } from "../../extras/instanceBusinessClass";
-import { LCUDRoom } from "../../room_maintenance/maintenance/LCUDRoom";
+import { LGetPassenger } from "../../passenger_maintenance/maintenace/LGetPassenger";
+
 import LGetReservation from "./LGetReservation";
 
-
-
-export default class LRegisterHotelReservation
+export default class LRegisterOnlineReservation
  {
-    private static instancia: LRegisterHotelReservation;
+    private static instancia: LRegisterOnlineReservation;
     private constructor() { }
-    public static getInstance(): LRegisterHotelReservation {
-        if (!LRegisterHotelReservation.instancia) {
-            LRegisterHotelReservation.instancia = new LRegisterHotelReservation();
+    public static getInstance(): LRegisterOnlineReservation {
+        if (!LRegisterOnlineReservation.instancia) {
+            LRegisterOnlineReservation.instancia = new LRegisterOnlineReservation();
         }
 
-        return LRegisterHotelReservation.instancia;
+        return LRegisterOnlineReservation.instancia;
     }
     private _objreservation: LogicReservation;
     public get objreservation(): LogicReservation {
@@ -29,36 +25,16 @@ export default class LRegisterHotelReservation
         this._objreservation = value;
     }
      
-    enterPassenger=async(idcard:string)=>
+    startReservation=async()=>
     {
         // let getobjreservation=this.objreservation;
         let newlogicr=new LogicReservation(0,new Date(),new Date(),
-            new Date(),"Pending","NotConfirmed","Hotel",0,null,[]);
+            new Date(),"Pending","NotConfirmed","Online",0,null,[]);
         this.objreservation=newlogicr;
-        let enterp= this.objreservation.enterPassenger(idcard);
-
-        return enterp
+        return this.objreservation
         
     }
-    registerPassenger=async(dtopassenger:DTOPassenger)=>
-    {
-        let lreservation=this.objreservation;
-        if(lreservation.passenger===null)
-        {
-            const logicp=InstanceLogicClass.instanceLPassenger(dtopassenger);
-            const result=await logicp.register();
-            if(result===true)
-            {
-                let enterp=lreservation.enterPassenger(logicp.idcard);
-                return enterp
-            }
-        }
-        else
-        {
-            throw new LogicException("The Passenger already exists");
-            
-        }
-    }
+    
     registerReservationDetail=async(numberrom:number)=>
     {
         let lreservation=this.objreservation;  
@@ -90,15 +66,11 @@ export default class LRegisterHotelReservation
      {
         
         let lreservation=this.objreservation;
-        lreservation.processtatus="Confirmed";
-        lreservation.confirmationstatus="Confirmed";
+    let getpassenger=await LGetPassenger.getLPassenger(dtreservation.idcardpassenger);
         if (lreservation != null) {
+            lreservation.passenger=getpassenger;
             let dtoreservation=await lreservation.save(dtreservation);
-            for(let detailr of dtoreservation.listDetailReservation)
-            {
-               
-                let disableroom=await LCUDRoom.changeStateRoom(detailr.numberroom,'Inactive');
-            }
+           
             let result=await FactoryData.getDataReservation().registerReservation(dtoreservation);
             return result
         }

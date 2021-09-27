@@ -3,17 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FactoryData_1 = require("../../../../data/FactoryData");
 const logicexception_1 = require("../../../../shared/exceptions/logicexception");
 const LReservation_1 = require("../../business_class/LReservation");
-const instanceBusinessClass_1 = require("../../extras/instanceBusinessClass");
-const LCUDRoom_1 = require("../../room_maintenance/maintenance/LCUDRoom");
+const LGetPassenger_1 = require("../../passenger_maintenance/maintenace/LGetPassenger");
 const LGetReservation_1 = require("./LGetReservation");
-class LRegisterHotelReservation {
+class LRegisterOnlineReservation {
     static instancia;
     constructor() { }
     static getInstance() {
-        if (!LRegisterHotelReservation.instancia) {
-            LRegisterHotelReservation.instancia = new LRegisterHotelReservation();
+        if (!LRegisterOnlineReservation.instancia) {
+            LRegisterOnlineReservation.instancia = new LRegisterOnlineReservation();
         }
-        return LRegisterHotelReservation.instancia;
+        return LRegisterOnlineReservation.instancia;
     }
     _objreservation;
     get objreservation() {
@@ -22,26 +21,11 @@ class LRegisterHotelReservation {
     set objreservation(value) {
         this._objreservation = value;
     }
-    enterPassenger = async (idcard) => {
+    startReservation = async () => {
         // let getobjreservation=this.objreservation;
-        let newlogicr = new LReservation_1.default(0, new Date(), new Date(), new Date(), "Pending", "NotConfirmed", "Hotel", 0, null, []);
+        let newlogicr = new LReservation_1.default(0, new Date(), new Date(), new Date(), "Pending", "NotConfirmed", "Online", 0, null, []);
         this.objreservation = newlogicr;
-        let enterp = this.objreservation.enterPassenger(idcard);
-        return enterp;
-    };
-    registerPassenger = async (dtopassenger) => {
-        let lreservation = this.objreservation;
-        if (lreservation.passenger === null) {
-            const logicp = instanceBusinessClass_1.InstanceLogicClass.instanceLPassenger(dtopassenger);
-            const result = await logicp.register();
-            if (result === true) {
-                let enterp = lreservation.enterPassenger(logicp.idcard);
-                return enterp;
-            }
-        }
-        else {
-            throw new logicexception_1.LogicException("The Passenger already exists");
-        }
+        return this.objreservation;
     };
     registerReservationDetail = async (numberrom) => {
         let lreservation = this.objreservation;
@@ -68,13 +52,10 @@ class LRegisterHotelReservation {
     };
     saveReservation = async (dtreservation) => {
         let lreservation = this.objreservation;
-        lreservation.processtatus = "Confirmed";
-        lreservation.confirmationstatus = "Confirmed";
+        let getpassenger = await LGetPassenger_1.LGetPassenger.getLPassenger(dtreservation.idcardpassenger);
         if (lreservation != null) {
+            lreservation.passenger = getpassenger;
             let dtoreservation = await lreservation.save(dtreservation);
-            for (let detailr of dtoreservation.listDetailReservation) {
-                let disableroom = await LCUDRoom_1.LCUDRoom.changeStateRoom(detailr.numberroom, 'Inactive');
-            }
             let result = await FactoryData_1.FactoryData.getDataReservation().registerReservation(dtoreservation);
             return result;
         }
@@ -83,5 +64,5 @@ class LRegisterHotelReservation {
         }
     };
 }
-exports.default = LRegisterHotelReservation;
-//# sourceMappingURL=LRegisterHotelReservation.js.map
+exports.default = LRegisterOnlineReservation;
+//# sourceMappingURL=LRegisterOnlineReservation.js.map
