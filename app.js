@@ -20,7 +20,7 @@ let dtpassenger=new DTOPassenger("6789798",
 "","Password12345","");
 
 
-let dtoroom=new DTORoom(3,
+let dtoroom=new DTORoom(7,
   "dfhdfh","dfshdfh",
   "safasf","asgagasgasgasgasasg",50.55,"Active","asd.jpg");
 
@@ -35,8 +35,8 @@ arraydetailreservation.push(dtodetailreservation);
 arraydetailreservation.push(dtodetailreservation1);
 arraydetailreservation.push(dtodetailreservation2);
 
-let dtoreservation=new DTOReservation(0,"December17, 2020","December 17, 2020",
-"December 17, 2020","Confirmed","Confirmed","Hotel",546,"6789798",arraydetailreservation);
+let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 17, 2021"),
+ new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",arraydetailreservation);
 
 //*********************************** USER MAINTENACE **************** */
 
@@ -159,7 +159,7 @@ let dtoreservation=new DTOReservation(0,"December17, 2020","December 17, 2020",
 //     console.log(listreservation);
 //     let objreservation= LRegisterHotelReservation.getInstance().objreservation;
 //     console.log(objreservation);
-//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(1);
+//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(5);
 //     console.log(regdetailr);
 //     // let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
 //     // console.log(regdetailr1);
@@ -183,7 +183,7 @@ let dtoreservation=new DTOReservation(0,"December17, 2020","December 17, 2020",
 
 // )
 
-// ******** ONLINE ******************
+// ******************** ONLINE *************************************
 
 // let registerReservation=async()=>
 // {
@@ -191,7 +191,7 @@ let dtoreservation=new DTOReservation(0,"December17, 2020","December 17, 2020",
 //     console.log(start);
    
   
-//     let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(1);
+//     let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(6);
 //     console.log(regdetailr);
     
 //     let objreservation= FactoryLogic.ReservationController().getReservationinProgress();
@@ -219,10 +219,70 @@ let dtoreservation=new DTOReservation(0,"December17, 2020","December 17, 2020",
 
 // )
 
+//***************************** RESERVATION MAINTENANCE ********************************* */
+
+// let removeRoomReservation=async()=>
+// {
+//       let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName5");
+//   console.log(getp);
+//   let getspr=await FactoryLogic.ReservationController().getLReservationPassenger(getp.idcard)
+//   console.log(getspr);
+//     let getr=await FactoryLogic.ReservationController().getReservation(1);
+//   console.log(getr);
+//   let removerroom=await FactoryLogic.ReservationController().removeReservationRoom(getr.numberreservation,2);
+//   console.log(removerroom)
+  
+// }
+
+// removeRoomReservation().then(
+
+// )
 
 
+// let canceledr=async()=>
+// {
+//     let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName5");
+//   console.log(getp);
+//   let getspr=await FactoryLogic.ReservationController().getLReservationPassenger(getp.idcard)
+//   console.log(getspr);
+//   let getr=await FactoryLogic.ReservationController().getReservation(1);
+//   console.log(getr);
+//   let canceledr=await FactoryLogic.ReservationController().cancelReservation(getr.numberreservation);
+//   console.log(canceledr);
 
+// }
+// canceledr().then(
 
+// );
+// let confirmr=async()=>
+// {
+//     let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName5");
+//   console.log(getp);
+//   let getspr=await FactoryLogic.ReservationController().getLReservationPassenger(getp.idcard)
+//   console.log(getspr);
+//   let getr=await FactoryLogic.ReservationController().getReservation(2);
+//   console.log(getr);
+
+//   let confirmr=await FactoryLogic.ReservationController().confirmReservation(getr.numberreservation);
+//   console.log(confirmr);
+
+// }
+// confirmr().then(
+
+// );
+// let addroomreservation=async()=>
+// {
+//   dtoreservation.listDetailReservation.push(new DTOReservationDetail(0,50,7));
+//   let getp=await FactoryLogic.ReservationController().addReservationDetail(dtoreservation);
+//   console.log(dtoreservation);
+  
+// }
+
+// addroomreservation().then(
+
+// )
+
+//************************************************************************* */
 
 
 

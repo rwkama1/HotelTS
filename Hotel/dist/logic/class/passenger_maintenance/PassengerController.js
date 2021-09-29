@@ -42,6 +42,10 @@ class PassengerController {
         let gpassangers = await LGetPassenger_1.LGetPassenger.getLActiveSortPassengers();
         return gpassangers;
     };
+    getLPassengerbyname = async (name, surname) => {
+        let gpassangers = await LGetPassenger_1.LGetPassenger.getLPassengerbyname(name, surname);
+        return gpassangers;
+    };
     //******************* AUTENTICATION *********************** */
     loginPassenger = async (idcard, password) => {
         const lp = await LPassengerAutentication_1.LPassengerAutentication.getInstance().loginPassenger(idcard, password);

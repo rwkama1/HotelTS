@@ -5,8 +5,10 @@ import LogicPassenger from "../class/business_class/LPassenger";
 export default interface IPassengerController 
 {
     getPassanger(idcard:string):Promise<LogicPassenger>;
+    getLPassengerbyname(name:string,surname:string):Promise<LogicPassenger>;
     getPassangers():Promise<ArrayPassenger>;
     getLActiveSortPassengers():Promise<LogicPassenger[]>;
+
    
     registerPassenger(dtpassenger:DTOPassenger):Promise<boolean>;
     updatePassanger(dtpassenger:DTOPassenger):Promise<boolean>;

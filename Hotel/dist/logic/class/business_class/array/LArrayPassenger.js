@@ -15,6 +15,15 @@ class ArrayPassenger {
         }
         return null;
     };
+    searchbyname = (name, surname) => {
+        let listpassenger = this.arraypassenger;
+        for (let passenger of listpassenger) {
+            if (passenger.name === name || passenger.surname === surname) {
+                return passenger;
+            }
+        }
+        return null;
+    };
     getActiveSort = () => {
         let listpassenger = this.arraypassenger;
         let newarray = [];

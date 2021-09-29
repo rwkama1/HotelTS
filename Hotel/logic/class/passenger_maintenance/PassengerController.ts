@@ -54,6 +54,11 @@ export class PassengerController implements IPassengerController{
     let gpassangers= await LGetPassenger.getLActiveSortPassengers();
     return gpassangers
   }
+  getLPassengerbyname=async(name:string,surname:string)=>
+  {
+    let gpassangers= await LGetPassenger.getLPassengerbyname(name,surname);
+    return gpassangers
+  }
    //******************* AUTENTICATION *********************** */
     loginPassenger=async(idcard:string,password:string)=>
    {  

@@ -1,3 +1,4 @@
+import LogicPassenger from "../LPassenger";
 import LogicReservation from "../LReservation";
 
 export class ArrayReservation{
@@ -21,20 +22,75 @@ export class ArrayReservation{
       }
       return null;
     }
-    
-    // getSort=()=>
-    // {
-    // let listarrayr=this.arrayreservation;
-    // let newarray=[];
-    // for(let reservation of listarrayr)
-    //   {
-    //     if(reservation.statee==="Active")
-    //     {
-    //       newarray.push(passenger);
+    searchbyPassenger=(idcard:string)=>
+    {
+    let listreservation=this.arrayreservation;
+    let newarray=[];
+    for(let reservation of listreservation)
+      {
+        if(idcard===reservation.passenger.idcard)
+        {
+          newarray.push(reservation);
          
-    //     }
-    //   }
-    //  const sortarray=newarray.sort((a, b) => a.name.localeCompare(b.name));
-    //  return sortarray
-    // }
+        }
+      }
+
+      return newarray;
+    }
+    getPendingbyPassenger=(idcard:string)=>
+    {
+    let listreservation=this.arrayreservation;
+    let newarray=[];
+    for(let reservation of listreservation)
+      {
+        if(idcard===reservation.passenger.idcard&&reservation.processtatus==="Pending")
+        {
+          newarray.push(reservation);
+         
+        }
+      }
+
+      return newarray;
+    }
+    getPending=()=>
+    {
+    let listreservation=this.arrayreservation;
+    let newarray=[];
+    for(let reservation of listreservation)
+      {
+        if(reservation.processtatus==="Pending")
+        {
+          newarray.push(reservation);
+        }
+      }
+      return newarray;
+    }
+       
+    getConfirmed=()=>
+    {
+    let listreservation=this.arrayreservation;
+    let newarray=[];
+    for(let reservation of listreservation)
+      {
+        if(reservation.processtatus==="Confirmed")
+        {
+          newarray.push(reservation);
+        }
+      }
+      return newarray;
+    }
+    getCanceled=()=>
+    {
+    let listreservation=this.arrayreservation;
+    let newarray=[];
+    for(let reservation of listreservation)
+      {
+        if(reservation.processtatus==="Canceled")
+        {
+          newarray.push(reservation);
+        }
+      }
+      return newarray;
+    }
+    
 }

@@ -7,9 +7,15 @@ import LogicReservation from "../class/business_class/LReservation";
 
 export default interface IReservationController 
 {
-    //*********************GETS *********************** */
+    //********************* GETS *********************** */
+
     getReservation(numberr:number):Promise<LogicReservation>;
+    getLConfirmed():Promise<LogicReservation[]>;
+    getLPending():Promise<LogicReservation[]>;
+    getLCanceled():Promise<LogicReservation[]>;
     getReservations():Promise<ArrayReservation>;
+    getLReservationPassenger(idcard:string):Promise<LogicReservation[]>;
+    getLPendingPassenger(idcard:string):Promise<LogicReservation[]>;
 
     //************** HOTEL RESERVATION ************ */
 
@@ -29,4 +35,12 @@ export default interface IReservationController
     removeOnlineReservationDetail(numberrom:number):Promise<boolean>;
     closeOnlineReservation():Promise<LogicReservation>;
     saveOnlineReservation(dtoreservation:DTOReservation):Promise<boolean>;
+
+    //************************** MAINTENANCE ******************************** */
+
+    removeReservationRoom(numberreservation:number,numberrom:number):Promise<boolean>;
+    cancelReservation(numberreservation:number):Promise<boolean>;
+    confirmReservation(numberreservation:number):Promise<boolean>;
+    addReservationDetail(dtoreservation:DTOReservation):Promise<boolean>;
+
 }

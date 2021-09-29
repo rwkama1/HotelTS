@@ -6,8 +6,7 @@ import { Conection } from "../Conection";
 import IDataReservation from "../interfaces/IDataReservation";
 
 export default class DataReservation implements IDataReservation 
-{
-     
+{ 
     private static instancia: DataReservation;
     private constructor() { }
     public static getInstance(): DataReservation {
@@ -55,8 +54,6 @@ export default class DataReservation implements IDataReservation
       }
   
     }
-  
-    
     getReservations=async()=>
     {
       try {
@@ -82,7 +79,7 @@ export default class DataReservation implements IDataReservation
           throw new DataException("DataLayer Error: "+e.message)
       }
      }
-     getDetailReservations=async(numberreservation:number)=>
+    getDetailReservations=async(numberreservation:number)=>
     {
       try {
           let queryget = "select * from ReservationDetail where NumberReservation=@NumberReservationn";
@@ -104,5 +101,74 @@ export default class DataReservation implements IDataReservation
       {
           throw new DataException("DataLayer Error: "+e.message)
       }
+     }
+    changeStateReservation=async(dtoreservation:DTOReservation)=>
+     {
+       try {
+           let queryupdate = "Update Reservation Set ProcessStatus=@ProcessStatus,ConfirmationStatus=@ConfirmationStatus where NumberReservationn=@NumberReservationn";
+           let pool = await Conection.conection();
+          
+           const result = await pool.request()
+               .input('NumberReservationn', Int,dtoreservation.numberreservation)
+               .input('ProcessStatus', VarChar, dtoreservation.processtatus)
+               .input('ConfirmationStatus', VarChar, dtoreservation.confirmationstatus)
+               .query(queryupdate)
+             
+           pool.close();
+           return true;
+          
+       }
+       catch(e)
+       {
+           throw new DataException("DataLayer Error: "+e.message)
+       }
+   
+     }
+    removeDetailReservation=async(numberr:number,numberroom:number)=>
+     {
+       try {
+           let queryd = "Delete from ReservationDetail where NumberReservation=@NumberReservation and NumberRoom=@NumberRoom";
+           let pool = await Conection.conection();
+          
+           const result = await pool.request()
+               .input('NumberRoom', Int,numberroom)
+               .input('NumberReservation', Int,numberr)
+               .query(queryd)
+             
+           pool.close();
+           return true;
+          
+       }
+       catch(e)
+       {
+           throw new DataException("DataLayer Error: "+e.message)
+       }
+   
+     }
+    addDetailReservation=async(dtoreservation:DTOReservation)=>
+     {
+ 
+         let listdtrlength=dtoreservation.listDetailReservation.length;
+        let queryinsert2 = "insert into ReservationDetail values (@NumberRD,@Value,@NumberReservation,@NumberRoom)";
+       try {
+          
+           let pool = await Conection.conection();
+          
+           const result2 = await pool.request()
+            .input('NumberRD', Int, dtoreservation.listDetailReservation[listdtrlength-1].numberrd)
+            .input('Value', Money, dtoreservation.listDetailReservation[listdtrlength-1].value)
+            .input('NumberReservation', Int, dtoreservation.numberreservation)
+            .input('NumberRoom', Int, dtoreservation.listDetailReservation[listdtrlength-1].numberroom)
+            .query(queryinsert2)
+             
+           pool.close();
+           return true;
+          
+       }
+       catch(e)
+       {
+           throw new DataException("DataLayer Error: "+e.message)
+       }
+   
      }
 }

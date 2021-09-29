@@ -1,3 +1,4 @@
+import { threadId } from "worker_threads";
 import DTOReservation from "../../../shared/entity/DTOReservation";
 import DTOReservationDetail from "../../../shared/entity/DTOReservationDetail";
 import { LogicException } from "../../../shared/exceptions/logicexception";
@@ -6,7 +7,7 @@ import LGetReservation from "../reservation_maintenance/maintenance/LGetReservat
 import { LGetRoom } from "../room_maintenance/maintenance/LGetRoom";
 import LogicReservationDetail from "./LDetailReservation";
 import LogicPassenger from "./LPassenger";
-import LogicRoom from "./LRoom";
+
 
 export  default class LogicReservation
 {
@@ -55,6 +56,7 @@ export  default class LogicReservation
     }
 
    //SETTERS
+
     public set numberreservation(value: number) {
         this._numberreservation = value;
     }
@@ -72,6 +74,7 @@ export  default class LogicReservation
             throw new LogicException("The Arrival Date is null");
             
         }
+       
         this._arrivaldate = value;
     }
     public set departuredate(value: Date) {
@@ -80,6 +83,7 @@ export  default class LogicReservation
             throw new LogicException("The Departure Date is null");
             
         }
+       
         this._departuredate = value;
     }
     public set processtatus(value: string) {
@@ -114,6 +118,15 @@ export  default class LogicReservation
         this._listDetailReservation = value;
     }
    
+    validateDate=()=>
+    {
+        if(this.arrivaldate>=this.departuredate)
+        {
+            throw new LogicException("The Departure Date must be greater than Arrival Date");
+            
+        }
+    }
+
     enterPassenger=async(idcard:string)=>
     {
     
@@ -163,6 +176,10 @@ export  default class LogicReservation
     }
     save=async(dtreservation:DTOReservation)=>
     {
+        this.reservationdate=dtreservation.reservationdate;
+        this.arrivaldate=dtreservation.arrivaldate;
+        this.departuredate=dtreservation.departuredate;
+        this.validateDate();
         for(let logicdr of this.listDetailReservation)
         {
             if(logicdr.lroom.statee==="Inactive")
@@ -171,9 +188,6 @@ export  default class LogicReservation
                 
             }
         }
-        this.reservationdate=dtreservation.reservationdate;
-        this.arrivaldate=dtreservation.arrivaldate;
-        this.departuredate=dtreservation.departuredate;
        
         let havereservrdetails=this.haveDetailR();
         if(havereservrdetails)
@@ -186,6 +200,69 @@ export  default class LogicReservation
           {
             throw new LogicException("The Detail Reservations has no items");
           }
+    }
+    cancel=async()=>
+    {
+        this.processtatus="Canceled";
+        this.confirmationstatus="NotConfirmed";
+        let dto=this.getDTO();
+        return dto
+    }
+    confirm=async()=>
+    {
+        this.processtatus="Confirmed";
+        this.confirmationstatus="Confirmed";
+        let dto=this.getDTO();
+        return dto
+        
+    }
+    addDetailReservation=async(dtoreservation:DTOReservation)=> {
+        if(this.processtatus==="Confirmed")
+        {
+        let lengthdetailr=dtoreservation.listDetailReservation.length;
+        let lastelementlist=dtoreservation.listDetailReservation[lengthdetailr-1];
+        let numberlrroom=lastelementlist.numberroom;
+       
+       
+        let lroom=await LGetRoom.getLRoom(numberlrroom);
+        if(lroom.statee==="Inactive")
+        {
+         throw new LogicException("The Room is inactive");
+        } 
+        if(lroom===null)
+        {
+         throw new LogicException("The Room does not exists in the system");
+        } 
+        let detailr=await this.searchDetailReservationbyroom(numberlrroom);
+        if(detailr!=null)
+        {
+         throw new LogicException("The Room already exists in the reservation");
+        } 
+        let ldetailr=new LogicReservationDetail(this.listDetailReservation.length+1,lroom.value,lroom);
+        this.listDetailReservation.push(ldetailr);
+        let getdto=this.getDTO();
+        return getdto;
+      }
+      else
+      {
+          throw new LogicException("Rooms can only be added to confirmed reservations");
+          
+      }
+
+       
+    }
+    searchDetailReservationbyroom=async(numberrom:number)=>
+    {
+        let listdetailr=this.listDetailReservation;
+        for(let detailr of listdetailr)
+          {
+            if(numberrom===detailr.lroom.numberroom)
+            {
+              return detailr;
+            }
+          }
+          return null;
+        
     }
     haveDetailR() {
         var listdetailr = this.listDetailReservation;
@@ -207,6 +284,33 @@ export  default class LogicReservation
             this.confirmationstatus,this.origin,this.total,
             this.passenger.idcard,arraydetailreservation);
             return dtoreservation
+    }
+    removeReservationDetail=async(numberrom:number)=>
+    {
+    if(this.processtatus==="Confirmed")
+     {
+        let detailr=await this.searchDetailReservationbyroom(numberrom)
+        if(detailr===null)
+        {
+          throw new LogicException("The Room does not exists in the reservation");
+        }
+        let getdtoroom=await detailr.lroom.register();
+        if(getdtoroom===true)
+        {
+            let datar=this.getDTO();
+            return datar;
+        }
+        else
+        {
+            throw new LogicException("The requested room could not be activated");
+            
+        }
+      }
+      else
+      {
+          throw new LogicException("Rooms can only be removed to confirmed reservations");
+          
+      }
     }
 
     constructor(pnumberreservation:number,preservationdate:Date,

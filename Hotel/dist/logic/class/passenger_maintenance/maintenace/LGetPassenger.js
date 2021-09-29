@@ -15,6 +15,11 @@ class LGetPassenger {
         let searchpasse = datapasse.search(idcard);
         return searchpasse;
     };
+    static getLPassengerbyname = async (name, surname) => {
+        let datapasse = await this.getLPassengerss();
+        let searchpasse = datapasse.searchbyname(name, surname);
+        return searchpasse;
+    };
     static getLPassengerss = async () => {
         let arraypassenger = [];
         let datapase = await FactoryData_1.FactoryData.getDataPassenger().getPassengers();

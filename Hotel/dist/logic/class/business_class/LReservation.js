@@ -97,6 +97,11 @@ class LogicReservation {
     set listDetailReservation(value) {
         this._listDetailReservation = value;
     }
+    validateDate = () => {
+        if (this.arrivaldate >= this.departuredate) {
+            throw new logicexception_1.LogicException("The Departure Date must be greater than Arrival Date");
+        }
+    };
     enterPassenger = async (idcard) => {
         const getPassenger = await LGetPassenger_1.LGetPassenger.getLPassenger(idcard);
         if (getPassenger === null) {
@@ -136,14 +141,15 @@ class LogicReservation {
         this.total = vtotal;
     };
     save = async (dtreservation) => {
+        this.reservationdate = dtreservation.reservationdate;
+        this.arrivaldate = dtreservation.arrivaldate;
+        this.departuredate = dtreservation.departuredate;
+        this.validateDate();
         for (let logicdr of this.listDetailReservation) {
             if (logicdr.lroom.statee === "Inactive") {
                 throw new logicexception_1.LogicException("A room in the reservation detail is inactive and cannot be reserved");
             }
         }
-        this.reservationdate = dtreservation.reservationdate;
-        this.arrivaldate = dtreservation.arrivaldate;
-        this.departuredate = dtreservation.departuredate;
         let havereservrdetails = this.haveDetailR();
         if (havereservrdetails) {
             let dtoreservation = this.getDTO();
@@ -152,6 +158,52 @@ class LogicReservation {
         else {
             throw new logicexception_1.LogicException("The Detail Reservations has no items");
         }
+    };
+    cancel = async () => {
+        this.processtatus = "Canceled";
+        this.confirmationstatus = "NotConfirmed";
+        let dto = this.getDTO();
+        return dto;
+    };
+    confirm = async () => {
+        this.processtatus = "Confirmed";
+        this.confirmationstatus = "Confirmed";
+        let dto = this.getDTO();
+        return dto;
+    };
+    addDetailReservation = async (dtoreservation) => {
+        if (this.processtatus === "Confirmed") {
+            let lengthdetailr = dtoreservation.listDetailReservation.length;
+            let lastelementlist = dtoreservation.listDetailReservation[lengthdetailr - 1];
+            let numberlrroom = lastelementlist.numberroom;
+            let lroom = await LGetRoom_1.LGetRoom.getLRoom(numberlrroom);
+            if (lroom.statee === "Inactive") {
+                throw new logicexception_1.LogicException("The Room is inactive");
+            }
+            if (lroom === null) {
+                throw new logicexception_1.LogicException("The Room does not exists in the system");
+            }
+            let detailr = await this.searchDetailReservationbyroom(numberlrroom);
+            if (detailr != null) {
+                throw new logicexception_1.LogicException("The Room already exists in the reservation");
+            }
+            let ldetailr = new LDetailReservation_1.default(this.listDetailReservation.length + 1, lroom.value, lroom);
+            this.listDetailReservation.push(ldetailr);
+            let getdto = this.getDTO();
+            return getdto;
+        }
+        else {
+            throw new logicexception_1.LogicException("Rooms can only be added to confirmed reservations");
+        }
+    };
+    searchDetailReservationbyroom = async (numberrom) => {
+        let listdetailr = this.listDetailReservation;
+        for (let detailr of listdetailr) {
+            if (numberrom === detailr.lroom.numberroom) {
+                return detailr;
+            }
+        }
+        return null;
     };
     haveDetailR() {
         var listdetailr = this.listDetailReservation;
@@ -166,6 +218,25 @@ class LogicReservation {
         }
         let dtoreservation = new DTOReservation_1.default(this.numberreservation, this.reservationdate, this.arrivaldate, this.departuredate, this.processtatus, this.confirmationstatus, this.origin, this.total, this.passenger.idcard, arraydetailreservation);
         return dtoreservation;
+    };
+    removeReservationDetail = async (numberrom) => {
+        if (this.processtatus === "Confirmed") {
+            let detailr = await this.searchDetailReservationbyroom(numberrom);
+            if (detailr === null) {
+                throw new logicexception_1.LogicException("The Room does not exists in the reservation");
+            }
+            let getdtoroom = await detailr.lroom.register();
+            if (getdtoroom === true) {
+                let datar = this.getDTO();
+                return datar;
+            }
+            else {
+                throw new logicexception_1.LogicException("The requested room could not be activated");
+            }
+        }
+        else {
+            throw new logicexception_1.LogicException("Rooms can only be removed to confirmed reservations");
+        }
     };
     constructor(pnumberreservation, preservationdate, parrivaldate, pdeparturedate, pprocesstatus, pconfirmationstatus, porigin, ptotal, ppassenger, plistDetailReservation) {
         this.numberreservation = pnumberreservation;

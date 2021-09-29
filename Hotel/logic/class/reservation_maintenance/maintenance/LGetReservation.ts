@@ -24,4 +24,39 @@ export default class LGetReservation
       let searchr=datar.search(numberr);
       return searchr
     }
+    static getLReservationPassenger=async(idcard:string)=>
+    {
+      let datar= await this.getLReservations();
+     
+      let searchr=datar.searchbyPassenger(idcard);
+      return searchr
+    }
+    static getLPending=async()=>
+    {
+      let datar= await this.getLReservations();
+     
+      let getp=datar.getPending();
+      return getp
+    }
+    static getLPendingPassenger=async(idcard:string)=>
+    {
+      let datar= await this.getLReservations();
+     
+      let getp=datar.getPendingbyPassenger(idcard);
+      return getp
+    }
+    static getLConfirmed=async()=>
+    {
+      let datar= await this.getLReservations();
+     
+      let getp=datar.getConfirmed();
+      return getp
+    }
+    static getLCanceled=async()=>
+    {
+      let datar= await this.getLReservations();
+     
+      let getp=datar.getCanceled();
+      return getp
+    }
  }

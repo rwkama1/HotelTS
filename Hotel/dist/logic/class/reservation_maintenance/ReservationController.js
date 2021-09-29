@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReservationController = void 0;
 const LGetReservation_1 = require("./maintenance/LGetReservation");
+const LMaintenanceReservation_1 = require("./maintenance/LMaintenanceReservation");
 const LRegisterHotelReservation_1 = require("./maintenance/LRegisterHotelReservation");
 const LRegisterOnlineReservation_1 = require("./maintenance/LRegisterOnlineReservation");
 class ReservationController {
@@ -38,7 +39,24 @@ class ReservationController {
         const result = await LRegisterHotelReservation_1.default.getInstance().saveReservation(dtoreservation);
         return result;
     };
-    //************************** ONLINE RESERVATION ******************************** */
+    //************************** MAINTENANCE ******************************** */
+    removeReservationRoom = async (numberreservation, numberrom) => {
+        let removerroom = await LMaintenanceReservation_1.default.removeReservationRoom(numberreservation, numberrom);
+        return removerroom;
+    };
+    cancelReservation = async (numberreservation) => {
+        let cancelr = await LMaintenanceReservation_1.default.cancelReservation(numberreservation);
+        return cancelr;
+    };
+    confirmReservation = async (numberreservation) => {
+        let confirm = await LMaintenanceReservation_1.default.confirmReservation(numberreservation);
+        return confirm;
+    };
+    addReservationDetail = async (dtoreservation) => {
+        let addrd = await LMaintenanceReservation_1.default.addReservationDetail(dtoreservation);
+        return addrd;
+    };
+    //     //**************** HOTEL RESERVATION ********************** **/
     startReservation = async () => {
         const startr = await LRegisterOnlineReservation_1.default.getInstance().startReservation();
         return startr;
@@ -70,6 +88,26 @@ class ReservationController {
     };
     getReservations = async () => {
         const greservations = await LGetReservation_1.default.getLReservations();
+        return greservations;
+    };
+    getLConfirmed = async () => {
+        const greservations = await LGetReservation_1.default.getLConfirmed();
+        return greservations;
+    };
+    getLPending = async () => {
+        const greservations = await LGetReservation_1.default.getLPending();
+        return greservations;
+    };
+    getLCanceled = async () => {
+        const greservations = await LGetReservation_1.default.getLCanceled();
+        return greservations;
+    };
+    getLReservationPassenger = async (idcard) => {
+        const greservations = await LGetReservation_1.default.getLReservationPassenger(idcard);
+        return greservations;
+    };
+    getLPendingPassenger = async (idcard) => {
+        const greservations = await LGetReservation_1.default.getLPendingPassenger(idcard);
         return greservations;
     };
 }

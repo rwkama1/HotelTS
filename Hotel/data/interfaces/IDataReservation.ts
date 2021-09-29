@@ -1,11 +1,13 @@
-import { IRecordSet, IResult } from "mssql";
+
 import DTOReservation from "../../shared/entity/DTOReservation";
-import DTOReservationDetail from "../../shared/entity/DTOReservationDetail";
+
 
 export default interface IDataReservation 
 {
     getReservations():Promise<DTOReservation[]>; 
     registerReservation(dtreservation:DTOReservation):Promise<boolean>;
-   
+    changeStateReservation(dtoreservation:DTOReservation):Promise<boolean>;
+    removeDetailReservation(numberr:number,numberroom:number):Promise<boolean>;
+    addDetailReservation(dtoreservation:DTOReservation):Promise<boolean>;
    
 }

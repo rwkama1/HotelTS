@@ -82,6 +82,55 @@ class DataReservation {
             throw new dataexception_1.DataException("DataLayer Error: " + e.message);
         }
     };
+    changeStateReservation = async (dtoreservation) => {
+        try {
+            let queryupdate = "Update Reservation Set ProcessStatus=@ProcessStatus,ConfirmationStatus=@ConfirmationStatus where NumberReservationn=@NumberReservationn";
+            let pool = await Conection_1.Conection.conection();
+            const result = await pool.request()
+                .input('NumberReservationn', mssql_1.Int, dtoreservation.numberreservation)
+                .input('ProcessStatus', mssql_1.VarChar, dtoreservation.processtatus)
+                .input('ConfirmationStatus', mssql_1.VarChar, dtoreservation.confirmationstatus)
+                .query(queryupdate);
+            pool.close();
+            return true;
+        }
+        catch (e) {
+            throw new dataexception_1.DataException("DataLayer Error: " + e.message);
+        }
+    };
+    removeDetailReservation = async (numberr, numberroom) => {
+        try {
+            let queryd = "Delete from ReservationDetail where NumberReservation=@NumberReservation and NumberRoom=@NumberRoom";
+            let pool = await Conection_1.Conection.conection();
+            const result = await pool.request()
+                .input('NumberRoom', mssql_1.Int, numberroom)
+                .input('NumberReservation', mssql_1.Int, numberr)
+                .query(queryd);
+            pool.close();
+            return true;
+        }
+        catch (e) {
+            throw new dataexception_1.DataException("DataLayer Error: " + e.message);
+        }
+    };
+    addDetailReservation = async (dtoreservation) => {
+        let listdtrlength = dtoreservation.listDetailReservation.length;
+        let queryinsert2 = "insert into ReservationDetail values (@NumberRD,@Value,@NumberReservation,@NumberRoom)";
+        try {
+            let pool = await Conection_1.Conection.conection();
+            const result2 = await pool.request()
+                .input('NumberRD', mssql_1.Int, dtoreservation.listDetailReservation[listdtrlength - 1].numberrd)
+                .input('Value', mssql_1.Money, dtoreservation.listDetailReservation[listdtrlength - 1].value)
+                .input('NumberReservation', mssql_1.Int, dtoreservation.numberreservation)
+                .input('NumberRoom', mssql_1.Int, dtoreservation.listDetailReservation[listdtrlength - 1].numberroom)
+                .query(queryinsert2);
+            pool.close();
+            return true;
+        }
+        catch (e) {
+            throw new dataexception_1.DataException("DataLayer Error: " + e.message);
+        }
+    };
 }
 exports.default = DataReservation;
 //# sourceMappingURL=DataReservation.js.map
