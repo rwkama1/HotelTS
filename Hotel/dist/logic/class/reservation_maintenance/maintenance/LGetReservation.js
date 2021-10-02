@@ -24,6 +24,11 @@ class LGetReservation {
         let searchr = datar.searchbyPassenger(idcard);
         return searchr;
     };
+    static getReservationbydates = async (date1, date2) => {
+        let datar = await this.getLReservations();
+        let searchr = datar.getbyDates(date1, date2);
+        return searchr;
+    };
     static getLPending = async () => {
         let datar = await this.getLReservations();
         let getp = datar.getPending();
@@ -42,6 +47,11 @@ class LGetReservation {
     static getLCanceled = async () => {
         let datar = await this.getLReservations();
         let getp = datar.getCanceled();
+        return getp;
+    };
+    static getLByRoom = async (numberr) => {
+        let datar = await this.getLReservations();
+        let getp = datar.getByRoom(numberr);
         return getp;
     };
 }

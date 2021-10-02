@@ -76,7 +76,7 @@ export class ReservationController implements IReservationController{
     }
   
  
-//     //**************** HOTEL RESERVATION ********************** **/
+//     //**************** ONLINE RESERVATION ********************** **/
   startReservation=async()=>
   {
     const startr=await LRegisterOnlineReservation.getInstance().startReservation();
@@ -148,6 +148,16 @@ export class ReservationController implements IReservationController{
     getLPendingPassenger=async(idcard:string)=>
    {
     const greservations=await LGetReservation.getLPendingPassenger(idcard);
+    return greservations
+   }
+   getLRbyDate=async(date1:Date,date2:Date)=>
+   {
+    const greservations=await LGetReservation.getReservationbydates(date1,date2);
+    return greservations
+   }
+   getByRoom=async(nr:number)=>
+   {
+    const greservations=await LGetReservation.getLByRoom(nr);
     return greservations
    }
 

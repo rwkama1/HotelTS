@@ -16,6 +16,8 @@ export default interface IReservationController
     getReservations():Promise<ArrayReservation>;
     getLReservationPassenger(idcard:string):Promise<LogicReservation[]>;
     getLPendingPassenger(idcard:string):Promise<LogicReservation[]>;
+    getLRbyDate(date1:Date,date2:Date):Promise<LogicReservation[]>;
+    getByRoom(nr:number):Promise<LogicReservation[]>;
 
     //************** HOTEL RESERVATION ************ */
 

@@ -56,7 +56,7 @@ class ReservationController {
         let addrd = await LMaintenanceReservation_1.default.addReservationDetail(dtoreservation);
         return addrd;
     };
-    //     //**************** HOTEL RESERVATION ********************** **/
+    //     //**************** ONLINE RESERVATION ********************** **/
     startReservation = async () => {
         const startr = await LRegisterOnlineReservation_1.default.getInstance().startReservation();
         return startr;
@@ -108,6 +108,14 @@ class ReservationController {
     };
     getLPendingPassenger = async (idcard) => {
         const greservations = await LGetReservation_1.default.getLPendingPassenger(idcard);
+        return greservations;
+    };
+    getLRbyDate = async (date1, date2) => {
+        const greservations = await LGetReservation_1.default.getReservationbydates(date1, date2);
+        return greservations;
+    };
+    getByRoom = async (nr) => {
+        const greservations = await LGetReservation_1.default.getLByRoom(nr);
         return greservations;
     };
 }

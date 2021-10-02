@@ -1,3 +1,4 @@
+import { LGetRoom } from "../../room_maintenance/maintenance/LGetRoom";
 import LogicPassenger from "../LPassenger";
 import LogicReservation from "../LReservation";
 
@@ -52,6 +53,37 @@ export class ArrayReservation{
 
       return newarray;
     }
+    getbyDates=(date1:Date,date2:Date)=>
+    {
+    let listreservation=this.arrayreservation;
+    let newarray=[];
+    for(let reservation of listreservation)
+      {
+        if(date1<=reservation.reservationdate&&reservation.reservationdate<=date2)
+        {
+          newarray.push(reservation);
+         
+        }
+      }
+
+      return newarray;
+    }
+    getByRoom=(numberrom:number)=>
+    {
+    let listreservation=this.arrayreservation;
+    let array=[];
+    for(let reservation of listreservation)
+      {
+        for(let detailr of reservation.listDetailReservation)
+        {
+          if(numberrom===detailr.lroom.numberroom)
+          {
+            array.push(reservation);
+          }
+        }
+      }
+      return array
+    }
     getPending=()=>
     {
     let listreservation=this.arrayreservation;
@@ -64,8 +96,7 @@ export class ArrayReservation{
         }
       }
       return newarray;
-    }
-       
+    }  
     getConfirmed=()=>
     {
     let listreservation=this.arrayreservation;

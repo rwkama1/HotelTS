@@ -23,7 +23,6 @@ class LRegisterHotelReservation {
         this._objreservation = value;
     }
     enterPassenger = async (idcard) => {
-        // let getobjreservation=this.objreservation;
         let newlogicr = new LReservation_1.default(0, new Date(), new Date(), new Date(), "Pending", "NotConfirmed", "Hotel", 0, null, []);
         this.objreservation = newlogicr;
         let enterp = this.objreservation.enterPassenger(idcard);

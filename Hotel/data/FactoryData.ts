@@ -1,10 +1,12 @@
 
 import DataPassenger from "./class/DataPassenger";
+import DataPassengerService from "./class/DataPassengerService";
 import DataReservation from "./class/DataReservation";
 import DataRoom from "./class/DataRoom";
 import DataService from "./class/DataService";
 import DataUser from "./class/DataUser";
 import IDataPassenger from "./interfaces/IDataPassenger";
+import IDataPassengerService from "./interfaces/IDataPassengerService";
 import IDataReservation from "./interfaces/IDataReservation";
 import IDataRoom from "./interfaces/IDataRoom";
 import IDataService from "./interfaces/IDataService";
@@ -25,5 +27,8 @@ export class FactoryData {
     }  
     public static getDataReservation(): IDataReservation {
         return (DataReservation.getInstance());
+    } 
+    public static getDataPassengerService(): IDataPassengerService {
+        return (DataPassengerService.getInstance());
     }    
 }

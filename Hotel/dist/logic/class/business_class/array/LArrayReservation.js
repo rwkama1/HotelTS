@@ -35,6 +35,28 @@ class ArrayReservation {
         }
         return newarray;
     };
+    getbyDates = (date1, date2) => {
+        let listreservation = this.arrayreservation;
+        let newarray = [];
+        for (let reservation of listreservation) {
+            if (date1 <= reservation.reservationdate && reservation.reservationdate <= date2) {
+                newarray.push(reservation);
+            }
+        }
+        return newarray;
+    };
+    getByRoom = (numberrom) => {
+        let listreservation = this.arrayreservation;
+        let array = [];
+        for (let reservation of listreservation) {
+            for (let detailr of reservation.listDetailReservation) {
+                if (numberrom === detailr.lroom.numberroom) {
+                    array.push(reservation);
+                }
+            }
+        }
+        return array;
+    };
     getPending = () => {
         let listreservation = this.arrayreservation;
         let newarray = [];

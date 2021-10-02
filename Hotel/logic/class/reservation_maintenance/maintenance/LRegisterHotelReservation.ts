@@ -31,7 +31,7 @@ export default class LRegisterHotelReservation
      
     enterPassenger=async(idcard:string)=>
     {
-        // let getobjreservation=this.objreservation;
+      
         let newlogicr=new LogicReservation(0,new Date(),new Date(),
             new Date(),"Pending","NotConfirmed","Hotel",0,null,[]);
         this.objreservation=newlogicr;
