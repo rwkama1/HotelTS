@@ -144,7 +144,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 // let registerReservation=async()=>
 // {
-//     let enterp=await FactoryLogic.ReservationController().enterPassenger("6789798");
+//     let enterp=await FactoryLogic.ReservationController().enterPassenger("456456546");
 //     console.log(enterp);
 //     if(enterp===false)
 //     {
@@ -153,23 +153,18 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //     }
 //     let listreservation= await FactoryLogic.RoomController().getLActiveSortRooms();
 //     console.log(listreservation);
-//     let objreservation= LRegisterHotelReservation.getInstance().objreservation;
-//     console.log(objreservation);
+   
 //     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(5);
 //     console.log(regdetailr);
 //     // let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
 //     // console.log(regdetailr1);
-//     // let regdetailr2=await FactoryLogic.ReservationController().registerReservationDetail(3);
-//     // console.log(regdetailr2);
 //     // let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
 //     // console.log(regdetailr6);
    
 //     let closer=await FactoryLogic.ReservationController().closeReservation();
 //     console.log(closer);
-//     let objreservation1= LRegisterHotelReservation.getInstance().objreservation;
-//     console.log(objreservation1);
-//     let saver=await FactoryLogic.ReservationController().saveReservation
-//     (dtoreservation);
+  
+//     let saver=await FactoryLogic.ReservationController().saveReservation(dtoreservation);
 //     console.log(saver);
    
   
@@ -326,8 +321,10 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //   console.log(sps);
 //   let rdps=await FactoryLogic.PassengerServiceController().registerDPS(1);
 //   console.log(rdps);
-//   let rdps2=await FactoryLogic.PassengerServiceController().registerDPS(85);
+//   let rdps2=await FactoryLogic.PassengerServiceController().registerDPS(5);
 //   console.log(rdps2);
+//   let rmdps2=await FactoryLogic.PassengerServiceController().removeDPS(5);
+//   console.log(rmdps2);
 //   let closeps=await FactoryLogic.PassengerServiceController().closePS(dtopassengerservice);
 //   console.log(closeps);
 //   let saveps=await FactoryLogic.PassengerServiceController().savePS();
@@ -357,7 +354,12 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 // )
 // let getPassengerService=async()=>
 // {
-//     let getps=await FactoryLogic.PassengerServiceController().getPS(1);
+  
+//      let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
+//     console.log(getpname);
+//       let getspr=await FactoryLogic.PassengerServiceController().getPSbyPassenger(getpname.idcard);
+//   console.log(getspr);
+//     let getps=await FactoryLogic.PassengerServiceController().getPS(getspr.numberps);
 //    console.log(getps);
 
 // }
