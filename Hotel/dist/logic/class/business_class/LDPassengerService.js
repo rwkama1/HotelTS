@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const DTODPassengerService_1 = require("../../../shared/entity/DTODPassengerService");
 class LogicDPassengerService {
     _numberdetailps;
     _service;
@@ -24,6 +25,10 @@ class LogicDPassengerService {
     set amount(value) {
         this._amount = value;
     }
+    getDTO = () => {
+        let dtodps = new DTODPassengerService_1.default(this.numberdetailps, this.service.idservice, this.amount);
+        return dtodps;
+    };
     constructor(pnumberdps, pservice, pamount) {
         this.numberdetailps = pnumberdps;
         this.service = pservice;

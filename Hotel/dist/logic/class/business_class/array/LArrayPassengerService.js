@@ -15,6 +15,15 @@ class ArrayPassengerService {
         }
         return null;
     };
+    searchbyPassenger = (idcard) => {
+        let listps = this.arrayps;
+        for (let ps of listps) {
+            if (idcard === ps.passenger.idcard) {
+                return ps;
+            }
+        }
+        return null;
+    };
 }
 exports.ArrayPassengerService = ArrayPassengerService;
 //# sourceMappingURL=LArrayPassengerService.js.map

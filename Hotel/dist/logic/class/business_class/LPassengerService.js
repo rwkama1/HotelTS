@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DTODPassengerService_1 = require("../../../shared/entity/DTODPassengerService");
 const DTOPassengerService_1 = require("../../../shared/entity/DTOPassengerService");
 const logicexception_1 = require("../../../shared/exceptions/logicexception");
+const LGetPassenger_1 = require("../passenger_maintenance/maintenace/LGetPassenger");
 const LGetPassengerServices_1 = require("../passenger_service_maintenance/maintenance/LGetPassengerServices");
 const LGetService_1 = require("../service_maintenance/maintenance/LGetService");
 const LDPassengerService_1 = require("./LDPassengerService");
@@ -67,17 +68,28 @@ class LogicPassengerService {
     set listdetailps(value) {
         this._listdetailps = value;
     }
+    validateDate = () => {
+        if (this.startdate >= this.enddate) {
+            throw new logicexception_1.LogicException("The End Date must be greater than Start Date");
+        }
+    };
     registerDetailPS = async (ids) => {
         let lservice = await LGetService_1.LGetService.getLService(ids);
+        if (lservice === null) {
+            throw new logicexception_1.LogicException("The Service does not exists in the system");
+        }
         let lengharraydr = this.listdetailps.length;
         lengharraydr++;
         let detailr = new LDPassengerService_1.default(lengharraydr, lservice, lservice.value);
         let listdps = this.listdetailps;
         listdps.push(detailr);
-        return detailr;
+        return detailr.getDTO();
     };
     removeDetailPS = async (ids) => {
         let lservice = await LGetService_1.LGetService.getLService(ids);
+        if (lservice === null) {
+            throw new logicexception_1.LogicException("The Service does not exists in the system");
+        }
         var listdetailr = this.listdetailps;
         for (var i = 0; i < listdetailr.length; i++) {
             if (listdetailr[i].service.idservice === lservice.idservice) {
@@ -86,18 +98,54 @@ class LogicPassengerService {
             }
         }
     };
-    close = async () => {
+    close = async (dtops) => {
         let getsps = await LGetPassengerServices_1.default.getListPS();
+        let getpassenger = await LGetPassenger_1.LGetPassenger.getLPassenger(dtops.idcardp);
+        if (getpassenger === null) {
+            throw new logicexception_1.LogicException("The Passenger does not exists in the system");
+        }
+        this.observations = dtops.observations;
+        this.startdate = dtops.startdate;
+        this.enddate = dtops.enddate;
+        this.passenger = getpassenger;
+        this.validateDate();
         let listdetailr = this.listdetailps;
         let vtotal = 0;
         for (let d of listdetailr) {
             vtotal += d.amount;
         }
-        this.total = vtotal;
+        this.total = vtotal * this.calculatenumberdays();
         let lengthservices = getsps.arrayps.length;
-        this.numberps = lengthservices;
+        this.numberps = lengthservices + 1;
         let data = this.getDTO();
         return data;
+    };
+    save = () => {
+        let havereservrdetails = this.haveDPS();
+        if (havereservrdetails) {
+            let dtops = this.getDTO();
+            return dtops;
+        }
+        else {
+            throw new logicexception_1.LogicException("The Detail Passenger Service has no items");
+        }
+    };
+    addDPS = async (dtops) => {
+        let lengthdetailr = dtops.listdetailps.length;
+        let lastelementlist = dtops.listdetailps[lengthdetailr - 1];
+        let idservice = lastelementlist.idservice;
+        let lservice = await LGetService_1.LGetService.getLService(idservice);
+        if (lservice === null) {
+            throw new logicexception_1.LogicException("The Service does not exists in the system");
+        }
+        let detailr = await this.searchDPSByService(idservice);
+        if (detailr != null) {
+            throw new logicexception_1.LogicException("The Service already exists in the reservation");
+        }
+        let ldetailr = new LDPassengerService_1.default(this.listdetailps.length + 1, lservice, lservice.value);
+        this.listdetailps.push(ldetailr);
+        let getdto = this.getDTO();
+        return getdto;
     };
     getDTO = () => {
         let arraydtodps = [];
@@ -107,6 +155,26 @@ class LogicPassengerService {
         }
         let dtops = new DTOPassengerService_1.default(this.numberps, this.passenger.idcard, this.startdate, this.enddate, this.total, this.observations, arraydtodps);
         return dtops;
+    };
+    haveDPS() {
+        var listdetailss = this.listdetailps;
+        var haveDPS = listdetailss.length > 0;
+        return haveDPS;
+    }
+    searchDPSByService = async (idservice) => {
+        let listdetailr = this.listdetailps;
+        for (let detailr of listdetailr) {
+            if (idservice === detailr.service.idservice) {
+                return detailr;
+            }
+        }
+        return null;
+    };
+    calculatenumberdays = () => {
+        var day_as_milliseconds = 86400000;
+        let diff_in_millisenconds = this.enddate.valueOf() - this.startdate.valueOf();
+        var diff_in_days = diff_in_millisenconds / day_as_milliseconds;
+        return diff_in_days;
     };
     constructor(pnumberps, ppassenger, pstartdate, penddate, ptotal, pobservations, plistdetailps) {
         this.numberps = pnumberps;

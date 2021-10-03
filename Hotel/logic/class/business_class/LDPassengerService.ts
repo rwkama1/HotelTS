@@ -1,3 +1,4 @@
+import DTODPassengerService from "../../../shared/entity/DTODPassengerService";
 import LogicService from "./LService";
 
 export  default class LogicDPassengerService
@@ -29,7 +30,11 @@ export  default class LogicDPassengerService
     public set amount(value: number) {
         this._amount = value;
     }
-
+    getDTO=()=>
+    { 
+        let dtodps=new DTODPassengerService(this.numberdetailps,this.service.idservice,this.amount);
+        return dtodps    
+    }
 
    constructor(pnumberdps:number,pservice:LogicService,pamount:number)
    {

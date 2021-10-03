@@ -62,11 +62,11 @@ class DataPassengerService {
     };
     getDPS = async (idps) => {
         try {
-            let queryget = "select * from DetailPassengerService where IDDPassangerService=@IDDPassangerService";
+            let queryget = "select * from DetailPassengerService where NumberPService=@NumberPService";
             let pool = await Conection_1.Conection.conection();
             let arraydpassengerservice = [];
             const result = await pool.request()
-                .input('IDDPassangerService', mssql_1.Int, idps)
+                .input('NumberPService', mssql_1.Int, idps)
                 .query(queryget);
             for (let x of result.recordset) {
                 let detailps = new DTODPassengerService_1.default(x.IDDPassangerService, x.IDServicee, x.Amount);
@@ -74,6 +74,24 @@ class DataPassengerService {
             }
             pool.close();
             return arraydpassengerservice;
+        }
+        catch (e) {
+            throw new dataexception_1.DataException("DataLayer Error: " + e.message);
+        }
+    };
+    addDPS = async (dtopservice) => {
+        let listdtrlength = dtopservice.listdetailps.length;
+        let queryinsert2 = "insert into DetailPassengerService values (@IDDPassangerService,@NumberPService,@IDServicee,@Amount)";
+        try {
+            let pool = await Conection_1.Conection.conection();
+            const result2 = await pool.request()
+                .input('IDDPassangerService', mssql_1.Int, dtopservice.listdetailps[listdtrlength - 1].numberdetailps)
+                .input('NumberPService', mssql_1.Int, dtopservice.numberps)
+                .input('IDServicee', mssql_1.Int, dtopservice.listdetailps[listdtrlength - 1].idservice)
+                .input('Amount', mssql_1.Money, dtopservice.listdetailps[listdtrlength - 1].amount)
+                .query(queryinsert2);
+            pool.close();
+            return true;
         }
         catch (e) {
             throw new dataexception_1.DataException("DataLayer Error: " + e.message);

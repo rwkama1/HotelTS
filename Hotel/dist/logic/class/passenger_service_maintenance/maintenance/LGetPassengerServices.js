@@ -19,6 +19,11 @@ class LGetPassengerService {
         let searchps = dataps.search(id);
         return searchps;
     };
+    static getPSbyPassenger = async (idcard) => {
+        let dataps = await this.getListPS();
+        let searchr = dataps.searchbyPassenger(idcard);
+        return searchr;
+    };
 }
 exports.default = LGetPassengerService;
 //# sourceMappingURL=LGetPassengerServices.js.map

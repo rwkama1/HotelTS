@@ -80,11 +80,11 @@ export default class DataPassengerService implements IDataPassengerService
      getDPS=async(idps:number)=>
      {
        try {
-           let queryget = "select * from DetailPassengerService where IDDPassangerService=@IDDPassangerService";
+           let queryget = "select * from DetailPassengerService where NumberPService=@NumberPService";
            let pool = await Conection.conection();
            let arraydpassengerservice=[];
            const result = await pool.request()
-           .input('IDDPassangerService', Int, idps)
+           .input('NumberPService', Int, idps)
            .query(queryget)
            for (let x of result.recordset) {
                
@@ -100,4 +100,29 @@ export default class DataPassengerService implements IDataPassengerService
            throw new DataException("DataLayer Error: "+e.message)
        }
       }
+      addDPS=async(dtopservice:DTOPassengerService)=>
+     {
+        let listdtrlength=dtopservice.listdetailps.length;
+        let queryinsert2 = "insert into DetailPassengerService values (@IDDPassangerService,@NumberPService,@IDServicee,@Amount)";
+       try {
+          
+           let pool = await Conection.conection();
+          
+           const result2 = await pool.request()
+            .input('IDDPassangerService', Int, dtopservice.listdetailps[listdtrlength-1].numberdetailps)
+            .input('NumberPService', Int,dtopservice.numberps)
+            .input('IDServicee', Int,  dtopservice.listdetailps[listdtrlength-1].idservice)
+            .input('Amount', Money, dtopservice.listdetailps[listdtrlength-1].amount)
+            .query(queryinsert2)
+             
+           pool.close();
+           return true;
+          
+       }
+       catch(e)
+       {
+           throw new DataException("DataLayer Error: "+e.message)
+       }
+   
+     }
 }

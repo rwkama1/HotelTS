@@ -1,6 +1,8 @@
+import { FactoryData } from "../../../../data/FactoryData";
+import DTOPassengerService from "../../../../shared/entity/DTOPassengerService";
 import { LogicException } from "../../../../shared/exceptions/logicexception";
+import LogicPassenger from "../../business_class/LPassenger";
 import LogicPassengerService from "../../business_class/LPassengerService";
-
 
 export default class LRegisterPassengerService
  {
@@ -22,18 +24,19 @@ export default class LRegisterPassengerService
     }
     startPS=async()=>
     {
-        
-        let newlogicps=new LogicPassengerService(0,null,new Date(),new Date(),0,"asd",[]);
+        let newpassenger=new LogicPassenger(
+            "123","name1","surname2","country","town","address","78789","asd@gmail.com","","","");
+        let newlogicps=new LogicPassengerService(0,newpassenger,new Date(),new Date(),0,"asd",[]);
         this.objps=newlogicps;
        
-        return this.objps
+        return this.objps.getDTO()
         
     }
     registerDPS=async(idservice:number)=>
     {
         let lps=this.objps;  
-        let logicdps=await lps.registerDetailPS(idservice);     
-        return logicdps;
+        let dtodps=await lps.registerDetailPS(idservice);     
+        return dtodps;
     }
     removeDPS=async(idservice:number)=> {
        
@@ -42,15 +45,32 @@ export default class LRegisterPassengerService
         return true;
         
     }
-    closePS=async()=>{
+    closePS=async(dtops:DTOPassengerService)=>{
         let lps=this.objps; 
         if (lps != null) {
-            let dtops=lps.close();
-            return dtops
+            let data=lps.close(dtops);
+            return data
         } 
         else
         {
             throw new LogicException("The Passenger Service is null");
         }       
+    }
+    savePS=async()=>
+     {
+        
+        let lps=this.objps; 
+       
+        if (lps != null) {
+           
+            let datadps=await lps.save();
+            let result=await FactoryData.getDataPassengerService().registerPassengerService(datadps);
+            return result
+        }
+        else
+        {
+            throw new LogicException("The Passenger Service is null");
+        }
+      
     }
 }

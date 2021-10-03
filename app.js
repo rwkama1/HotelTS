@@ -7,6 +7,8 @@ const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService")
 const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
 const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
 const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
+const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
+const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
 
 let dtuser=new DTOUser("8545654654",
@@ -26,18 +28,11 @@ let dtoroom=new DTORoom(7,
 
 let dtoservice=new DTOService(2,"Service2",9.10);
 
-let dtodetailreservation=new DTOReservationDetail(1,50,1);
-let dtodetailreservation1=new DTOReservationDetail(2,40,1);
-let dtodetailreservation2=new DTOReservationDetail(3,60,1);
-
-let arraydetailreservation=[];
-arraydetailreservation.push(dtodetailreservation);
-arraydetailreservation.push(dtodetailreservation1);
-arraydetailreservation.push(dtodetailreservation2);
-
 let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 17, 2021"),
- new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",arraydetailreservation);
+ new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
 
+
+ let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
 //************************ USER MAINTENACE ******************** */
 
 // FactoryLogic.UserController().registerUser(dtuser).then(data => {
@@ -331,9 +326,42 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //   console.log(sps);
 //   let rdps=await FactoryLogic.PassengerServiceController().registerDPS(1);
 //   console.log(rdps);
+//   let rdps2=await FactoryLogic.PassengerServiceController().registerDPS(85);
+//   console.log(rdps2);
+//   let closeps=await FactoryLogic.PassengerServiceController().closePS(dtopassengerservice);
+//   console.log(closeps);
+//   let saveps=await FactoryLogic.PassengerServiceController().savePS();
+//   console.log(saveps);
   
 // }
 // addservicepassanger().then(
+
+// )
+
+// let addnewservice=async()=>
+// {
+
+
+//   dtopassengerservice.listdetailps.push(new DTODPassengerService(0,3,200));
+//     let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
+//   console.log(getpname);
+  
+//   let getp=await FactoryLogic.PassengerServiceController().enterPassenger(getpname.idcard);
+//   console.log(getp);
+//   let addps=await FactoryLogic.PassengerServiceController().addDPS(dtopassengerservice);
+//   console.log(addps);
+  
+// }
+// addnewservice().then(
+
+// )
+// let getPassengerService=async()=>
+// {
+//     let getps=await FactoryLogic.PassengerServiceController().getPS(1);
+//    console.log(getps);
+
+// }
+// getPassengerService().then(
 
 // )
 
@@ -349,9 +377,8 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 
 
-
-
 //****************************************************************************** */
+// ADD MANY PASSENGER
 
 // let dtpassenger1=new DTOPassenger("2456465",
 // "Passenger1","PassengerLastName1","Country1","Town1","Address1",
@@ -395,6 +422,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 // )
 // //****************************************************************** */
+// ADD MANY ROOMS
 
 // let dtoroom1=new DTORoom(85,
 //   "Individual","Individual",
@@ -427,6 +455,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //         ) 
 
 //********************************************************************** */
+//ADD MANY SERVICES
 
 // let dtoservice1=new DTOService(85,"Service1",9.10);
 // let dtoservice2=new DTOService(85,"Service2",8.10);

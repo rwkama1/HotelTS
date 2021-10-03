@@ -23,6 +23,14 @@ export default class LGetPassengerService
      let searchps=dataps.search(id);
      return searchps
    }
+   static getPSbyPassenger=async(idcard:string)=>
+   {
+     
+    let dataps= await this.getListPS();
+    
+     let searchr=dataps.searchbyPassenger(idcard);
+     return searchr
+   }
   
  
 }

@@ -22,20 +22,20 @@ export class ArrayPassengerService{
       }
       return null;
     }
-    // searchbyPassenger=(idcard:string)=>
-    // {
-    // let listreservation=this.arrayreservation;
-    // let newarray=[];
-    // for(let reservation of listreservation)
-    //   {
-    //     if(idcard===reservation.passenger.idcard)
-    //     {
-    //       newarray.push(reservation);
+    searchbyPassenger=(idcard:string)=>
+    {
+      let listps=this.arrayps;
+   
+    for(let ps of listps)
+      {
+        if(idcard===ps.passenger.idcard)
+        {
+          return ps
          
-    //     }
-    //   }
+        }
+      }
 
-    //   return newarray;
-    // }
+      return null;
+    }
    
 }
