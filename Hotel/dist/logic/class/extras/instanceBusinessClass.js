@@ -5,11 +5,14 @@ const LDetailReservation_1 = require("../business_class/LDetailReservation");
 const LDPassengerService_1 = require("../business_class/LDPassengerService");
 const LPassenger_1 = require("../business_class/LPassenger");
 const LPassengerService_1 = require("../business_class/LPassengerService");
+const LPayment_1 = require("../business_class/LPayment");
 const LReservation_1 = require("../business_class/LReservation");
 const LRoom_1 = require("../business_class/LRoom");
 const LService_1 = require("../business_class/LService");
 const LUser_1 = require("../business_class/LUser");
 const LGetPassenger_1 = require("../passenger_maintenance/maintenace/LGetPassenger");
+const LGetPassengerServices_1 = require("../passenger_service_maintenance/maintenance/LGetPassengerServices");
+const LGetReservation_1 = require("../reservation_maintenance/maintenance/LGetReservation");
 const LGetRoom_1 = require("../room_maintenance/maintenance/LGetRoom");
 const LGetService_1 = require("../service_maintenance/maintenance/LGetService");
 class InstanceLogicClass {
@@ -50,6 +53,13 @@ class InstanceLogicClass {
         }
         let logicps = new LPassengerService_1.default(dtops.numberps, searchp, dtops.startdate, dtops.enddate, dtops.total, dtops.observations, arraylogicdps);
         return logicps;
+    };
+    static instancePayment = async (dtopayment) => {
+        let spassenger = await LGetPassenger_1.LGetPassenger.getLPassenger(dtopayment.idcardpassenger);
+        let spassengerservice = await LGetPassengerServices_1.default.getPS(dtopayment.idpassengerservice);
+        let sreservation = await LGetReservation_1.default.getLReservation(dtopayment.numberreservation);
+        let logicpayment = new LPayment_1.default(dtopayment.idpayment, spassenger, sreservation, spassengerservice, dtopayment.passengeramount, dtopayment.totalrs, dtopayment.date);
+        return logicpayment;
     };
 }
 exports.InstanceLogicClass = InstanceLogicClass;

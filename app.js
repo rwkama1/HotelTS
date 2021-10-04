@@ -1,39 +1,39 @@
 
 
-const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
-const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
-const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
-const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
-const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
-const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
-const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
-const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
-const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
+// const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
+// const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
+// const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
+// const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
+// const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
+// const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
+// const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
+// const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
+// const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
 
-let dtuser=new DTOUser("8545654654",
-"ksdgsdgsdg","User1","Adress3",
-"79789797","Administrator",
-"Password12345","","mail2@gmail.com","");
+// let dtuser=new DTOUser("8545654654",
+// "ksdgsdgsdg","User1","Adress3",
+// "79789797","Administrator",
+// "Password12345","","mail2@gmail.com","");
 
-let dtpassenger=new DTOPassenger("6789798",
-"qwrfas","User1","USA","New York","Address",
-"79789797","mailpassenger@gmail.com",
-"","Password12345","");
-
-
-let dtoroom=new DTORoom(7,
-  "dfhdfh","dfshdfh",
-  "safasf","asgagasgasgasgasasg",50.55,"Active","asd.jpg");
-
-let dtoservice=new DTOService(2,"Service2",9.10);
-
-let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 17, 2021"),
- new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
+// let dtpassenger=new DTOPassenger("6789798",
+// "qwrfas","User1","USA","New York","Address",
+// "79789797","mailpassenger@gmail.com",
+// "","Password12345","");
 
 
- let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
-//************************ USER MAINTENACE ******************** */
+// let dtoroom=new DTORoom(7,
+//   "dfhdfh","dfshdfh",
+//   "safasf","asgagasgasgasgasasg",50.55,"Active","asd.jpg");
+
+// let dtoservice=new DTOService(2,"Service2",9.10);
+
+// let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 17, 2021"),
+//  new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
+
+
+//  let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
+// ************************ USER MAINTENACE ******************** */
 
 // FactoryLogic.UserController().registerUser(dtuser).then(data => {
 //     console.log(data);
@@ -67,7 +67,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 // )
 
-  //********************** PASSENGER MAINTENACE ************************** */
+//   ********************** PASSENGER MAINTENACE ************************** */
 
 // FactoryLogic.PassengerController().registerPassenger(dtpassenger).then(data => {
 //     console.log(data);
@@ -99,7 +99,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 // autenticationpassenger().then(
 
 // )
-//***********************  ROOM MAINTENANCE ************************* */
+// ***********************  ROOM MAINTENANCE ************************* */
 
 // FactoryLogic.RoomController().registerRoom(dtoroom).then(data => {
 //     console.log(data);
@@ -120,7 +120,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //   console.log(data);
 // });
 
-//*********************** SERVICE MAINTENANCE ************************ */
+// *********************** SERVICE MAINTENANCE ************************ */
 
 // FactoryLogic.ServiceController().registerService(dtoservice).then(data => {
 //     console.log(data);
@@ -138,7 +138,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //   console.log(data);
 // });
 
-//************************** RESERVATION MAINTENANCE ******************* */
+// ************************** RESERVATION MAINTENANCE ******************* */
 
 //  HOTEL 
 
@@ -312,7 +312,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 // getReservationbyroom().then(
 
 // )
-//**************************** PASSENGER SERVICES MAINTENANCE  ******************************************* */
+// **************************** PASSENGER SERVICES MAINTENANCE  ******************************************* */
 
 // let addservicepassanger=async()=>
 // {
@@ -367,6 +367,25 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 // )
 
+// ********************************** PAYMENT MAINTENANCE ******************************* */
+
+// let registerPayment=async()=>
+// {
+  
+//   let datepay=new Date("October 20, 2021");
+//      let getreservations=await FactoryLogic.PaymentController().enterPassenger("456456546");
+//     console.log(getreservations);
+//     let getres=await FactoryLogic.PaymentController().enterReservationsService(1);
+//     console.log(getres);
+//       let getclosep=await FactoryLogic.PaymentController().closePayment(200,datepay);
+//     console.log(getclosep);
+//     let result=await FactoryLogic.PaymentController().savePayment();
+//    console.log(result);
+
+// }
+// registerPayment().then(
+
+// )
 
 
 
@@ -379,7 +398,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 
 
-//****************************************************************************** */
+// ****************************************************************************** */
 // ADD MANY PASSENGER
 
 // let dtpassenger1=new DTOPassenger("2456465",
@@ -456,8 +475,8 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
         
 //         ) 
 
-//********************************************************************** */
-//ADD MANY SERVICES
+// ********************************************************************** */
+// ADD MANY SERVICES
 
 // let dtoservice1=new DTOService(85,"Service1",9.10);
 // let dtoservice2=new DTOService(85,"Service2",8.10);

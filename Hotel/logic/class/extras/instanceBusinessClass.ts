@@ -1,5 +1,6 @@
 import DTOPassenger from "../../../shared/entity/DTOPassenger";
 import DTOPassengerService from "../../../shared/entity/DTOPassengerService";
+import DTOPayment from "../../../shared/entity/DTOPayment";
 import DTOReservation from "../../../shared/entity/DTOReservation";
 import DTORoom from "../../../shared/entity/DTORoom";
 import DTOService from "../../../shared/entity/DTOService";
@@ -8,11 +9,14 @@ import LogicReservationDetail from "../business_class/LDetailReservation";
 import LogicDPassengerService from "../business_class/LDPassengerService";
 import LogicPassenger from "../business_class/LPassenger";
 import LogicPassengerService from "../business_class/LPassengerService";
+import LogicPayment from "../business_class/LPayment";
 import LogicReservation from "../business_class/LReservation";
 import LogicRoom from "../business_class/LRoom";
 import LogicService from "../business_class/LService";
 import LogicUser from "../business_class/LUser";
 import { LGetPassenger } from "../passenger_maintenance/maintenace/LGetPassenger";
+import LGetPassengerService from "../passenger_service_maintenance/maintenance/LGetPassengerServices";
+import LGetReservation from "../reservation_maintenance/maintenance/LGetReservation";
 import { LGetRoom } from "../room_maintenance/maintenance/LGetRoom";
 import { LGetService } from "../service_maintenance/maintenance/LGetService";
 
@@ -78,5 +82,14 @@ export class InstanceLogicClass
         let logicps=new LogicPassengerService(
             dtops.numberps,searchp,dtops.startdate,dtops.enddate,dtops.total,dtops.observations,arraylogicdps);
             return logicps
+    }
+    static instancePayment=async(dtopayment:DTOPayment)=>
+    {
+        let spassenger=await LGetPassenger.getLPassenger(dtopayment.idcardpassenger);
+        let spassengerservice=await LGetPassengerService.getPS(dtopayment.idpassengerservice);
+        let sreservation=await LGetReservation.getLReservation(dtopayment.numberreservation);
+        let logicpayment=new LogicPayment(dtopayment.idpayment,spassenger,sreservation
+            ,spassengerservice,dtopayment.passengeramount,dtopayment.totalrs,dtopayment.date);
+            return logicpayment
     }
 }

@@ -14,6 +14,7 @@ export default interface IPassengerController
     updatePassanger(dtpassenger:DTOPassenger):Promise<boolean>;
     inactivatePassanger(dtpassenger:DTOPassenger):Promise<boolean>;
     
+    
     loginPassenger(idcard:string,password:string):Promise<LogicPassenger>;
     getloginPassenger():LogicPassenger;
     logout():boolean;

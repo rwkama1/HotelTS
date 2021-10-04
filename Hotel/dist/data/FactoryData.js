@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FactoryData = void 0;
 const DataPassenger_1 = require("./class/DataPassenger");
 const DataPassengerService_1 = require("./class/DataPassengerService");
+const DataPayment_1 = require("./class/DataPayment");
 const DataReservation_1 = require("./class/DataReservation");
 const DataRoom_1 = require("./class/DataRoom");
 const DataService_1 = require("./class/DataService");
@@ -25,6 +26,9 @@ class FactoryData {
     }
     static getDataPassengerService() {
         return (DataPassengerService_1.default.getInstance());
+    }
+    static getDataPayment() {
+        return (DataPayment_1.default.getInstance());
     }
 }
 exports.FactoryData = FactoryData;

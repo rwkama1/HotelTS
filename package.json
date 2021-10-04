@@ -1,12 +1,35 @@
 {
   "name": "hotelts",
   "version": "1.0.0",
-  "description": "",
+  "description": "This package contains a backend of what would be the logic of a hotel software, the architecture used is made in 3 layers",
   "main": "app.js",
+
   "scripts": {
     "start": "node app"
   },
-  "keywords": [],
+  "keywords": ["backend",
+    "typeScript",
+    "ts",
+    "js",
+    "javascript",
+    "order",
+    "item",
+    "calculate",
+    "article",
+    "price",
+    "stock",
+    "amount",
+    "cash",
+    "card",
+    "total",
+    "date",
+    "quantity",
+    "customer",
+    "employees",
+    "category",
+    "user",
+    "e-commercee",
+    "ecommerce"],
   "author": "Carlos Rodriguez <rwkamandriw@gmail.com>",
   "license": "MIT"
 }
