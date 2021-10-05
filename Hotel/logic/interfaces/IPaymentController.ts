@@ -1,22 +1,20 @@
 import DTOPayment from "../../shared/entity/DTOPayment";
-import { ArrayPayment } from "../class/business_class/array/LArrayPayment";
-import LogicPayment from "../class/business_class/LPayment";
+import DTOReservation from "../../shared/entity/DTOReservation";
 
-import LogicReservation from "../class/business_class/LReservation";
 
 export default interface IPaymentController 
 {
     //******************* REGISTER ************************* */
     
-    enterPassenger(idcard:string):Promise<LogicReservation[]>;
+    enterPassenger(idcard:string):Promise<DTOReservation[]>;
     enterReservationsService(numberr:number):Promise<DTOPayment>;
     closePayment(passengeramount:number,datepayment:Date):Promise<number>;
     savePayment():Promise<boolean>;
 
     //*********************** GETS ************************** */
 
-    getLPayment(idpay:number):Promise<LogicPayment>;
-    getLPaymentPassenger(idcard:string):Promise<LogicPayment>;
-    getListPayments():Promise<ArrayPayment>;
+    getLPayment(idpay:number):Promise<DTOPayment>;
+    getLPaymentPassenger(idcard:string):Promise<DTOPayment>;
+    getListPayments():Promise<DTOPayment[]>;
     
 }

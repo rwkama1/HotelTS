@@ -2,7 +2,7 @@
 
 import DTODPassengerService from "../../shared/entity/DTODPassengerService";
 import DTOPassengerService from "../../shared/entity/DTOPassengerService";
-import LogicPassengerService from "../class/business_class/LPassengerService";
+
 
 
 
@@ -21,8 +21,8 @@ export default interface IPassengerServiceController
     addDPS(dtops:DTOPassengerService):Promise<boolean>;
 
     //********************* GETS ***************** */
-    getPSbyPassenger(idcard:string):Promise<LogicPassengerService>;
-    getPS(id:number):Promise<LogicPassengerService>
+    getPSbyPassenger(idcard:string):Promise<DTOPassengerService>;
+    getPS(id:number):Promise<DTOPassengerService>
 
 
 }

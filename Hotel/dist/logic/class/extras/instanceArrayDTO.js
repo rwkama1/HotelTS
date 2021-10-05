@@ -42,6 +42,14 @@ class InstanceArrayDTO {
         }
         return arraydto;
     };
+    static instanceArrayPayment = (larraypay) => {
+        let arraydto = [];
+        for (let pay of larraypay) {
+            let dtopay = pay.getDTO();
+            arraydto.push(dtopay);
+        }
+        return arraydto;
+    };
 }
 exports.InstanceArrayDTO = InstanceArrayDTO;
 //# sourceMappingURL=instanceArrayDTO.js.map

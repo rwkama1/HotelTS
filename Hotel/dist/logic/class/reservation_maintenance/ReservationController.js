@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReservationController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
 const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const LGetReservation_1 = require("./maintenance/LGetReservation");
 const LMaintenanceReservation_1 = require("./maintenance/LMaintenanceReservation");
@@ -85,6 +86,9 @@ class ReservationController {
     //    //***************** GET RESERVATION ***************** */
     getReservation = async (numberr) => {
         const greservation = await LGetReservation_1.default.getLReservation(numberr);
+        if (greservation === null) {
+            throw new logicexception_1.LogicException("The Reservation does not exists in the system");
+        }
         return greservation.getDTO();
     };
     getReservations = async () => {

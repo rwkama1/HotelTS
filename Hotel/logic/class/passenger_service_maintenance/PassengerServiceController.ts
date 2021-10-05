@@ -1,4 +1,5 @@
 import DTOPassengerService from "../../../shared/entity/DTOPassengerService";
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import IPassengerServiceController from "../../interfaces/IPassengerServiceController";
 import LAddService from "./maintenance/LAddService";
 import LGetPassengerService from "./maintenance/LGetPassengerServices";
@@ -61,11 +62,21 @@ export class PassengerServiceController implements IPassengerServiceController{
     getPSbyPassenger=async(idcard:string)=>
    {
     let getps= await LGetPassengerService.getPSbyPassenger(idcard);
-    return getps
+    if(getps===null)
+    {
+        throw new LogicException("The Passenger Service does not exists in the system");
+        
+    }
+    return getps.getDTO()
    }
     getPS=async(id:number)=>
    {
-    let getps= await LGetPassengerService.getPS(id);
-    return getps
+        let getps= await LGetPassengerService.getPS(id);
+        if(getps===null)
+        {
+            throw new LogicException("The Passenger Service does not exists in the system");
+            
+        }
+        return getps.getDTO()
    }
 }

@@ -1,5 +1,6 @@
 import DTOPassenger from "../../../shared/entity/DTOPassenger";
 import DTOReservation from "../../../shared/entity/DTOReservation";
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import IReservationController from "../../interfaces/IReservationController";
 import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import LGetReservation from "./maintenance/LGetReservation";
@@ -114,7 +115,11 @@ export class ReservationController implements IReservationController{
    getReservation=async(numberr:number)=>
    {
         const greservation=await LGetReservation.getLReservation(numberr);
-      
+        if(greservation===null)
+        {
+            throw new LogicException("The Reservation does not exists in the system");
+            
+        }
         return greservation.getDTO()
     
    }

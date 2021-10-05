@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PassengerServiceController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
 const LAddService_1 = require("./maintenance/LAddService");
 const LGetPassengerServices_1 = require("./maintenance/LGetPassengerServices");
 const LRegisterPassengerService_1 = require("./maintenance/LRegisterPassengerService");
@@ -46,11 +47,17 @@ class PassengerServiceController {
     //******************* GETS ********************* */
     getPSbyPassenger = async (idcard) => {
         let getps = await LGetPassengerServices_1.default.getPSbyPassenger(idcard);
-        return getps;
+        if (getps === null) {
+            throw new logicexception_1.LogicException("The Passenger Service does not exists in the system");
+        }
+        return getps.getDTO();
     };
     getPS = async (id) => {
         let getps = await LGetPassengerServices_1.default.getPS(id);
-        return getps;
+        if (getps === null) {
+            throw new logicexception_1.LogicException("The Passenger Service does not exists in the system");
+        }
+        return getps.getDTO();
     };
 }
 exports.PassengerServiceController = PassengerServiceController;

@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
+const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const LGetPayment_1 = require("./maintenance/LGetPayment");
 const LRegisterPayment_1 = require("./maintenance/LRegisterPayment");
 class PaymentController {
@@ -14,7 +16,8 @@ class PaymentController {
     }
     enterPassenger = async (idcard) => {
         let getrs = await LRegisterPayment_1.default.getInstance().enterPassenger(idcard);
-        return getrs;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(getrs);
+        return arraydto;
     };
     enterReservationsService = async (numberr) => {
         let datapay = await LRegisterPayment_1.default.getInstance().enterReservationsService(numberr);
@@ -31,15 +34,22 @@ class PaymentController {
     //***************************** GETS ************************************** */
     getLPayment = async (idpay) => {
         let datapay = await LGetPayment_1.LGetPayment.getLPayment(idpay);
-        return datapay;
+        if (datapay === null) {
+            throw new logicexception_1.LogicException("The Payment does not exists in the system");
+        }
+        return datapay.getDTO();
     };
     getLPaymentPassenger = async (idcard) => {
         let datapay = await LGetPayment_1.LGetPayment.getLPaymentPassenger(idcard);
-        return datapay;
+        if (datapay === null) {
+            throw new logicexception_1.LogicException("The Payment does not exists in the system");
+        }
+        return datapay.getDTO();
     };
     getListPayments = async () => {
         let datapay = await LGetPayment_1.LGetPayment.getListPayments();
-        return datapay;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayPayment(datapay.arraypayment);
+        return arraydto;
     };
 }
 exports.PaymentController = PaymentController;

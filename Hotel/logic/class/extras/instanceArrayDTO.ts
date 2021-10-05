@@ -1,4 +1,5 @@
 import LogicPassenger from "../business_class/LPassenger";
+import LogicPayment from "../business_class/LPayment";
 import LogicReservation from "../business_class/LReservation";
 import LogicRoom from "../business_class/LRoom";
 import LogicService from "../business_class/LService";
@@ -58,6 +59,17 @@ export class InstanceArrayDTO
         {
             let dtor=res.getDTO();
             arraydto.push(dtor);
+
+        }
+        return arraydto;       
+    }
+    static instanceArrayPayment=(larraypay:LogicPayment[])=>
+    {
+        let arraydto=[];
+        for(let pay of larraypay)
+        {
+            let dtopay=pay.getDTO();
+            arraydto.push(dtopay);
 
         }
         return arraydto;       

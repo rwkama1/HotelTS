@@ -1,4 +1,6 @@
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import IPaymentController from "../../interfaces/IPaymentController";
+import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { LGetPayment } from "./maintenance/LGetPayment";
 import LRegisterPayment from "./maintenance/LRegisterPayment";
 
@@ -16,7 +18,8 @@ export class PaymentController implements IPaymentController{
     enterPassenger=async(idcard:string)=>
     {
         let getrs= await LRegisterPayment.getInstance().enterPassenger(idcard);
-        return getrs     
+        let arraydto=InstanceArrayDTO.instanceArrayReservation(getrs);
+        return arraydto
     }
     enterReservationsService=async(numberr:number)=>
     {
@@ -41,18 +44,30 @@ export class PaymentController implements IPaymentController{
      getLPayment=async(idpay:number)=>
       {
         let datapay= await LGetPayment.getLPayment(idpay);
-        return datapay
+        if(datapay===null)
+        {
+            throw new LogicException("The Payment does not exists in the system");
+            
+        }
+        return datapay.getDTO()
       }
 
       getLPaymentPassenger=async(idcard:string)=>
       {
         let datapay= await LGetPayment.getLPaymentPassenger(idcard);
-        return datapay
+        if(datapay===null)
+        {
+            throw new LogicException("The Payment does not exists in the system");
+            
+        }
+        return datapay.getDTO()
       }
       getListPayments=async()=>
       {
         let datapay= await LGetPayment.getListPayments();
-        return datapay
+        let arraydto=InstanceArrayDTO.instanceArrayPayment(datapay.arraypayment);
+        return arraydto
+        
       }
 
 }
