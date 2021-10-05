@@ -6,11 +6,30 @@ This package contains a backend of what would be the logic of a hotel software, 
 
 #### User management for the system.
 
-#### Hotel service management.
+* Register the identity document, password, name, surname, address, telephone number and type (Administrator or Receptionist) of a new user for the system.
+* Start user session by entering the identity document and password.
+* Modify the name, surname, address, telephone number and type (Administrator or Receptionist) of a user registered in the system.
+* Show the identity document, the name, the surname, the address, the telephone number and the type of user (Administrator or Receptionist).
+* Remove a user from the system, changing the status from active to inactive.
 
 #### Hotel passenger management.
 
+* Register the identity document, name, surname, country of origin, city, address, telephone, email and password of a new passenger.
+* Start passenger session by entering email and password.
+* Modify the name, surname, address, telephone, country of origin, city, email and password of a passenger registered in the system.
+* The administrator and receptionist will be able to access the passenger information, identity document, name, surname, country of origin, city. the address, telephone and email.
+
 #### Room management.
+
+
+
+#### Hotel service management.
+
+
+
+
+
+
 
 #### Reservation management
 

@@ -4,19 +4,23 @@ import LogicPassenger from "../class/business_class/LPassenger";
 
 export default interface IPassengerController 
 {
-    getPassanger(idcard:string):Promise<LogicPassenger>;
-    getLPassengerbyname(name:string,surname:string):Promise<LogicPassenger>;
-    getPassangers():Promise<ArrayPassenger>;
-    getLActiveSortPassengers():Promise<LogicPassenger[]>;
+    //***********************GETS **************** */
 
-   
+    getPassanger(idcard:string):Promise<DTOPassenger>;
+    getLPassengerbyname(name:string,surname:string):Promise<DTOPassenger>;
+    getPassangers():Promise<DTOPassenger[]>;
+    getLActiveSortPassengers():Promise<DTOPassenger[]>;
+
+   //******************** MAINTENANCE ******************* */
+
     registerPassenger(dtpassenger:DTOPassenger):Promise<boolean>;
     updatePassanger(dtpassenger:DTOPassenger):Promise<boolean>;
     inactivatePassanger(dtpassenger:DTOPassenger):Promise<boolean>;
     
-    
-    loginPassenger(idcard:string,password:string):Promise<LogicPassenger>;
-    getloginPassenger():LogicPassenger;
+    //******************** LOGIN ******************* */
+
+    loginPassenger(idcard:string,password:string):Promise<DTOPassenger>;
+    getloginPassenger():DTOPassenger;
     logout():boolean;
     
 }

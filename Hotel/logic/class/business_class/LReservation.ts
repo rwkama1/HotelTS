@@ -146,6 +146,10 @@ export  default class LogicReservation
     }
     registerReservationDetail=async(numberroom:number)=> {
         let lroom = await LGetRoom.getLRoom(numberroom);
+        if (lroom===null) {
+            throw new LogicException("The Room does not exists in the system");
+            
+        }
         let lengharraydr=this.listDetailReservation.length;
         lengharraydr++;
         var detailr = new LogicReservationDetail(lengharraydr,lroom.value,lroom);
@@ -155,7 +159,11 @@ export  default class LogicReservation
        
     }
     removeRD=async(numberroom:number)=> {
-        let lroom = await LGetRoom.getLRoom(numberroom);   
+        let lroom = await LGetRoom.getLRoom(numberroom);  
+        if (lroom===null) {
+            throw new LogicException("The Room does not exists in the system");
+            
+        } 
         var listdetailr = this.listDetailReservation;
         for (var i =0; i < listdetailr.length; i++)
         {
@@ -165,17 +173,9 @@ export  default class LogicReservation
             }
         }
     }
-    close=async()=> {
+    close=async(dtreservation:DTOReservation)=> {
+
        
-        var listdetailr = this.listDetailReservation;
-        var vtotal=0;
-        for (let d of listdetailr) {
-            vtotal += d.value
-        }
-       this.total=vtotal;    
-    }
-    save=async(dtreservation:DTOReservation)=>
-    {
         this.reservationdate=dtreservation.reservationdate;
         this.arrivaldate=dtreservation.arrivaldate;
         this.departuredate=dtreservation.departuredate;
@@ -188,7 +188,18 @@ export  default class LogicReservation
                 
             }
         }
-       
+        var listdetailr = this.listDetailReservation;
+        var vtotal=0;
+        for (let d of listdetailr) {
+            vtotal += d.value
+        }
+       this.total=vtotal;    
+       let data= this.getDTO();
+       return data
+
+    }
+    save=async()=>
+    {
         let havereservrdetails=this.haveDetailR();
         if(havereservrdetails)
           {
@@ -200,6 +211,7 @@ export  default class LogicReservation
           {
             throw new LogicException("The Detail Reservations has no items");
           }
+         
     }
     cancel=async()=>
     {

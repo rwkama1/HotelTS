@@ -72,28 +72,29 @@ export default class LRegisterHotelReservation
         return true;
         
     }
-    closeReservation=async()=>{
+    closeReservation=async(dtreservation:DTOReservation)=>{
         let lreservation=this.objreservation;  
+        lreservation.processtatus="Confirmed";
+        lreservation.confirmationstatus="Confirmed";
         if (lreservation != null) {
             let getreservations=await LGetReservation.getLReservations();
             let lengthreservations=getreservations.arrayreservation.length;
             lreservation.numberreservation=lengthreservations;
-            lreservation.close();
+           
         }
         else
         {
             throw new LogicException("The Reservation is null");
         }
-        return lreservation;
+        return lreservation.close(dtreservation);
     }
-    saveReservation=async(dtreservation:DTOReservation)=>
+    saveReservation=async()=>
      {
         
         let lreservation=this.objreservation;
-        lreservation.processtatus="Confirmed";
-        lreservation.confirmationstatus="Confirmed";
+      
         if (lreservation != null) {
-            let dtoreservation=await lreservation.save(dtreservation);
+            let dtoreservation=await lreservation.save();
             for(let detailr of dtoreservation.listDetailReservation)
             {
                

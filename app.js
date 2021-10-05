@@ -1,25 +1,25 @@
 
 
-// const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
-// const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
-// const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
-// const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
-// const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
-// const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
-// const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
-// const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
-// const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
+const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
+const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
+const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
+const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
+const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
+const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
+const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
+const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
+const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
 
-// let dtuser=new DTOUser("8545654654",
-// "ksdgsdgsdg","User1","Adress3",
-// "79789797","Administrator",
-// "Password12345","","mail2@gmail.com","");
+let dtuser=new DTOUser("75456546",
+"ksdgsdgsdg","User1","Adress3",
+"79789797","Administrator",
+"Password12345","","mail2@gmail.com","");
 
-// let dtpassenger=new DTOPassenger("6789798",
-// "qwrfas","User1","USA","New York","Address",
-// "79789797","mailpassenger@gmail.com",
-// "","Password12345","");
+let dtpassenger=new DTOPassenger("6789798",
+"qwrfas","User1","USA","New York","Address",
+"79789797","mailpassenger@gmail.com",
+"","Password12345","");
 
 
 // let dtoroom=new DTORoom(7,
@@ -28,11 +28,12 @@
 
 // let dtoservice=new DTOService(2,"Service2",9.10);
 
-// let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 17, 2021"),
-//  new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
+let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 17, 2021"),
+ new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
 
 
 //  let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
+
 // ************************ USER MAINTENACE ******************** */
 
 // FactoryLogic.UserController().registerUser(dtuser).then(data => {
@@ -44,7 +45,7 @@
 // FactoryLogic.UserController().inactivateUser(dtuser).then(data => {
 //     console.log(data);
 // });
-// FactoryLogic.UserController().getUser("5879789798").then(data => {
+// FactoryLogic.UserController().getUser("75456546").then(data => {
 //     console.log(data);
 // });
 // FactoryLogic.UserController().getLActiveSortUsers().then(data => {
@@ -55,13 +56,13 @@
 // });
 // let autenticationuser=async()=>
 // {
-//     let login=await FactoryLogic.UserController().loginUser("8545654654","Password1234");
+//     let login=await FactoryLogic.UserController().loginUser("8545654654","Password12345");
 //     console.log(login);
-
-//     let logout= FactoryLogic.UserController().logout();
-//     console.log(logout);
 //     let userlogin= FactoryLogic.UserController().getloginUser();
 //     console.log(userlogin);
+//     let logout= FactoryLogic.UserController().logout();
+//     console.log(logout);
+   
 // }
 // autenticationuser().then(
 
@@ -78,10 +79,10 @@
 // FactoryLogic.PassengerController().inactivatePassanger(dtpassenger).then(data => {
 //   console.log(data);
 // });
-// FactoryLogic.PassengerController().getPassanger("67897988").then(data => {
+// FactoryLogic.PassengerController().getPassanger("456456546").then(data => {
 //     console.log(data);
 // });
-// FactoryLogic.PassengerController().getPasangers().then(data => {
+// FactoryLogic.PassengerController().getPassangers().then(data => {
 //     console.log(data);
 // });
 // FactoryLogic.PassengerController().getLActiveSortPassengers().then(data => {
@@ -89,7 +90,7 @@
 // });
 // let autenticationpassenger=async()=>
 // {
-//     let login=await FactoryLogic.PassengerController().loginPassenger("85456574654","Password12345");
+//     let login=await FactoryLogic.PassengerController().loginPassenger("456456546","Passenger12345");
 //     console.log(login);
 //     let logout= FactoryLogic.PassengerController().logout();
 //     console.log(logout);
@@ -144,7 +145,7 @@
 
 // let registerReservation=async()=>
 // {
-//     let enterp=await FactoryLogic.ReservationController().enterPassenger("456456546");
+//     let enterp=await FactoryLogic.ReservationController().enterPassenger("6789798");
 //     console.log(enterp);
 //     if(enterp===false)
 //     {
@@ -154,17 +155,17 @@
 //     let listreservation= await FactoryLogic.RoomController().getLActiveSortRooms();
 //     console.log(listreservation);
    
-//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(5);
+//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(1);
 //     console.log(regdetailr);
-//     // let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
-//     // console.log(regdetailr1);
-//     // let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
-//     // console.log(regdetailr6);
+//     let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
+//     console.log(regdetailr1);
+//     let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
+//     console.log(regdetailr6);
    
-//     let closer=await FactoryLogic.ReservationController().closeReservation();
+//     let closer=await FactoryLogic.ReservationController().closeReservation(dtoreservation);
 //     console.log(closer);
   
-//     let saver=await FactoryLogic.ReservationController().saveReservation(dtoreservation);
+//     let saver=await FactoryLogic.ReservationController().saveReservation();
 //     console.log(saver);
    
   
@@ -184,24 +185,24 @@
 //     console.log(start);
    
   
-//     let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(7);
+//     let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(4);
 //     console.log(regdetailr);
     
 //     let objreservation= FactoryLogic.ReservationController().getReservationinProgress();
 //     console.log(objreservation);
-//     let regdetailr1=await FactoryLogic.ReservationController().registerOnlineReservationDetail(2);
-//     console.log(regdetailr1);
-//     let regdetailr2=await FactoryLogic.ReservationController().registerOnlineReservationDetail(3);
-//     console.log(regdetailr2);
-//     let regdetailr6=await FactoryLogic.ReservationController().removeOnlineReservationDetail(3);
-//     console.log(regdetailr6);
-   
-//     let closer=await FactoryLogic.ReservationController().closeOnlineReservation();
-//     console.log(closer);
-//     let login=await FactoryLogic.PassengerController().loginPassenger("45678622","Passenger123456");
+//     // let regdetailr1=await FactoryLogic.ReservationController().registerOnlineReservationDetail(2);
+//     // console.log(regdetailr1);
+//     // let regdetailr2=await FactoryLogic.ReservationController().registerOnlineReservationDetail(3);
+//     // console.log(regdetailr2);
+//     // let regdetailr6=await FactoryLogic.ReservationController().removeOnlineReservationDetail(3);
+//     // console.log(regdetailr6);
+//     let login=await FactoryLogic.PassengerController().loginPassenger("7898764","Passenger123");
 //     console.log(login);
-//     dtoreservation.idcardpassenger=login._idcard;
-//     let saver=await FactoryLogic.ReservationController().saveOnlineReservation(dtoreservation);
+//     dtoreservation.idcardpassenger=login.idcard;
+//     let closer=await FactoryLogic.ReservationController().closeOnlineReservation(dtoreservation);
+//     console.log(closer);
+
+//     let saver=await FactoryLogic.ReservationController().saveOnlineReservation();
 
 //     console.log(saver);
    
@@ -387,6 +388,20 @@
 
 // )
 
+
+// let getPayment=async()=>
+// {
+  
+//        let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
+//     console.log(getpname);
+//       let getpay=await FactoryLogic.PaymentController().getLPaymentPassenger(getpname.idcard);
+//     console.log(getpay);
+   
+
+// }
+// getPayment().then(
+
+// )
 
 
 

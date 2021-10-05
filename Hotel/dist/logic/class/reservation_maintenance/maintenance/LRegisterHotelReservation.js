@@ -52,25 +52,24 @@ class LRegisterHotelReservation {
         await lreservation.removeRD(numberrom);
         return true;
     };
-    closeReservation = async () => {
-        let lreservation = this.objreservation;
-        if (lreservation != null) {
-            let getreservations = await LGetReservation_1.default.getLReservations();
-            let lengthreservations = getreservations.arrayreservation.length;
-            lreservation.numberreservation = lengthreservations;
-            lreservation.close();
-        }
-        else {
-            throw new logicexception_1.LogicException("The Reservation is null");
-        }
-        return lreservation;
-    };
-    saveReservation = async (dtreservation) => {
+    closeReservation = async (dtreservation) => {
         let lreservation = this.objreservation;
         lreservation.processtatus = "Confirmed";
         lreservation.confirmationstatus = "Confirmed";
         if (lreservation != null) {
-            let dtoreservation = await lreservation.save(dtreservation);
+            let getreservations = await LGetReservation_1.default.getLReservations();
+            let lengthreservations = getreservations.arrayreservation.length;
+            lreservation.numberreservation = lengthreservations;
+        }
+        else {
+            throw new logicexception_1.LogicException("The Reservation is null");
+        }
+        return lreservation.close(dtreservation);
+    };
+    saveReservation = async () => {
+        let lreservation = this.objreservation;
+        if (lreservation != null) {
+            let dtoreservation = await lreservation.save();
             for (let detailr of dtoreservation.listDetailReservation) {
                 let disableroom = await LCUDRoom_1.LCUDRoom.changeStateRoom(detailr.numberroom, 'Inactive');
             }

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReservationController = void 0;
+const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const LGetReservation_1 = require("./maintenance/LGetReservation");
 const LMaintenanceReservation_1 = require("./maintenance/LMaintenanceReservation");
 const LRegisterHotelReservation_1 = require("./maintenance/LRegisterHotelReservation");
@@ -25,18 +26,18 @@ class ReservationController {
     };
     registerReservationDetail = async (numberrom) => {
         const ldetailr = await LRegisterHotelReservation_1.default.getInstance().registerReservationDetail(numberrom);
-        return ldetailr;
+        return ldetailr.getDTO();
     };
     removeReservationDetail = async (numberrom) => {
         const result = await LRegisterHotelReservation_1.default.getInstance().removeReservationDetail(numberrom);
         return result;
     };
-    closeReservation = async () => {
-        const lreservation = await LRegisterHotelReservation_1.default.getInstance().closeReservation();
+    closeReservation = async (dtoreservation) => {
+        const lreservation = await LRegisterHotelReservation_1.default.getInstance().closeReservation(dtoreservation);
         return lreservation;
     };
-    saveReservation = async (dtoreservation) => {
-        const result = await LRegisterHotelReservation_1.default.getInstance().saveReservation(dtoreservation);
+    saveReservation = async () => {
+        const result = await LRegisterHotelReservation_1.default.getInstance().saveReservation();
         return result;
     };
     //************************** MAINTENANCE ******************************** */
@@ -63,7 +64,7 @@ class ReservationController {
     };
     registerOnlineReservationDetail = async (numberrom) => {
         const ldetailr = await LRegisterOnlineReservation_1.default.getInstance().registerReservationDetail(numberrom);
-        return ldetailr;
+        return ldetailr.getDTO();
     };
     getReservationinProgress = () => {
         const getr = LRegisterOnlineReservation_1.default.getInstance().objreservation;
@@ -73,50 +74,58 @@ class ReservationController {
         const result = await LRegisterOnlineReservation_1.default.getInstance().removeReservationDetail(numberrom);
         return result;
     };
-    closeOnlineReservation = async () => {
-        const lreservation = await LRegisterOnlineReservation_1.default.getInstance().closeReservation();
+    closeOnlineReservation = async (dtoreservation) => {
+        const lreservation = await LRegisterOnlineReservation_1.default.getInstance().closeReservation(dtoreservation);
         return lreservation;
     };
-    saveOnlineReservation = async (dtoreservation) => {
-        const result = await LRegisterOnlineReservation_1.default.getInstance().saveReservation(dtoreservation);
+    saveOnlineReservation = async () => {
+        const result = await LRegisterOnlineReservation_1.default.getInstance().saveReservation();
         return result;
     };
     //    //***************** GET RESERVATION ***************** */
     getReservation = async (numberr) => {
         const greservation = await LGetReservation_1.default.getLReservation(numberr);
-        return greservation;
+        return greservation.getDTO();
     };
     getReservations = async () => {
         const greservations = await LGetReservation_1.default.getLReservations();
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations.arrayreservation);
+        return arraydto;
     };
     getLConfirmed = async () => {
         const greservations = await LGetReservation_1.default.getLConfirmed();
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations);
+        return arraydto;
     };
     getLPending = async () => {
         const greservations = await LGetReservation_1.default.getLPending();
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations);
+        return arraydto;
     };
     getLCanceled = async () => {
         const greservations = await LGetReservation_1.default.getLCanceled();
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations);
+        return arraydto;
     };
     getLReservationPassenger = async (idcard) => {
         const greservations = await LGetReservation_1.default.getLReservationPassenger(idcard);
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations);
+        return arraydto;
     };
     getLPendingPassenger = async (idcard) => {
         const greservations = await LGetReservation_1.default.getLPendingPassenger(idcard);
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations);
+        return arraydto;
     };
     getLRbyDate = async (date1, date2) => {
         const greservations = await LGetReservation_1.default.getReservationbydates(date1, date2);
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations);
+        return arraydto;
     };
     getByRoom = async (nr) => {
         const greservations = await LGetReservation_1.default.getLByRoom(nr);
-        return greservations;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayReservation(greservations);
+        return arraydto;
     };
 }
 exports.ReservationController = ReservationController;

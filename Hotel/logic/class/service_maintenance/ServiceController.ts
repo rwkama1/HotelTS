@@ -1,5 +1,6 @@
 import DTOService from "../../../shared/entity/DTOService";
 import IServiceController from "../../interfaces/IServiceController";
+import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { InstanceLogicClass } from "../extras/instanceBusinessClass";
 import { LGetService } from "./maintenance/LGetService";
 
@@ -37,16 +38,20 @@ export class ServiceController implements IServiceController{
    }
 
    
+  
+   //***************** GET SERVICES ***************** */
+
    getService=async(idservice:number)=>
    {
     const gservice=await LGetService.getLService(idservice);
-    return gservice
+    return gservice.getDTO()
    }
-   //***************** GET SERVICES ***************** */
    getServices=async()=>
    {
         const gservices=await LGetService.getLServices();
-        return gservices
+        let arraydto=InstanceArrayDTO.instanceArrayService(gservices.arrayservice);
+        return arraydto
+        
     
    }
   

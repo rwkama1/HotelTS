@@ -1,5 +1,7 @@
 import DTOPassenger from "../../../shared/entity/DTOPassenger";
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import IPassengerController from "../../interfaces/IPassengerController";
+import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { InstanceLogicClass } from "../extras/instanceBusinessClass";
 import { LGetPassenger } from "./maintenace/LGetPassenger";
 import { LPassengerAutentication } from "./maintenace/LPassengerAutentication";
@@ -37,39 +39,56 @@ export class PassengerController implements IPassengerController{
     const result=await logip.disable();
     return result
    }
-    getPassanger=async(idcard:string)=>
+  
+   //***************** GET PASSANGER ***************** */
+   getPassanger=async(idcard:string)=>
    {
     const gpassanger=await LGetPassenger.getLPassenger(idcard);
-    return gpassanger
+    if(gpassanger===null)
+    {
+        throw new LogicException("The Passenger does not exists in the system");
+        
+    }
+    return gpassanger.getDTO()
    }
-   //***************** GET PASSANGER ***************** */
     getPassangers=async()=>
    {
         const gpassangers=await LGetPassenger.getLPassengerss();
-        return gpassangers
-    
+        let arraydto=InstanceArrayDTO.instanceArrayPassenger(gpassangers.arraypassenger);
+        return arraydto
    }
     getLActiveSortPassengers=async()=>
   {
     let gpassangers= await LGetPassenger.getLActiveSortPassengers();
-    return gpassangers
+     let arraydto=InstanceArrayDTO.instanceArrayPassenger(gpassangers);
+        return arraydto
   }
   getLPassengerbyname=async(name:string,surname:string)=>
   {
     let gpassangers= await LGetPassenger.getLPassengerbyname(name,surname);
-    return gpassangers
+    if(gpassangers===null)
+    {
+        throw new LogicException("The Passenger does not exists in the system");
+        
+    }
+    return gpassangers.getDTO()
   }
    //******************* AUTENTICATION *********************** */
     loginPassenger=async(idcard:string,password:string)=>
    {  
     const lp=await LPassengerAutentication.getInstance().loginPassenger(idcard,password);
-    return lp
+    return lp.getDTO()
    }
     getloginPassenger=()=>
    {
   
     const getlp= LPassengerAutentication.getInstance().passengerlogin;
-    return getlp
+    if(getlp===null)
+    {
+        throw new LogicException("There is no passenger logged in");
+        
+    }
+    return getlp.getDTO()
     
    }
     logout=()=>

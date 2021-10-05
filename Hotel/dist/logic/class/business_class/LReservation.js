@@ -115,6 +115,9 @@ class LogicReservation {
     };
     registerReservationDetail = async (numberroom) => {
         let lroom = await LGetRoom_1.LGetRoom.getLRoom(numberroom);
+        if (lroom === null) {
+            throw new logicexception_1.LogicException("The Room does not exists in the system");
+        }
         let lengharraydr = this.listDetailReservation.length;
         lengharraydr++;
         var detailr = new LDetailReservation_1.default(lengharraydr, lroom.value, lroom);
@@ -124,6 +127,9 @@ class LogicReservation {
     };
     removeRD = async (numberroom) => {
         let lroom = await LGetRoom_1.LGetRoom.getLRoom(numberroom);
+        if (lroom === null) {
+            throw new logicexception_1.LogicException("The Room does not exists in the system");
+        }
         var listdetailr = this.listDetailReservation;
         for (var i = 0; i < listdetailr.length; i++) {
             if (listdetailr[i].lroom.numberroom === lroom.numberroom) {
@@ -132,15 +138,7 @@ class LogicReservation {
             }
         }
     };
-    close = async () => {
-        var listdetailr = this.listDetailReservation;
-        var vtotal = 0;
-        for (let d of listdetailr) {
-            vtotal += d.value;
-        }
-        this.total = vtotal;
-    };
-    save = async (dtreservation) => {
+    close = async (dtreservation) => {
         this.reservationdate = dtreservation.reservationdate;
         this.arrivaldate = dtreservation.arrivaldate;
         this.departuredate = dtreservation.departuredate;
@@ -150,6 +148,16 @@ class LogicReservation {
                 throw new logicexception_1.LogicException("A room in the reservation detail is inactive and cannot be reserved");
             }
         }
+        var listdetailr = this.listDetailReservation;
+        var vtotal = 0;
+        for (let d of listdetailr) {
+            vtotal += d.value;
+        }
+        this.total = vtotal;
+        let data = this.getDTO();
+        return data;
+    };
+    save = async () => {
         let havereservrdetails = this.haveDetailR();
         if (havereservrdetails) {
             let dtoreservation = this.getDTO();

@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoomController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
+const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const instanceBusinessClass_1 = require("../extras/instanceBusinessClass");
 const LGetRoom_1 = require("./maintenance/LGetRoom");
 class RoomController {
@@ -28,18 +30,23 @@ class RoomController {
         const result = await logicroom.disable();
         return result;
     };
+    //***************** GET ROOMS ***************** */
     getRoom = async (numberroom) => {
         const groom = await LGetRoom_1.LGetRoom.getLRoom(numberroom);
-        return groom;
+        if (groom === null) {
+            throw new logicexception_1.LogicException("The Room does not exists in the system");
+        }
+        return groom.getDTO();
     };
-    //***************** GET ROOMS ***************** */
     getRooms = async () => {
         const grooms = await LGetRoom_1.LGetRoom.getLRooms();
-        return grooms;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayRoom(grooms.arrayroom);
+        return arraydto;
     };
     getLActiveSortRooms = async () => {
         const getarooms = await LGetRoom_1.LGetRoom.getLActiveSortRoom();
-        return getarooms;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayRoom(getarooms);
+        return arraydto;
     };
 }
 exports.RoomController = RoomController;

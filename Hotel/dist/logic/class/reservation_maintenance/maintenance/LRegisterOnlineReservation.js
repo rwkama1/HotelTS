@@ -22,7 +22,6 @@ class LRegisterOnlineReservation {
         this._objreservation = value;
     }
     startReservation = async () => {
-        // let getobjreservation=this.objreservation;
         let newlogicr = new LReservation_1.default(0, new Date(), new Date(), new Date(), "Pending", "NotConfirmed", "Online", 0, null, []);
         this.objreservation = newlogicr;
         return this.objreservation;
@@ -37,25 +36,24 @@ class LRegisterOnlineReservation {
         await lreservation.removeRD(numberrom);
         return true;
     };
-    closeReservation = async () => {
+    closeReservation = async (dtreservation) => {
         let lreservation = this.objreservation;
+        let getpassenger = await LGetPassenger_1.LGetPassenger.getLPassenger(dtreservation.idcardpassenger);
+        lreservation.passenger = getpassenger;
         if (lreservation != null) {
             let getreservations = await LGetReservation_1.default.getLReservations();
             let lengthreservations = getreservations.arrayreservation.length;
             lreservation.numberreservation = lengthreservations;
-            lreservation.close();
         }
         else {
             throw new logicexception_1.LogicException("The Reservation is null");
         }
-        return lreservation;
+        return lreservation.close(dtreservation);
     };
-    saveReservation = async (dtreservation) => {
+    saveReservation = async () => {
         let lreservation = this.objreservation;
-        let getpassenger = await LGetPassenger_1.LGetPassenger.getLPassenger(dtreservation.idcardpassenger);
         if (lreservation != null) {
-            lreservation.passenger = getpassenger;
-            let dtoreservation = await lreservation.save(dtreservation);
+            let dtoreservation = await lreservation.save();
             let result = await FactoryData_1.FactoryData.getDataReservation().registerReservation(dtoreservation);
             return result;
         }

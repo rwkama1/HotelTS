@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
+const logicexception_1 = require("../../../shared/exceptions/logicexception");
+const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const instanceBusinessClass_1 = require("../extras/instanceBusinessClass");
 const LAutentication_1 = require("./maintenace/LAutentication");
 const LGetUsers_1 = require("./maintenace/LGetUsers");
@@ -31,25 +33,33 @@ class UserController {
     };
     getUser = async (idcard) => {
         const guser = await LGetUsers_1.LGetUsers.getLUser(idcard);
-        return guser;
+        if (guser === null) {
+            throw new logicexception_1.LogicException("The User does not exists in the system");
+        }
+        return guser.getDTO();
     };
     //***************** GETUSERS ***************** */
     getUsers = async () => {
         const gusers = await LGetUsers_1.LGetUsers.getLUsers();
-        return gusers;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayUser(gusers.arrayuser);
+        return arraydto;
     };
     getLActiveSortUsers = async () => {
         const getactiveuser = await LGetUsers_1.LGetUsers.getLActiveSortUsers();
-        return getactiveuser;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayUser(getactiveuser);
+        return arraydto;
     };
     //******************* AUTENTICATION *********************** */
     loginUser = async (idcard, password) => {
         const luser = await LAutentication_1.LUserAutentication.getInstance().loginUser(idcard, password);
-        return luser;
+        return luser.getDTO();
     };
     getloginUser = () => {
         const getloginuser = LAutentication_1.LUserAutentication.getInstance().userlogin;
-        return getloginuser;
+        if (getloginuser === null) {
+            throw new logicexception_1.LogicException("There is no user logged in");
+        }
+        return getloginuser.getDTO();
     };
     logout = () => {
         const logout = LAutentication_1.LUserAutentication.getInstance().logout();

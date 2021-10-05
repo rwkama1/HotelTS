@@ -27,7 +27,7 @@ export default class LRegisterOnlineReservation
      
     startReservation=async()=>
     {
-        // let getobjreservation=this.objreservation;
+    
         let newlogicr=new LogicReservation(0,new Date(),new Date(),
             new Date(),"Pending","NotConfirmed","Online",0,null,[]);
         this.objreservation=newlogicr;
@@ -39,7 +39,7 @@ export default class LRegisterOnlineReservation
     {
         let lreservation=this.objreservation;  
         let logicreserdetail=await lreservation.registerReservationDetail(numberrom);     
-        return logicreserdetail;
+        return logicreserdetail
     }
     removeReservationDetail=async(numberrom:number)=> {
        
@@ -48,28 +48,29 @@ export default class LRegisterOnlineReservation
         return true;
         
     }
-    closeReservation=async()=>{
+    closeReservation=async(dtreservation:DTOReservation)=>{
         let lreservation=this.objreservation;  
+        let getpassenger=await LGetPassenger.getLPassenger(dtreservation.idcardpassenger);
+        lreservation.passenger=getpassenger;
         if (lreservation != null) {
             let getreservations=await LGetReservation.getLReservations();
             let lengthreservations=getreservations.arrayreservation.length;
             lreservation.numberreservation=lengthreservations;
-            lreservation.close();
+             
         }
         else
         {
             throw new LogicException("The Reservation is null");
         }
-        return lreservation;
+        return lreservation.close(dtreservation);
     }
-    saveReservation=async(dtreservation:DTOReservation)=>
+    saveReservation=async()=>
      {
-        
         let lreservation=this.objreservation;
-    let getpassenger=await LGetPassenger.getLPassenger(dtreservation.idcardpassenger);
         if (lreservation != null) {
-            lreservation.passenger=getpassenger;
-            let dtoreservation=await lreservation.save(dtreservation);
+        
+  
+            let dtoreservation=await lreservation.save();
            
             let result=await FactoryData.getDataReservation().registerReservation(dtoreservation);
             return result

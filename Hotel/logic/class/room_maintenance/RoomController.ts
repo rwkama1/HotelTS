@@ -1,5 +1,7 @@
 import DTORoom from "../../../shared/entity/DTORoom";
+import { LogicException } from "../../../shared/exceptions/logicexception";
 import IRoomController from "../../interfaces/IRoomController";
+import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { InstanceLogicClass } from "../extras/instanceBusinessClass";
 import { LGetRoom } from "./maintenance/LGetRoom";
 
@@ -36,22 +38,33 @@ export class RoomController implements IRoomController{
     const result=await logicroom.disable();
     return result
    }
+
+   //***************** GET ROOMS ***************** */
+
    getRoom=async(numberroom:number)=>
    {
     const groom=await LGetRoom.getLRoom(numberroom);
-    return groom
+    if(groom===null)
+    {
+        throw new LogicException("The Room does not exists in the system");
+        
+    }
+    return groom.getDTO()
    }
-   //***************** GET ROOMS ***************** */
+
    getRooms=async()=>
    {
         const grooms=await LGetRoom.getLRooms();
-        return grooms
+        let arraydto=InstanceArrayDTO.instanceArrayRoom(grooms.arrayroom);
+        return arraydto
+       
     
    }
    getLActiveSortRooms=async()=>
    {
         const getarooms=await LGetRoom.getLActiveSortRoom();
-        return getarooms
+        let arraydto=InstanceArrayDTO.instanceArrayRoom(getarooms);
+        return arraydto
     
    }
 }

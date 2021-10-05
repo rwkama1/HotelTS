@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const DTOReservationDetail_1 = require("../../../shared/entity/DTOReservationDetail");
 const logicexception_1 = require("../../../shared/exceptions/logicexception");
 class LogicReservationDetail {
     _numberrd;
@@ -31,6 +32,10 @@ class LogicReservationDetail {
         }
         this._lroom = value;
     }
+    getDTO = () => {
+        let dtodps = new DTOReservationDetail_1.default(this.numberrd, this.value, this.lroom.numberroom);
+        return dtodps;
+    };
     constructor(pnumberrd, pvalue, plroom) {
         this.numberrd = pnumberrd;
         this.value = pvalue;

@@ -1,3 +1,4 @@
+import DTOReservationDetail from "../../../shared/entity/DTOReservationDetail";
 import { LogicException } from "../../../shared/exceptions/logicexception";
 import LogicRoom from "./LRoom";
 
@@ -39,7 +40,11 @@ export  default class LogicReservationDetail
         }
         this._lroom = value;
     }
-
+    getDTO=()=>
+    { 
+        let dtodps=new DTOReservationDetail(this.numberrd,this.value,this.lroom.numberroom);
+        return dtodps    
+    }
    constructor(pnumberrd:number,pvalue:number,
     plroom:LogicRoom)
    {

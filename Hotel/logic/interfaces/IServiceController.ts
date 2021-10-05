@@ -4,8 +4,13 @@ import LogicService from "../class/business_class/LService";
 
 export default interface IServiceController 
 {
-    getService(idservice:number):Promise<LogicService>;
-    getServices():Promise<ArrayService>;
+    //**************** GETS ***************** */
+
+    getService(idservice:number):Promise<DTOService>;
+    getServices():Promise<DTOService[]>;
+
+    //**************** MAINTENACE **************** */
+
     registerService(dtservice:DTOService):Promise<boolean>;
     updateService(dtservice:DTOService):Promise<boolean>;
     disableService(dtservice:DTOService):Promise<boolean>;    

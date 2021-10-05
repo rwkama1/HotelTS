@@ -1,19 +1,24 @@
 import DTOUser from "../../shared/entity/DTOUser";
-import { ArrayUser } from "../class/business_class/array/LArrayUser";
-import LogicUser from "../class/business_class/LUser";
+
 
 export default interface IUserController 
 {
-    getUser(idcard:string):Promise<LogicUser>;
-    getUsers():Promise<ArrayUser>;
-    getLActiveSortUsers():Promise<LogicUser[]>;
+    //**************** GETS **************** */
+
+    getUser(idcard:string):Promise<DTOUser>;
+    getUsers():Promise<DTOUser[]>;
+    getLActiveSortUsers():Promise<DTOUser[]>;
    
+    //**************** MAINTENACE **************** */
+
     registerUser(dtuser:DTOUser):Promise<boolean>;
     updateUser(dtuser:DTOUser):Promise<boolean>;
     inactivateUser(dtuser:DTOUser):Promise<boolean>;
-    
-    loginUser(idcard:string,password:string):Promise<LogicUser>;
-    getloginUser():LogicUser;
+
+     //**************** LOGIN **************** */
+
+    loginUser(idcard:string,password:string):Promise<DTOUser>;
+    getloginUser():DTOUser;
     logout():boolean;
     
 }

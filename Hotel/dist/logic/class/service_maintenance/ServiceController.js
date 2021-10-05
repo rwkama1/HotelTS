@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServiceController = void 0;
+const instanceArrayDTO_1 = require("../extras/instanceArrayDTO");
 const instanceBusinessClass_1 = require("../extras/instanceBusinessClass");
 const LGetService_1 = require("./maintenance/LGetService");
 class ServiceController {
@@ -28,14 +29,15 @@ class ServiceController {
         const result = await logics.disable();
         return result;
     };
+    //***************** GET SERVICES ***************** */
     getService = async (idservice) => {
         const gservice = await LGetService_1.LGetService.getLService(idservice);
-        return gservice;
+        return gservice.getDTO();
     };
-    //***************** GET SERVICES ***************** */
     getServices = async () => {
         const gservices = await LGetService_1.LGetService.getLServices();
-        return gservices;
+        let arraydto = instanceArrayDTO_1.InstanceArrayDTO.instanceArrayService(gservices.arrayservice);
+        return arraydto;
     };
 }
 exports.ServiceController = ServiceController;

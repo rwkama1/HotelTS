@@ -1,4 +1,5 @@
 import IPaymentController from "../../interfaces/IPaymentController";
+import { LGetPayment } from "./maintenance/LGetPayment";
 import LRegisterPayment from "./maintenance/LRegisterPayment";
 
 export class PaymentController implements IPaymentController{
@@ -34,4 +35,24 @@ export class PaymentController implements IPaymentController{
         return result
 
     }
+
+    //***************************** GETS ************************************** */
+
+     getLPayment=async(idpay:number)=>
+      {
+        let datapay= await LGetPayment.getLPayment(idpay);
+        return datapay
+      }
+
+      getLPaymentPassenger=async(idcard:string)=>
+      {
+        let datapay= await LGetPayment.getLPaymentPassenger(idcard);
+        return datapay
+      }
+      getListPayments=async()=>
+      {
+        let datapay= await LGetPayment.getListPayments();
+        return datapay
+      }
+
 }
