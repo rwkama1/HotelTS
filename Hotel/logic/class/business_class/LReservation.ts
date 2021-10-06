@@ -228,15 +228,15 @@ export  default class LogicReservation
         return dto
         
     }
-    addDetailReservation=async(dtoreservation:DTOReservation)=> {
+    addDetailReservation=async(room:number)=> {
         if(this.processtatus==="Confirmed")
         {
-        let lengthdetailr=dtoreservation.listDetailReservation.length;
-        let lastelementlist=dtoreservation.listDetailReservation[lengthdetailr-1];
-        let numberlrroom=lastelementlist.numberroom;
+        // let lengthdetailr=this.listDetailReservation.length;
+        // let lastelementlist=this.listDetailReservation[lengthdetailr-1];
+        // let numberlrroom=lastelementlist.numberroom;
        
        
-        let lroom=await LGetRoom.getLRoom(numberlrroom);
+        let lroom=await LGetRoom.getLRoom(room);
         if(lroom.statee==="Inactive")
         {
          throw new LogicException("The Room is inactive");
@@ -245,13 +245,14 @@ export  default class LogicReservation
         {
          throw new LogicException("The Room does not exists in the system");
         } 
-        let detailr=await this.searchDetailReservationbyroom(numberlrroom);
+        let detailr=await this.searchDetailReservationbyroom(room);
         if(detailr!=null)
         {
          throw new LogicException("The Room already exists in the reservation");
         } 
         let ldetailr=new LogicReservationDetail(this.listDetailReservation.length+1,lroom.value,lroom);
         this.listDetailReservation.push(ldetailr);
+         this.total=this.total+lroom.value;
         let getdto=this.getDTO();
         return getdto;
       }
@@ -324,7 +325,7 @@ export  default class LogicReservation
           
       }
     }
-
+   
     constructor(pnumberreservation:number,preservationdate:Date,
         parrivaldate:Date,pdeparturedate:Date,pprocesstatus:string,
         pconfirmationstatus:string,porigin:string,ptotal:number,

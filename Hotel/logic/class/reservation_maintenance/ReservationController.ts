@@ -70,9 +70,9 @@ export class ReservationController implements IReservationController{
       let confirm=await LMaintenanceRservation.confirmReservation(numberreservation);
       return confirm
     }
-     addReservationDetail=async(dtoreservation:DTOReservation)=>
+    addReservationDetail=async(room:number,numberreservation:number)=>
     {
-      let addrd=await LMaintenanceRservation.addReservationDetail(dtoreservation);
+      let addrd=await LMaintenanceRservation.addReservationDetail(room,numberreservation);
       return addrd
     }
   

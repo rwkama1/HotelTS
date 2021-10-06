@@ -171,4 +171,24 @@ export default class DataReservation implements IDataReservation
        }
    
      }
+     updateTotalReservation=async(dtoreservation:DTOReservation)=>
+     {
+     let queryupdate = "Update Reservation Set Total=@Total where NumberReservationn=@NumberReservation";
+       try {        
+           let pool = await Conection.conection();
+           const result2 = await pool.request()
+            .input('NumberReservation', Int, dtoreservation.numberreservation)
+            .input('Total', Money, dtoreservation.total)
+            .query(queryupdate)
+             
+           pool.close();
+           return true;
+          
+       }
+       catch(e)
+       {
+           throw new DataException("DataLayer Error: "+e.message)
+       }
+   
+     }
 }

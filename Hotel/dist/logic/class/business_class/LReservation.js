@@ -179,24 +179,25 @@ class LogicReservation {
         let dto = this.getDTO();
         return dto;
     };
-    addDetailReservation = async (dtoreservation) => {
+    addDetailReservation = async (room) => {
         if (this.processtatus === "Confirmed") {
-            let lengthdetailr = dtoreservation.listDetailReservation.length;
-            let lastelementlist = dtoreservation.listDetailReservation[lengthdetailr - 1];
-            let numberlrroom = lastelementlist.numberroom;
-            let lroom = await LGetRoom_1.LGetRoom.getLRoom(numberlrroom);
+            // let lengthdetailr=this.listDetailReservation.length;
+            // let lastelementlist=this.listDetailReservation[lengthdetailr-1];
+            // let numberlrroom=lastelementlist.numberroom;
+            let lroom = await LGetRoom_1.LGetRoom.getLRoom(room);
             if (lroom.statee === "Inactive") {
                 throw new logicexception_1.LogicException("The Room is inactive");
             }
             if (lroom === null) {
                 throw new logicexception_1.LogicException("The Room does not exists in the system");
             }
-            let detailr = await this.searchDetailReservationbyroom(numberlrroom);
+            let detailr = await this.searchDetailReservationbyroom(room);
             if (detailr != null) {
                 throw new logicexception_1.LogicException("The Room already exists in the reservation");
             }
             let ldetailr = new LDetailReservation_1.default(this.listDetailReservation.length + 1, lroom.value, lroom);
             this.listDetailReservation.push(ldetailr);
+            this.total = this.total + lroom.value;
             let getdto = this.getDTO();
             return getdto;
         }

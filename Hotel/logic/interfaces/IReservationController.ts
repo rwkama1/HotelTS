@@ -44,6 +44,6 @@ export default interface IReservationController
     removeReservationRoom(numberreservation:number,numberrom:number):Promise<boolean>;
     cancelReservation(numberreservation:number):Promise<boolean>;
     confirmReservation(numberreservation:number):Promise<boolean>;
-    addReservationDetail(dtoreservation:DTOReservation):Promise<boolean>;
+    addReservationDetail(room:number,numberreservation:number):Promise<boolean>;
 
 }

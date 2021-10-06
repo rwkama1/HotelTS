@@ -54,8 +54,8 @@ class ReservationController {
         let confirm = await LMaintenanceReservation_1.default.confirmReservation(numberreservation);
         return confirm;
     };
-    addReservationDetail = async (dtoreservation) => {
-        let addrd = await LMaintenanceReservation_1.default.addReservationDetail(dtoreservation);
+    addReservationDetail = async (room, numberreservation) => {
+        let addrd = await LMaintenanceReservation_1.default.addReservationDetail(room, numberreservation);
         return addrd;
     };
     //     //**************** ONLINE RESERVATION ********************** **/

@@ -125,4 +125,24 @@ export default class DataPassengerService implements IDataPassengerService
        }
    
      }
+     updateTotalPS=async(dtopservice:DTOPassengerService)=>
+     {
+     let queryupdate = "Update PassengerServicee Set Total=@Total where NumberPS=@NumberPS";
+       try {        
+           let pool = await Conection.conection();
+           const result2 = await pool.request()
+            .input('NumberPS', Int, dtopservice.numberps)
+            .input('Total', Money, dtopservice.total)
+            .query(queryupdate)
+             
+           pool.close();
+           return true;
+          
+       }
+       catch(e)
+       {
+           throw new DataException("DataLayer Error: "+e.message)
+       }
+   
+     }
 }

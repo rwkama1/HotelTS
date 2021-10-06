@@ -9,5 +9,6 @@ export default interface IDataReservation
     changeStateReservation(dtoreservation:DTOReservation):Promise<boolean>;
     removeDetailReservation(numberr:number,numberroom:number):Promise<boolean>;
     addDetailReservation(dtoreservation:DTOReservation):Promise<boolean>;
+    updateTotalReservation(dtoreservation:DTOReservation):Promise<boolean>;
    
 }

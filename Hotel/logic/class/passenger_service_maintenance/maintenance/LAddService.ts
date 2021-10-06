@@ -47,6 +47,7 @@ export default class LAddService
     {
       let lps=this.objps;
       let dataps=await lps.addDPS(dtops);
+      let updatetotal=await FactoryData.getDataPassengerService().updateTotalPS(dataps);
       let addrd=await FactoryData.getDataPassengerService().addDPS(dataps);
       return addrd
     }

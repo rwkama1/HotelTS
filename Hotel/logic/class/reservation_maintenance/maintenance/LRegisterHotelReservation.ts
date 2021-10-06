@@ -95,12 +95,13 @@ export default class LRegisterHotelReservation
       
         if (lreservation != null) {
             let dtoreservation=await lreservation.save();
+           
+            let result=await FactoryData.getDataReservation().registerReservation(dtoreservation);
             for(let detailr of dtoreservation.listDetailReservation)
             {
                
                 let disableroom=await LCUDRoom.changeStateRoom(detailr.numberroom,'Inactive');
             }
-            let result=await FactoryData.getDataReservation().registerReservation(dtoreservation);
             return result
         }
         else

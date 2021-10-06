@@ -70,10 +70,10 @@ class LRegisterHotelReservation {
         let lreservation = this.objreservation;
         if (lreservation != null) {
             let dtoreservation = await lreservation.save();
+            let result = await FactoryData_1.FactoryData.getDataReservation().registerReservation(dtoreservation);
             for (let detailr of dtoreservation.listDetailReservation) {
                 let disableroom = await LCUDRoom_1.LCUDRoom.changeStateRoom(detailr.numberroom, 'Inactive');
             }
-            let result = await FactoryData_1.FactoryData.getDataReservation().registerReservation(dtoreservation);
             return result;
         }
         else {

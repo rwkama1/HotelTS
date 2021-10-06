@@ -30,6 +30,7 @@ export  default class LogicDPassengerService
     public set amount(value: number) {
         this._amount = value;
     }
+    
     getDTO=()=>
     { 
         let dtodps=new DTODPassengerService(this.numberdetailps,this.service.idservice,this.amount);

@@ -4,17 +4,17 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
 const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
 const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
-const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
+// const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
 const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
 const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
-const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
-const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
+ const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
+ const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
 
-let dtuser=new DTOUser("75456546",
-"ksdgsdgsdg","User1","Adress3",
-"79789797","Administrator",
-"Password12345","","mail2@gmail.com","");
+// let dtuser=new DTOUser("75456546",
+// "ksdgsdgsdg","User1","Adress3",
+// "79789797","Administrator",
+// "Password12345","","mail2@gmail.com","");
 
 let dtpassenger=new DTOPassenger("6789798",
 "qwrfas","User1","USA","New York","Address",
@@ -22,17 +22,17 @@ let dtpassenger=new DTOPassenger("6789798",
 "","Password12345","");
 
 
-// let dtoroom=new DTORoom(7,
-//   "dfhdfh","dfshdfh",
-//   "safasf","asgagasgasgasgasasg",50.55,"Active","asd.jpg");
+let dtoroom=new DTORoom(7,
+  "dfhdfh","dfshdfh",
+  "safasf","asgagasgasgasgasasg",50.55,"Active","asd.jpg");
 
-// let dtoservice=new DTOService(2,"Service2",9.10);
+let dtoservice=new DTOService(2,"Service2",9.10);
 
-let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 17, 2021"),
+let dtoreservation=new DTOReservation(1,"September 17, 2021", new Date("October 17, 2021"),
  new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
 
 
-  let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
+ let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
 
 // ************************ USER MAINTENACE ******************** */
 
@@ -62,7 +62,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //     console.log(userlogin);
 //     let logout= FactoryLogic.UserController().logout();
 //     console.log(logout);
-   
+
 // }
 // autenticationuser().then(
 
@@ -141,7 +141,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 // ************************** RESERVATION MAINTENANCE ******************* */
 
-//  HOTEL 
+//  HOTEL
 
 // let registerReservation=async()=>
 // {
@@ -154,21 +154,21 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //     }
 //     let listreservation= await FactoryLogic.RoomController().getLActiveSortRooms();
 //     console.log(listreservation);
-   
-//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(3);
+
+//     let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(7);
 //     console.log(regdetailr);
-//     let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
-//     console.log(regdetailr1);
-//     let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
-//     console.log(regdetailr6);
-   
+//     // let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
+//     // console.log(regdetailr1);
+//     // let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
+//     // console.log(regdetailr6);
+
 //     let closer=await FactoryLogic.ReservationController().closeReservation(dtoreservation);
 //     console.log(closer);
-  
+
 //     let saver=await FactoryLogic.ReservationController().saveReservation();
 //     console.log(saver);
-   
-  
+
+
 // }
 
 // registerReservation().then(
@@ -176,18 +176,18 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 // )
 
 
-//  ONLINE 
+//  ONLINE
 
 
 // let registerReservation=async()=>
 // {
 //     let start=await FactoryLogic.ReservationController().startReservation();
 //     console.log(start);
-   
-  
+
+
 //     let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(4);
 //     console.log(regdetailr);
-    
+
 //     let objreservation= FactoryLogic.ReservationController().getReservationinProgress();
 //     console.log(objreservation);
 //     // let regdetailr1=await FactoryLogic.ReservationController().registerOnlineReservationDetail(2);
@@ -205,8 +205,8 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //     let saver=await FactoryLogic.ReservationController().saveOnlineReservation();
 
 //     console.log(saver);
-   
-  
+
+
 // }
 
 // registerReservation().then(
@@ -214,7 +214,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 // )
 
 
-// MAINTENANCE 
+// MAINTENANCE
 
 
 // let removeRoomReservation=async()=>
@@ -227,7 +227,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //   console.log(getr);
 //   let removerroom=await FactoryLogic.ReservationController().removeReservationRoom(getr.numberreservation,2);
 //   console.log(removerroom)
-  
+
 // }
 
 // removeRoomReservation().then(
@@ -266,23 +266,28 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 // confirmr().then(
 
 // );
+
 // let addroomreservation=async()=>
 // {
-//   dtoreservation.listDetailReservation.push(new DTOReservationDetail(0,50,7));
-//   let getp=await FactoryLogic.ReservationController().addReservationDetail(dtoreservation);
-//   console.log(dtoreservation);
-  
+//   dtoreservation.listDetailReservation.push(new DTOReservationDetail(0,50,5));
+//     let getp=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
+//   console.log(getp);
+
+//   let getadd=await FactoryLogic.ReservationController().addReservationDetail(5,2);
+//   console.log(getadd);
+
 // }
 
 // addroomreservation().then(
 
 // )
+
 // let getPendingPassenger=async()=>
 // {
 
 //   let getppr=await FactoryLogic.ReservationController().getLPendingPassenger("7898764");
 //   console.log(getppr);
-  
+
 // }
 
 
@@ -295,7 +300,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 //   let getppr=await FactoryLogic.ReservationController().getLRbyDate(new Date("September 16, 2021"),new Date("December 7, 2021"));
 //   console.log(getppr);
-  
+
 // }
 
 // getReservationbyDates().then(
@@ -307,7 +312,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 //   let getppr=await FactoryLogic.ReservationController().getByRoom(2);
 //   console.log(getppr);
-  
+
 // }
 
 // getReservationbyroom().then(
@@ -330,32 +335,32 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //   console.log(closeps);
 //   let saveps=await FactoryLogic.PassengerServiceController().savePS();
 //   console.log(saveps);
-  
+
 // }
 // addservicepassanger().then(
 
 // )
 
-// let addnewservice=async()=>
-// {
+let addnewservice=async()=>
+{
 
 
-//   dtopassengerservice.listdetailps.push(new DTODPassengerService(0,3,200));
-//     let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
-//   console.log(getpname);
-  
-//   let getp=await FactoryLogic.PassengerServiceController().enterPassenger(getpname.idcard);
-//   console.log(getp);
-//   let addps=await FactoryLogic.PassengerServiceController().addDPS(dtopassengerservice);
-//   console.log(addps);
-  
-// }
-// addnewservice().then(
+  dtopassengerservice.listdetailps.push(new DTODPassengerService(0,6,200));
+    let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
+  console.log(getpname);
 
-// // )
+  let getp=await FactoryLogic.PassengerServiceController().enterPassenger(getpname.idcard);
+  console.log(getp);
+  let addps=await FactoryLogic.PassengerServiceController().addDPS(dtopassengerservice);
+  console.log(addps);
+
+}
+addnewservice().then(
+
+)
 // let getPassengerService=async()=>
 // {
-  
+
 //      let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
 //     console.log(getpname);
 //       let getspr=await FactoryLogic.PassengerServiceController().getPSbyPassenger(getpname.idcard);
@@ -372,7 +377,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 // let registerPayment=async()=>
 // {
-  
+
 //   let datepay=new Date("October 20, 2021");
 //      let getreservations=await FactoryLogic.PaymentController().enterPassenger("456456546");
 //     console.log(getreservations);
@@ -391,12 +396,12 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 
 // let getPayment=async()=>
 // {
-  
+
 //        let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
 //     console.log(getpname);
 //       let getpay=await FactoryLogic.PaymentController().getLPaymentPassenger(getpname.idcard);
 //     console.log(getpay);
-   
+
 
 // }
 // getPayment().then(
@@ -485,10 +490,10 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //          console.log(addr);
 //        }
 //      }
-        
+
 //      addmanyrooms().then(
-        
-//         ) 
+
+//         )
 
 // ********************************************************************** */
 // ADD MANY SERVICES
@@ -517,7 +522,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
 //          console.log(addr);
 //        }
 //      }
-        
+
 //    addmanyservices().then(
-        
-//   ) 
+
+//   )

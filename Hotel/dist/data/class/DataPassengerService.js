@@ -97,6 +97,21 @@ class DataPassengerService {
             throw new dataexception_1.DataException("DataLayer Error: " + e.message);
         }
     };
+    updateTotalPS = async (dtopservice) => {
+        let queryupdate = "Update PassengerServicee Set Total=@Total where NumberPS=@NumberPS";
+        try {
+            let pool = await Conection_1.Conection.conection();
+            const result2 = await pool.request()
+                .input('NumberPS', mssql_1.Int, dtopservice.numberps)
+                .input('Total', mssql_1.Money, dtopservice.total)
+                .query(queryupdate);
+            pool.close();
+            return true;
+        }
+        catch (e) {
+            throw new dataexception_1.DataException("DataLayer Error: " + e.message);
+        }
+    };
 }
 exports.default = DataPassengerService;
 //# sourceMappingURL=DataPassengerService.js.map

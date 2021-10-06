@@ -43,30 +43,33 @@ export default class LMaintenanceRservation
          
       }
       let datar=await getreservation.confirm();
-      for(let detailr of datar.listDetailReservation)
-            {
-               
-                let disableroom=await LCUDRoom.changeStateRoom(detailr.numberroom,'Inactive');
-            }
+    
       let confirmr=await FactoryData.getDataReservation().changeStateReservation(datar);
+      for(let detailr of datar.listDetailReservation)
+      {
+         
+          let disableroom=await LCUDRoom.changeStateRoom(detailr.numberroom,'Inactive');
+      }
       return confirmr
     }
-    static addReservationDetail=async(dtoreservation:DTOReservation)=>
+    static addReservationDetail=async(room:number,numberreservation:number)=>
     {
       
-      let getreservation=await LGetReservation.getLReservation(dtoreservation.numberreservation);
+      let getreservation=await LGetReservation.getLReservation(numberreservation);
       if(getreservation===null)
       {
          throw new LogicException("The Reservation does not exists in the system");
          
       }
-      let datareservation=await getreservation.addDetailReservation(dtoreservation);
-      for(let detailr of dtoreservation.listDetailReservation)
-            {
-               
-                let disableroom=await LCUDRoom.changeStateRoom(detailr.numberroom,'Inactive');
-            }
+      let datareservation=await getreservation.addDetailReservation(room);
+    
+      let updatetotal=await FactoryData.getDataReservation().updateTotalReservation(datareservation);
       let addrd=await FactoryData.getDataReservation().addDetailReservation(datareservation);
+      for(let detailr of datareservation.listDetailReservation)
+      {
+         
+          let disableroom=await LCUDRoom.changeStateRoom(detailr.numberroom,'Inactive');
+      }
       return addrd
     }
  };

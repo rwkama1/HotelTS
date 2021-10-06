@@ -133,6 +133,7 @@ export  default class LogicPayment
        return this.passengeramount-this.totalrs
 
     }
+   
    constructor(pidpayment:number,ppassenger:LogicPassenger,preservation:LogicReservation,
     ppassengerservice:LogicPassengerService,ppassengeramount:number,ptotalrs:number,pdate:Date)
    {

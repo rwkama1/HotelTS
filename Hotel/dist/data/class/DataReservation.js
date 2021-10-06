@@ -131,6 +131,21 @@ class DataReservation {
             throw new dataexception_1.DataException("DataLayer Error: " + e.message);
         }
     };
+    updateTotalReservation = async (dtoreservation) => {
+        let queryupdate = "Update Reservation Set Total=@Total where NumberReservationn=@NumberReservation";
+        try {
+            let pool = await Conection_1.Conection.conection();
+            const result2 = await pool.request()
+                .input('NumberReservation', mssql_1.Int, dtoreservation.numberreservation)
+                .input('Total', mssql_1.Money, dtoreservation.total)
+                .query(queryupdate);
+            pool.close();
+            return true;
+        }
+        catch (e) {
+            throw new dataexception_1.DataException("DataLayer Error: " + e.message);
+        }
+    };
 }
 exports.default = DataReservation;
 //# sourceMappingURL=DataReservation.js.map

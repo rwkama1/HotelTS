@@ -35,6 +35,7 @@ class LAddService {
     addDPS = async (dtops) => {
         let lps = this.objps;
         let dataps = await lps.addDPS(dtops);
+        let updatetotal = await FactoryData_1.FactoryData.getDataPassengerService().updateTotalPS(dataps);
         let addrd = await FactoryData_1.FactoryData.getDataPassengerService().addDPS(dataps);
         return addrd;
     };

@@ -21,7 +21,9 @@ This package contains a backend of what would be the logic of a hotel software, 
 
 #### Room management.
 
-
+* Register a new room in the system, entering the type of room, lodging, type of bed, value and room number, thus generating the identification code of the room.
+* List rooms and show the type, lodging, type of bed, description and value.
+* Modify the value of a room stored in the system
 
 #### Hotel service management.
 
@@ -37,6 +39,8 @@ This package contains a backend of what would be the logic of a hotel software, 
 
 ```Javascript
 
+
+
 const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
 const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
@@ -48,7 +52,7 @@ const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTO
 const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
 
-let dtuser=new DTOUser("8545654654",
+let dtuser=new DTOUser("75456546",
 "ksdgsdgsdg","User1","Adress3",
 "79789797","Administrator",
 "Password12345","","mail2@gmail.com","");
@@ -69,7 +73,7 @@ let dtoreservation=new DTOReservation(0,"September 17, 2021", new Date("October 
  new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
 
 
- let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
+  let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
 
 ************************ USER MAINTENACE ******************** */
 
@@ -82,7 +86,7 @@ FactoryLogic.UserController().updateUser(dtuser).then(data => {
 FactoryLogic.UserController().inactivateUser(dtuser).then(data => {
     console.log(data);
 });
-FactoryLogic.UserController().getUser("5879789798").then(data => {
+FactoryLogic.UserController().getUser("75456546").then(data => {
     console.log(data);
 });
 FactoryLogic.UserController().getLActiveSortUsers().then(data => {
@@ -93,13 +97,13 @@ FactoryLogic.UserController().getUsers().then(data => {
 });
 let autenticationuser=async()=>
 {
-    let login=await FactoryLogic.UserController().loginUser("8545654654","Password1234");
+    let login=await FactoryLogic.UserController().loginUser("8545654654","Password12345");
     console.log(login);
-
-    let logout= FactoryLogic.UserController().logout();
-    console.log(logout);
     let userlogin= FactoryLogic.UserController().getloginUser();
     console.log(userlogin);
+    let logout= FactoryLogic.UserController().logout();
+    console.log(logout);
+   
 }
 autenticationuser().then(
 
@@ -116,10 +120,10 @@ FactoryLogic.PassengerController().updatePassanger(dtpassenger).then(data => {
 FactoryLogic.PassengerController().inactivatePassanger(dtpassenger).then(data => {
   console.log(data);
 });
-FactoryLogic.PassengerController().getPassanger("67897988").then(data => {
+FactoryLogic.PassengerController().getPassanger("456456546").then(data => {
     console.log(data);
 });
-FactoryLogic.PassengerController().getPasangers().then(data => {
+FactoryLogic.PassengerController().getPassangers().then(data => {
     console.log(data);
 });
 FactoryLogic.PassengerController().getLActiveSortPassengers().then(data => {
@@ -127,7 +131,7 @@ FactoryLogic.PassengerController().getLActiveSortPassengers().then(data => {
 });
 let autenticationpassenger=async()=>
 {
-    let login=await FactoryLogic.PassengerController().loginPassenger("85456574654","Password12345");
+    let login=await FactoryLogic.PassengerController().loginPassenger("456456546","Passenger12345");
     console.log(login);
     let logout= FactoryLogic.PassengerController().logout();
     console.log(logout);
@@ -192,17 +196,17 @@ let registerReservation=async()=>
     let listreservation= await FactoryLogic.RoomController().getLActiveSortRooms();
     console.log(listreservation);
    
-    let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(5);
+    let regdetailr=await FactoryLogic.ReservationController().registerReservationDetail(3);
     console.log(regdetailr);
-    // let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
-    // console.log(regdetailr1);
-    // let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
-    // console.log(regdetailr6);
+    let regdetailr1=await FactoryLogic.ReservationController().registerReservationDetail(2);
+    console.log(regdetailr1);
+    let regdetailr6=await FactoryLogic.ReservationController().removeReservationDetail(3);
+    console.log(regdetailr6);
    
-    let closer=await FactoryLogic.ReservationController().closeReservation();
+    let closer=await FactoryLogic.ReservationController().closeReservation(dtoreservation);
     console.log(closer);
   
-    let saver=await FactoryLogic.ReservationController().saveReservation(dtoreservation);
+    let saver=await FactoryLogic.ReservationController().saveReservation();
     console.log(saver);
    
   
@@ -222,24 +226,24 @@ let registerReservation=async()=>
     console.log(start);
    
   
-    let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(7);
+    let regdetailr=await FactoryLogic.ReservationController().registerOnlineReservationDetail(4);
     console.log(regdetailr);
     
     let objreservation= FactoryLogic.ReservationController().getReservationinProgress();
     console.log(objreservation);
-    let regdetailr1=await FactoryLogic.ReservationController().registerOnlineReservationDetail(2);
-    console.log(regdetailr1);
-    let regdetailr2=await FactoryLogic.ReservationController().registerOnlineReservationDetail(3);
-    console.log(regdetailr2);
-    let regdetailr6=await FactoryLogic.ReservationController().removeOnlineReservationDetail(3);
-    console.log(regdetailr6);
-   
-    let closer=await FactoryLogic.ReservationController().closeOnlineReservation();
-    console.log(closer);
-    let login=await FactoryLogic.PassengerController().loginPassenger("45678622","Passenger123456");
+    // let regdetailr1=await FactoryLogic.ReservationController().registerOnlineReservationDetail(2);
+    // console.log(regdetailr1);
+    // let regdetailr2=await FactoryLogic.ReservationController().registerOnlineReservationDetail(3);
+    // console.log(regdetailr2);
+    // let regdetailr6=await FactoryLogic.ReservationController().removeOnlineReservationDetail(3);
+    // console.log(regdetailr6);
+    let login=await FactoryLogic.PassengerController().loginPassenger("7898764","Passenger123");
     console.log(login);
-    dtoreservation.idcardpassenger=login._idcard;
-    let saver=await FactoryLogic.ReservationController().saveOnlineReservation(dtoreservation);
+    dtoreservation.idcardpassenger=login.idcard;
+    let closer=await FactoryLogic.ReservationController().closeOnlineReservation(dtoreservation);
+    console.log(closer);
+
+    let saver=await FactoryLogic.ReservationController().saveOnlineReservation();
 
     console.log(saver);
    
@@ -317,7 +321,7 @@ addroomreservation().then(
 let getPendingPassenger=async()=>
 {
 
-  let getppr=await FactoryLogic.ReservationController().getLPendingPassenger("45678622");
+  let getppr=await FactoryLogic.ReservationController().getLPendingPassenger("7898764");
   console.log(getppr);
   
 }
@@ -342,7 +346,7 @@ getReservationbyDates().then(
 let getReservationbyroom=async()=>
 {
 
-  let getppr=await FactoryLogic.ReservationController().getByRoom(7);
+  let getppr=await FactoryLogic.ReservationController().getByRoom(2);
   console.log(getppr);
   
 }
@@ -350,7 +354,7 @@ let getReservationbyroom=async()=>
 getReservationbyroom().then(
 
 )
-**************************** PASSENGER SERVICES MAINTENANCE  ******************************************* */
+// **************************** PASSENGER SERVICES MAINTENANCE  ******************************************* */
 
 let addservicepassanger=async()=>
 {
@@ -389,7 +393,7 @@ let addnewservice=async()=>
 }
 addnewservice().then(
 
-)
+// )
 let getPassengerService=async()=>
 {
   
@@ -425,6 +429,20 @@ registerPayment().then(
 
 )
 
+
+let getPayment=async()=>
+{
+  
+       let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
+    console.log(getpname);
+      let getpay=await FactoryLogic.PaymentController().getLPaymentPassenger(getpname.idcard);
+    console.log(getpay);
+   
+
+}
+getPayment().then(
+
+)
 
 
 
@@ -480,7 +498,7 @@ let addmanypassenger=async()=>
 addmanypassenger().then(
 
 )
-****************************************************************** */
+//****************************************************************** */
 ADD MANY ROOMS
 
 let dtoroom1=new DTORoom(85,
@@ -544,5 +562,6 @@ let dtoservice6=new DTOService(85,"Service6",8.50);
    addmanyservices().then(
         
   ) 
+
 
 ```

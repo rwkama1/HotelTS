@@ -144,6 +144,7 @@ class LogicPassengerService {
         }
         let ldetailr = new LDPassengerService_1.default(this.listdetailps.length + 1, lservice, lservice.value);
         this.listdetailps.push(ldetailr);
+        this.calculateTotal();
         let getdto = this.getDTO();
         return getdto;
     };
@@ -175,6 +176,13 @@ class LogicPassengerService {
         let diff_in_millisenconds = this.enddate.valueOf() - this.startdate.valueOf();
         var diff_in_days = diff_in_millisenconds / day_as_milliseconds;
         return diff_in_days;
+    };
+    calculateTotal = () => {
+        let vtotal = 0;
+        for (let d of this.listdetailps) {
+            vtotal += d.amount;
+        }
+        this.total = vtotal * this.calculatenumberdays();
     };
     constructor(pnumberps, ppassenger, pstartdate, penddate, ptotal, pobservations, plistdetailps) {
         this.numberps = pnumberps;
