@@ -1,14 +1,14 @@
 
 
-const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
-const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
-const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
-const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
+// const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
+// const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
+// const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
+// const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
 // const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
-const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
-const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
- const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
- const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
+// const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
+// const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DTOReservationDetail");
+//  const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
+//  const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
 
 // let dtuser=new DTOUser("75456546",
@@ -16,23 +16,23 @@ const { default: DTOReservationDetail } = require("./Hotel/dist/shared/entity/DT
 // "79789797","Administrator",
 // "Password12345","","mail2@gmail.com","");
 
-let dtpassenger=new DTOPassenger("6789798",
-"qwrfas","User1","USA","New York","Address",
-"79789797","mailpassenger@gmail.com",
-"","Password12345","");
+// let dtpassenger=new DTOPassenger("6789798",
+// "qwrfas","User1","USA","New York","Address",
+// "79789797","mailpassenger@gmail.com",
+// "","Password12345","");
 
 
-let dtoroom=new DTORoom(7,
-  "dfhdfh","dfshdfh",
-  "safasf","asgagasgasgasgasasg",50.55,"Active","asd.jpg");
+// let dtoroom=new DTORoom(7,
+//   "dfhdfh","dfshdfh",
+//   "safasf","asgagasgasgasgasasg",50.55,"Active","asd.jpg");
 
-let dtoservice=new DTOService(2,"Service2",9.10);
+// let dtoservice=new DTOService(2,"Service2",9.10);
 
-let dtoreservation=new DTOReservation(1,"September 17, 2021", new Date("October 17, 2021"),
- new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
+// let dtoreservation=new DTOReservation(1,"September 17, 2021", new Date("October 17, 2021"),
+//  new Date("November 17, 2021"),"Confirmed","Confirmed","Hotel",546,"6789798",[]);
 
 
- let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
+//  let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
 
 // ************************ USER MAINTENACE ******************** */
 
@@ -341,23 +341,23 @@ let dtoreservation=new DTOReservation(1,"September 17, 2021", new Date("October 
 
 // )
 
-let addnewservice=async()=>
-{
+// let addnewservice=async()=>
+// {
 
 
-  dtopassengerservice.listdetailps.push(new DTODPassengerService(0,6,200));
-    let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
-  console.log(getpname);
+//   dtopassengerservice.listdetailps.push(new DTODPassengerService(0,6,200));
+//     let getpname=await FactoryLogic.PassengerController().getLPassengerbyname("d","PassengerLastName4");
+//   console.log(getpname);
 
-  let getp=await FactoryLogic.PassengerServiceController().enterPassenger(getpname.idcard);
-  console.log(getp);
-  let addps=await FactoryLogic.PassengerServiceController().addDPS(dtopassengerservice);
-  console.log(addps);
+//   let getp=await FactoryLogic.PassengerServiceController().enterPassenger(getpname.idcard);
+//   console.log(getp);
+//   let addps=await FactoryLogic.PassengerServiceController().addDPS(dtopassengerservice);
+//   console.log(addps);
 
-}
-addnewservice().then(
+// }
+// addnewservice().then(
 
-)
+// )
 // let getPassengerService=async()=>
 // {
 
