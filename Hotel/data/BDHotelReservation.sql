@@ -101,22 +101,21 @@ go
 --drop table Payment
 --drop table DetailPassengerService
 --drop table PassengerServicee
---drop table Servicee
 --drop table ReservationDetail
 --drop table Reservation
+--drop table Servicee
 --drop table Room
 --drop table Passenger
 --drop table Users
 
 
-
 --select * from Users
---select * from Servicee
+select * from Servicee
 --select * from Passenger
---select * from Room
+select * from Room
 --select * from Payment
---select * from Reservation
---select * from ReservationDetail
+select * from Reservation
+select * from ReservationDetail
 --select * from DetailPassengerService where IDServicee=1
---select * from PassengerServicee
---select * from DetailPassengerService
+select * from PassengerServicee
+select * from DetailPassengerService

@@ -1,6 +1,6 @@
 
 
-// const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
+const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 // const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
 // const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
 // const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");

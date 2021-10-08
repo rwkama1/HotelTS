@@ -4,7 +4,7 @@
     "target": "ESNext",
     "lib": ["ESNext"],
     "outDir": "./dist",
-    "noImplicitAny":true,
+    // "noImplicitAny":true,
     "sourceMap": true
   },
   "exclude": [
