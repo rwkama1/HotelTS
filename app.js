@@ -1,6 +1,11 @@
 
 
-const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
+const { FactoryData } = require("./HotelTS/dist/data/FactoryData");
+const { InstanceArrayDTO } = require("./HotelTS/dist/logic/class/extras/instanceArrayDTO");
+const { UserController } = require("./HotelTS/dist/logic/class/user_maintenace/UserController");
+const {FactoryLogic}=require("./HotelTS/dist/logic/FactoryLogic");
+const { default: DTOPassenger } = require("./HotelTS/dist/shared/entity/DTOPassenger");
+const { default: DTOUser } = require("./HotelTS/dist/shared/entity/DTOUser");
 // const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
 // const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
 // const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
@@ -10,11 +15,11 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 //  const { default: DTOPassengerService } = require("./Hotel/dist/shared/entity/DTOPassengerService");
 //  const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
-
-// let dtuser=new DTOUser("75456546",
-// "ksdgsdgsdg","User1","Adress3",
-// "79789797","Administrator",
-// "Password12345","","mail2@gmail.com","");
+//#region INSTANCE
+let dtuser=new DTOUser("75456546",
+"ksdgsdgsdg","User1","Adresss3",
+"79789797","Administrator",
+"Password12345","","mail2@gmail.com","");
 
 // let dtpassenger=new DTOPassenger("6789798",
 // "qwrfas","User1","USA","New York","Address",
@@ -34,7 +39,10 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 
 //  let dtopassengerservice=new DTOPassengerService(0,"456456546",new Date("October 02,2021"),new Date("October 8,2021"),0,"asd",[]);
 
-// ************************ USER MAINTENACE ******************** */
+
+//#endregion
+
+//#region USER MAINTENANCE
 
 // FactoryLogic.UserController().registerUser(dtuser).then(data => {
 //     console.log(data);
@@ -45,18 +53,10 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 // FactoryLogic.UserController().inactivateUser(dtuser).then(data => {
 //     console.log(data);
 // });
-// FactoryLogic.UserController().getUser("75456546").then(data => {
-//     console.log(data);
-// });
-// FactoryLogic.UserController().getLActiveSortUsers().then(data => {
-//     console.log(data);
-// });
-// FactoryLogic.UserController().getUsers().then(data => {
-//     console.log(data);
-// });
+
 // let autenticationuser=async()=>
 // {
-//     let login=await FactoryLogic.UserController().loginUser("8545654654","Password12345");
+//     let login=await FactoryLogic.UserController().loginUser("75456546","Password12345");
 //     console.log(login);
 //     let userlogin= FactoryLogic.UserController().getloginUser();
 //     console.log(userlogin);
@@ -67,8 +67,110 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 // autenticationuser().then(
 
 // )
+// FactoryLogic.UserController().getUser("45").then(data => {
+//     console.log(data);
+// });
 
-//   ********************** PASSENGER MAINTENACE ************************** */
+// FactoryLogic.UserController().getUsersSearch("4", "Administrator", "4", "", "46").then(data => {
+//     console.log(data);
+// });
+
+// FactoryLogic.UserController().getUsers().then(data => {
+//     console.log(data);
+// });
+// FactoryLogic.UserController().getUsersActive().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().getUsersInactive().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyIdCardDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyNameAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyAddressDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyAddressAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyPhoneDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyPhoneAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyTypeUserDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbyTypeUserAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.UserController().SortbymailDesc().then(data => {
+//   console.log(data);
+// });
+// FactoryLogic.UserController().SortbyMailAsc().then(data => {
+//   console.log(data);
+// });
+
+
+//#region ADD MANY USERS
+
+
+// let arrayusers=[];
+
+// for (let index = 0; index < 50; index++) {
+//     let stringindex=index.toString();
+//     let idcard="111111111"+stringindex;
+//     let name="User"+stringindex;
+//     let surname="Surname"+stringindex;
+//     let address="Address"+stringindex;
+//     let phone="45245675"+stringindex;
+//     let typeuser="";
+//     if (index%2==0) {
+//         typeuser="Administrator";
+//     } else {
+//         typeuser="Receptionist";
+//     }
+  
+//     let password="Password12345"+stringindex;
+//     let mail="mail"+stringindex+"@gmail.com";
+//     arrayusers.push(new DTOUser(idcard,name,surname,address,phone,typeuser,password,"",mail,""));
+// }
+// let addmanyuser=async()=>
+// {
+//   for(let p of arrayusers)
+//   {
+//     let addp=await FactoryLogic.UserController().registerUser(p);
+//     console.log(addp);
+//   }
+// }
+
+// addmanyuser().then(
+
+// )
+
+
+//#endregion
+
+
+//#endregion
+
+//#region PASSENGER MAINTENACE
+
+
 
 // FactoryLogic.PassengerController().registerPassenger(dtpassenger).then(data => {
 //     console.log(data);
@@ -100,6 +202,46 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 // autenticationpassenger().then(
 
 // )
+
+//#region ADD MANY PASSENGER
+
+
+let arraypassenger=[];
+
+for (let index = 0; index < 50; index++) {
+    let stringindex=index.toString();
+    let idcard="111111111"+stringindex;
+    let name="Passenger"+stringindex;
+    let country="Country"+stringindex;
+    let town="Town"+stringindex;
+    let surname="Surname"+stringindex;
+    let address="Address"+stringindex;
+    let phone="45245675"+stringindex;
+   
+    let password="Password12345"+stringindex;
+    let mail="mailpassenger"+stringindex+"@gmail.com";
+    arraypassenger.push(new DTOPassenger(idcard,name,surname,country,town,address,phone,mail,"",password,"Active"));
+}
+let addmanypassenger=async()=>
+{
+  for(let p of arraypassenger)
+  {
+    let addp=await FactoryLogic.PassengerController().registerPassenger(p);
+    console.log(addp);
+  }
+}
+
+addmanypassenger().then(
+
+)
+
+
+
+
+
+//#endregion
+
+//#endregion
 // ***********************  ROOM MAINTENANCE ************************* */
 
 // FactoryLogic.RoomController().registerRoom(dtoroom).then(data => {
@@ -407,13 +549,6 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 // getPayment().then(
 
 // )
-
-
-
-
-
-
-
 
 
 
