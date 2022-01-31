@@ -23,5 +23,6 @@ export  default class DTORoom
        this.image=pimage;
        this.statee=pstatee;
    }
+  
       
 }

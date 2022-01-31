@@ -45,7 +45,7 @@ class PassengerController {
     getPassengerActives = async () => {
         return FactoryData_1.FactoryData.getDataPassenger().getPassengerActives();
     };
-    getUsersInactive = async () => {
+    getPassengersInactive = async () => {
         return FactoryData_1.FactoryData.getDataPassenger().getUsersInactive();
     };
     SortbyIdCardDesc = async () => {

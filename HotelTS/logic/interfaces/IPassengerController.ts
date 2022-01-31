@@ -1,5 +1,5 @@
 import DTOPassenger from "../../shared/entity/DTOPassenger";
-import { ArrayPassenger } from "../class/business_class/array/LArrayPassenger";
+
 import LogicPassenger from "../class/business_class/LPassenger";
 
 export default interface IPassengerController 
@@ -12,7 +12,7 @@ export default interface IPassengerController
      //#region LISTS
    getPassengers();
    getPassengerActives();
-   getUsersInactive();
+   getPassengersInactive();
    SortbyIdCardDesc();
    SortbyNameDesc();
    SortbyNameAsc();

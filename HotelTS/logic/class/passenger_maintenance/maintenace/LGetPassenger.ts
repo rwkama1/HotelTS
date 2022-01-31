@@ -1,5 +1,5 @@
 import { FactoryData } from "../../../../data/FactoryData";
-import { ArrayPassenger } from "../../business_class/array/LArrayPassenger";
+
 import { InstanceLogicClass } from "../../extras/instanceBusinessClass";
 
 export class LGetPassenger{

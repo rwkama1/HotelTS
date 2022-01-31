@@ -5,9 +5,10 @@ const { InstanceArrayDTO } = require("./HotelTS/dist/logic/class/extras/instance
 const { UserController } = require("./HotelTS/dist/logic/class/user_maintenace/UserController");
 const {FactoryLogic}=require("./HotelTS/dist/logic/FactoryLogic");
 const { default: DTOPassenger } = require("./HotelTS/dist/shared/entity/DTOPassenger");
+const { default: DTORoom } = require("./HotelTS/dist/shared/entity/DTORoom");
 const { default: DTOUser } = require("./HotelTS/dist/shared/entity/DTOUser");
 // const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
-// const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
+
 // const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
 // const { default: DTOUser } = require("./Hotel/dist/shared/entity/DTOUser");
 // const { default: DTOReservation } = require("./Hotel/dist/shared/entity/DTOReservation");
@@ -16,15 +17,13 @@ const { default: DTOUser } = require("./HotelTS/dist/shared/entity/DTOUser");
 //  const { default: DTODPassengerService } = require("./Hotel/dist/shared/entity/DTODPassengerService");
 
 //#region INSTANCE
-let dtuser=new DTOUser("75456546",
-"ksdgsdgsdg","User1","Adresss3",
-"79789797","Administrator",
-"Password12345","","mail2@gmail.com","");
 
-// let dtpassenger=new DTOPassenger("6789798",
-// "qwrfas","User1","USA","New York","Address",
-// "79789797","mailpassenger@gmail.com",
-// "","Password12345","");
+// let dtuser=new DTOUser("75456546",
+// "ksdgsdgsdg","User1","Adresss3",
+// "79789797","Administrator",
+// "Password12345","","mail2@gmail.com","");
+
+
 
 
 // let dtoroom=new DTORoom(7,
@@ -170,7 +169,10 @@ let dtuser=new DTOUser("75456546",
 
 //#region PASSENGER MAINTENACE
 
-
+// let dtpassenger=new DTOPassenger("1111111111",
+// "qwrfas","User1","USA","New York","Address",
+// "79789797","mailpassenger@gmail.com",
+// "","Password12345","");
 
 // FactoryLogic.PassengerController().registerPassenger(dtpassenger).then(data => {
 //     console.log(data);
@@ -184,65 +186,127 @@ let dtuser=new DTOUser("75456546",
 // FactoryLogic.PassengerController().getPassanger("456456546").then(data => {
 //     console.log(data);
 // });
-// FactoryLogic.PassengerController().getPassangers().then(data => {
+// FactoryLogic.PassengerController().getPassengerSearch("","","","","","","","").then(data => {
 //     console.log(data);
 // });
-// FactoryLogic.PassengerController().getLActiveSortPassengers().then(data => {
+
+// FactoryLogic.PassengerController().getPassengers().then(data => {
 //     console.log(data);
+// });
+// FactoryLogic.PassengerController().getPassengerActives().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().getPassengersInactive().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyIdCardDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyNameAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyNameDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyAddressDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyAddressAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyPhoneDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyPhoneAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyCountryDesc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbyCountryAsc().then(data => {
+//   console.log(data);
+// });
+
+// FactoryLogic.PassengerController().SortbymailDesc().then(data => {
+//   console.log(data);
+// });
+// FactoryLogic.PassengerController().SortbyMailAsc().then(data => {
+//   console.log(data);
+// });
+// FactoryLogic.PassengerController().SortbyTownDesc().then(data => {
+//   console.log(data);
+// });
+// FactoryLogic.PassengerController().SortbyTownAsc().then(data => {
+//   console.log(data);
 // });
 // let autenticationpassenger=async()=>
 // {
-//     let login=await FactoryLogic.PassengerController().loginPassenger("456456546","Passenger12345");
+//     let login=await FactoryLogic.PassengerController().loginPassenger("1111111111","Password12345");
 //     console.log(login);
+   
+//     let userlogin= FactoryLogic.PassengerController().getloginpassenger();
+//     console.log(userlogin);
 //     let logout= FactoryLogic.PassengerController().logout();
 //     console.log(logout);
-//     let userlogin= FactoryLogic.PassengerController().getloginPassenger();
-//     console.log(userlogin);
 // }
 // autenticationpassenger().then(
 
 // )
 
+
+// este for lo que r
+
 //#region ADD MANY PASSENGER
 
 
-let arraypassenger=[];
+// let arraypassenger=[];
 
-for (let index = 0; index < 50; index++) {
-    let stringindex=index.toString();
-    let idcard="111111111"+stringindex;
-    let name="Passenger"+stringindex;
-    let country="Country"+stringindex;
-    let town="Town"+stringindex;
-    let surname="Surname"+stringindex;
-    let address="Address"+stringindex;
-    let phone="45245675"+stringindex;
+// for (let index = 0; index < 50; index++) {
+//     let stringindex=index.toString();
+//     let idcard="111111111"+stringindex;
+//     let name="Passenger"+stringindex;
+//     let country="Country"+stringindex;
+//     let town="Town"+stringindex;
+//     let surname="Surname"+stringindex;
+//     let address="Address"+stringindex;
+//     let phone="45245675"+stringindex;
    
-    let password="Password12345"+stringindex;
-    let mail="mailpassenger"+stringindex+"@gmail.com";
-    arraypassenger.push(new DTOPassenger(idcard,name,surname,country,town,address,phone,mail,"",password,"Active"));
-}
-let addmanypassenger=async()=>
-{
-  for(let p of arraypassenger)
-  {
-    let addp=await FactoryLogic.PassengerController().registerPassenger(p);
-    console.log(addp);
-  }
-}
+//     let password="Password12345"+stringindex;
+//     let mail="mailpassenger"+stringindex+"@gmail.com";
+//     arraypassenger.push(new DTOPassenger(idcard,name,surname,country,town,address,phone,mail,"",password,"Active"));
+// }
+// let addmanypassenger=async()=>
+// {
+//   for(let p of arraypassenger)
+//   {
+//     let addp=await FactoryLogic.PassengerController().registerPassenger(p);
+//     console.log(addp);
+//   }
+// }
 
-addmanypassenger().then(
+// addmanypassenger().then(
 
-)
-
-
+// )
 
 
+
+
+
+//#endregion
 
 //#endregion
 
-//#endregion
-// ***********************  ROOM MAINTENANCE ************************* */
+//#region  ROOM MAINTENANCE 
 
 // FactoryLogic.RoomController().registerRoom(dtoroom).then(data => {
 //     console.log(data);
@@ -262,6 +326,55 @@ addmanypassenger().then(
 // FactoryLogic.RoomController().getLActiveSortRooms().then(data => {
 //   console.log(data);
 // });
+
+//#region ADD MANY ROOM
+
+
+// let arrayroom=[];
+
+// for (let index = 0; index < 50; index++) {
+//     let stringindex=index.toString();
+//     let type="";
+//     if(index%2==0)
+//     {
+//         type="Individual";
+//     }
+//     else if(index%3==0)
+//     {
+
+//     }
+//     let type=stringindex;
+    
+   
+    
+//     arrayroom.push(new DTORoom(0,);
+// }
+// let addmanyroom=async()=>
+// {
+//     for (let index = 0; index < array.length; index++) {
+//         const element = array[index];
+
+        
+//     }
+//   for(let p of arraypassenger)
+//   {
+//     let addp=await FactoryLogic.PassengerController().registerPassenger(p);
+//     console.log(addp);
+//   }
+// }
+
+// addmanyroom().then(
+
+// )
+
+
+
+
+
+//#endregion
+
+//#endregion
+
 
 // *********************** SERVICE MAINTENANCE ************************ */
 

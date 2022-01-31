@@ -121,10 +121,10 @@ select * from PassengerServicee
 select * from DetailPassengerService
 
 select * from Users where idcard='1111111111'
-select * from Passenger where idcard='11111'
+select * from Passenger where idcard='1111111111'
 select * from Users where statee='Inactive' 
 
-select * from Users where idcard like '% 1 %' and typeuser like '%Admin%' and phonenumber like '%1%' and addresss like '%a%' and mail like '%m%'
+select * from Users where idcard like '%1%' and typeuser like '%Admin%' and phonenumber like '%1%' and addresss like '%a%' and mail like '%m%'
 
 SELECT *
 FROM   users
@@ -134,3 +134,16 @@ WHERE  idcard LIKE '%1%'
        AND addresss LIKE '%a%'
        AND mail LIKE '%1%'
 	   AND statee='Active' 
+
+	   select * from Passenger
+	   select * from room where numberroomm = 1
+	   
+	   SELECT *
+		FROM   room
+		WHERE  numberroomm between 0 and 1
+       AND typee LIKE '%d%'
+       AND typebed LIKE '%%'
+		and value between 10 and 100
+	   AND statee='Active'  
+
+	    select count(*), typebed from room group by typebed 

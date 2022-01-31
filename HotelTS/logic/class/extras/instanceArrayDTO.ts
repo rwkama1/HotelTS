@@ -9,28 +9,8 @@ export class InstanceArrayDTO
 {
   
    
-    static instanceArrayPassenger=(larraypassenger:LogicPassenger[])=>
-    {
-        let arraydto=[];
-        for(let passenger of larraypassenger)
-        {
-            let dtopass=passenger.getDTO();
-            arraydto.push(dtopass);
-
-        }
-        return arraydto;       
-    }
-    static instanceArrayRoom=(larrayroom:LogicRoom[])=>
-    {
-        let arraydto=[];
-        for(let room of larrayroom)
-        {
-            let dtoroom=room.getDTO();
-            arraydto.push(dtoroom);
-
-        }
-        return arraydto;       
-    }
+   
+   
     static instanceArrayService=(larrayservice:LogicService[])=>
     {
         let arraydto=[];

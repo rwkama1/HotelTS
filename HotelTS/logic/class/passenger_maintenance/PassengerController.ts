@@ -64,7 +64,7 @@ export class PassengerController implements IPassengerController{
    {
     return FactoryData.getDataPassenger().getPassengerActives();
    }
-   getUsersInactive=async()=>
+   getPassengersInactive=async()=>
    {
     return FactoryData.getDataPassenger().getUsersInactive();
    }

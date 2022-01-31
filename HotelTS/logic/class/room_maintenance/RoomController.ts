@@ -1,8 +1,10 @@
+import { FactoryData } from "../../../data/FactoryData";
 import DTORoom from "../../../shared/entity/DTORoom";
 import { LogicException } from "../../../shared/exceptions/logicexception";
 import IRoomController from "../../interfaces/IRoomController";
 import { InstanceArrayDTO } from "../extras/instanceArrayDTO";
 import { InstanceLogicClass } from "../extras/instanceBusinessClass";
+import { LCUDRoom } from "./maintenance/LCUDRoom";
 import { LGetRoom } from "./maintenance/LGetRoom";
 
 export class RoomController implements IRoomController{
@@ -17,54 +19,76 @@ export class RoomController implements IRoomController{
         return RoomController.instancia;
     }
     
-    //************ CRUD ********************** */
-    registerRoom=async(dtroom:DTORoom)=>
+   //#region CUD
+   registerRoom=async(dtroom:DTORoom)=>
    {   
-     const logicroom=InstanceLogicClass.instanceLRoom(dtroom);
-        const result=await logicroom.register();
-        return result 
+    return LCUDRoom.registerRoom(dtroom);
        
    }
     updateRoom=async(dtroom:DTORoom)=>
    {
-    const logicroom=InstanceLogicClass.instanceLRoom(dtroom);
-    const result=await logicroom.update();
-    return result
+    return LCUDRoom.updateRoom(dtroom);
    }
 
     inactiveRoom=async(dtroom:DTORoom)=>
    {
-    const logicroom=InstanceLogicClass.instanceLRoom(dtroom);
-    const result=await logicroom.disable();
-    return result
+    return LCUDRoom.InactiveRoom(dtroom);
    }
-
-   //***************** GET ROOMS ***************** */
-
-   getRoom=async(numberroom:number)=>
-   {
-    const groom=await LGetRoom.getLRoom(numberroom);
-    if(groom===null)
+   //#endregion
+  //#region SEARCH
+  getRoombyID=async(number)=>
+  {
+    return FactoryData.getDataRoom().getRoombyID(number);
+  }
+  getRoomSearch=async(number1,number2,type,typebed,value1,value2)=>
+  { 
+    return FactoryData.getDataRoom().getRoomSearch(number1,number2,type,typebed,value1,value2);
+  }
+//#endregion
+  //#region LISTS
+    getRooms=async()=>
     {
-        throw new LogicException("The Room does not exists in the system");
-        
+        return FactoryData.getDataRoom().getRooms();
+    }   
+     getRoomsActive=async()=>
+     {
+        return FactoryData.getDataRoom().getRoomsActive();
+    } 
+     getRoomsInactive=async()=>
+     {
+        return FactoryData.getDataRoom().getRoomsInactive();
     }
-    return groom.getDTO()
-   }
+     SortbyNumberRoomDesc=async()=>
+     {
+        return FactoryData.getDataRoom().SortbyNumberRoomDesc();
+     }
+     SortbyTypeAsc=async()=>
+     {
+        return FactoryData.getDataRoom().SortbyTypeAsc();
+     }
+     SortbyTypeDesc=async()=>
+     {
+        return FactoryData.getDataRoom().SortbyTypeDesc();
+     }
+     SortbyTypeBedAsc=async()=>
+     {
+        return FactoryData.getDataRoom().SortbyTypeBedAsc();
+     }
+     SortbyTypeBedDesc=async()=>
+     {
+        return FactoryData.getDataRoom().SortbyTypeBedDesc();
+     }
+     SortbyValueAsc=async()=>
+     {
+        return FactoryData.getDataRoom().SortbyValueAsc();
+     }
+     SortbyValueDesc=async()=>
+     {
+        return FactoryData.getDataRoom().SortbyValueDesc();
+     }
+    
+//#endregion
+   
 
-   getRooms=async()=>
-   {
-        const grooms=await LGetRoom.getLRooms();
-        let arraydto=InstanceArrayDTO.instanceArrayRoom(grooms.arrayroom);
-        return arraydto
-       
-    
-   }
-   getLActiveSortRooms=async()=>
-   {
-        const getarooms=await LGetRoom.getLActiveSortRoom();
-        let arraydto=InstanceArrayDTO.instanceArrayRoom(getarooms);
-        return arraydto
-    
-   }
+ 
 }

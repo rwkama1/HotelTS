@@ -97,52 +97,52 @@ export  default class LogicRoom
     
     register=async()=>
     {
-     let roomsh = await LGetRoom.getLRoom(this.numberroom);
-     if (roomsh != null) {
-       if(roomsh.statee==="Active")
-       {
-         throw new LogicException("That Room already exists in the system");
-       }
-      else
-       {
-         const actroom=await LCUDRoom.changeStateRoom(roomsh.numberroom,"Active");
-         return actroom;
+    //  let roomsh = await LGetRoom.getLRoom(this.numberroom);
+    //  if (roomsh != null) {
+    //    if(roomsh.statee==="Active")
+    //    {
+    //      throw new LogicException("That Room already exists in the system");
+    //    }
+    //   else
+    //    {
+    //      const actroom=await LCUDRoom.changeStateRoom(roomsh.numberroom,"Active");
+    //      return actroom;
         
-       }
-     }   
-     const dto=this.getDTO();
-     const regroom=await LCUDRoom.registerRoom(dto);
-     return regroom
+    //    }
+    //  }   
+    //  const dto=this.getDTO();
+    //  const regroom=await LCUDRoom.registerRoom(dto);
+    //  return regroom
    }
    update=async()=>
    {
      
-    let roomsh = await LGetRoom.getLRoom(this.numberroom);
-     if (roomsh === null) {
-         throw new LogicException("That Room do not exists in the system");
-     }
-    if(roomsh.statee==="Inactive")
-     {
-       throw new LogicException("That Room is inactive");
-     } 
-    const dto=this.getDTO();
-    const updateroom=await LCUDRoom.updateRoom(dto);
-    return updateroom
+    // let roomsh = await LGetRoom.getLRoom(this.numberroom);
+    //  if (roomsh === null) {
+    //      throw new LogicException("That Room do not exists in the system");
+    //  }
+    // if(roomsh.statee==="Inactive")
+    //  {
+    //    throw new LogicException("That Room is inactive");
+    //  } 
+    // const dto=this.getDTO();
+    // const updateroom=await LCUDRoom.updateRoom(dto);
+    // return updateroom
      
    }
    disable=async()=>
     {
-        let roomsh = await LGetRoom.getLRoom(this.numberroom);
-        if (roomsh === null) {
-            throw new LogicException("That Room do not exists in the system");
-        }
-        if(roomsh.statee==="Inactive")
-        {
-          throw new LogicException("That Room is inactive");
-        }
-       const dto=this.getDTO();
-       const delroom=await LCUDRoom.changeStateRoom(dto.numberroom,"Inactive");
-       return delroom
+    //     let roomsh = await LGetRoom.getLRoom(this.numberroom);
+    //     if (roomsh === null) {
+    //         throw new LogicException("That Room do not exists in the system");
+    //     }
+    //     if(roomsh.statee==="Inactive")
+    //     {
+    //       throw new LogicException("That Room is inactive");
+    //     }
+    //    const dto=this.getDTO();
+    //    const delroom=await LCUDRoom.changeStateRoom(dto.numberroom,"Inactive");
+    //    return delroom
     }
     getDTO=()=>
     {

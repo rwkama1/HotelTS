@@ -64,9 +64,15 @@ export class InstanceLogicClass
     }
     static instanceLService=(dtoservice:DTOService)=>
     {
-        var logicservice=new LogicService(dtoservice.idservice,
+        var logicservice=null;
+        if (dtoservice!=null) 
+        {
+         logicservice=new LogicService(dtoservice.idservice,
             dtoservice.name,dtoservice.value,dtoservice.statee);
-            return logicservice
+             logicservice
+        }
+        return logicservice
+
     }
     static instanceLReservation=async(dtoreservation:DTOReservation)=>
     {
