@@ -136,14 +136,14 @@ WHERE  idcard LIKE '%1%'
 	   AND statee='Active' 
 
 	   select * from Passenger
-	   select * from room where numberroomm = 1
+	   select * from room order by typee asc
 	   
 	   SELECT *
 		FROM   room
 		WHERE  numberroomm between 0 and 1
        AND typee LIKE '%d%'
        AND typebed LIKE '%%'
-		and value between 10 and 100
+		and value between 100 and 0
 	   AND statee='Active'  
 
 	    select count(*), typebed from room group by typebed 
