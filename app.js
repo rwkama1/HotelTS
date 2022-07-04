@@ -1,6 +1,43 @@
 
+const { DataPassenger } = require("./data/DataPassenger");
+const { DTOPassenger } = require("./DTO/DTOPassenger");
+const { HashPassword } = require("./Hash_Login/hashPassword");
 
-const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
+//#region Passenger
+let passengermaintenance=async()=>
+{
+
+    async function registerPassenger() {
+        for (let index = 1; index < 100; index++) {
+            let dtopassenger =new DTOPassenger();
+            dtopassenger.idcard = "11111111111111" + index.toString();
+            dtopassenger.name = "NamePassenger" + index.toString();
+            dtopassenger.surname = "SurnamePassenger" + index.toString();
+            dtopassenger.country = "Country" + index.toString();
+            dtopassenger.town = "Town" + index.toString();
+            dtopassenger.address = "Address" + index.toString();
+            dtopassenger.phone = "111111111" + index.toString();
+            dtopassenger.mail ="email" + index.toString() + "@gmail.com";
+            const passh = HashPassword.hashPassword(dtopassenger.password);
+            dtopassenger.password = passh.hash;
+            dtopassenger.salt = passh.salt;
+            let registerPassenger = await DataPassenger.registerPassenger(dtopassenger);
+            if (registerPassenger===-1) {
+                throw new Error("The passenger already exists");
+            }
+            console.log("The passenger registered successfully");
+        }
+    }
+     await registerPassenger();
+
+}
+passengermaintenance().then()
+
+//#endregion
+
+//#region Others
+
+//const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 // const { default: DTOPassenger } = require("./Hotel/dist/shared/entity/DTOPassenger");
 // const { default: DTORoom } = require("./Hotel/dist/shared/entity/DTORoom");
 // const { default: DTOService } = require("./Hotel/dist/shared/entity/DTOService");
@@ -526,3 +563,4 @@ const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");
 //    addmanyservices().then(
 
 //   )
+//#endregion
