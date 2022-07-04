@@ -1,5 +1,6 @@
 
 const { VarChar,Int } = require("mssql");
+const { DTOPassenger } = require("../DTO/DTOPassenger");
 const { Conection } = require("./Conection");
 
 class DataPassenger
@@ -150,5 +151,129 @@ class DataPassenger
     }
     
     //#endregion
+
+    //#region GETS
+
+    static getPassenger=async(idcard)=>
+    {
+            let resultquery=0;
+            let querysearch = `
+
+            IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
+            BEGIN
+              select -1 as notexistpassenger
+            END
+            ELSE
+            BEGIN
+               SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active'
+            END
+
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .input('IDCard', VarChar, idcard)
+             .query(querysearch)
+              resultquery = result.recordset[0].notexistpassenger; 
+            if (resultquery===undefined) {
+              resultrecordset=result.recordset[0];
+              let passenger = new DTOPassenger();
+              this.getinformation(passenger, resultrecordset);
+              resultquery=passenger
+            }
+           pool.close();
+           return resultquery;
+      
+    
+     }
+
+     static getPassengers=async(orderby="idcard",ascdesc="desc")=>
+    {
+            let array=[];
+            let querysearch = `
+
+               SELECT * FROM Passenger WHERE Statee='Active'
+               ORDER BY ${orderby} ${ascdesc}
+
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .query(querysearch)
+             for (var p of result.recordset) {
+              let passenger = new DTOPassenger();
+              this.getinformation(passenger, p);
+              array.push(passenger);
+            } 
+           pool.close();
+           return array;
+      
+    
+     }
+
+     static getSearchPassengers=async(name="",lastname="",country="",town="",address="",phone="",mail=""
+     ,orderby="idcard",ascdesc="desc")=>
+     {
+             let array=[];
+             let querysearch = `
+ 
+                SELECT * FROM Passenger WHERE Statee='Active'
+                AND  Names LIKE '%${name}%' 
+                AND LastName LIKE '%${lastname}%' 
+                AND Country LIKE '%${country}%' 
+                AND Town LIKE '%${town}%' 
+                AND Addresss LIKE '%${address}%' 
+                AND PhoneNumber LIKE '%${phone}%' 
+                AND Mail LIKE '%${mail}%' 
+                ORDER BY ${orderby} ${ascdesc}
+             `
+
+            //  CREATE TABLE Passenger(
+            //   IDCard varchar(20) NOT NULL PRIMARY KEY ,
+            //   Names varchar(20) NOT NULL,
+            //   LastName varchar(20) NOT NULL,
+            //   Country varchar(20) NOT NULL,
+            //   Town varchar(20) NOT NULL,
+            //   Addresss varchar(20) NOT NULL,
+            //   PhoneNumber varchar(20) NOT NULL,
+            //     Mail varchar(50) NOT NULL,
+            //   Salt varchar(1000) not null,
+            //   Passwordd varchar(1000) not null,	
+            //   Statee varchar(20) not null,
+            // ) 
+            // go
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .query(querysearch)
+              for (var p of result.recordset) {
+               let passenger = new DTOPassenger();
+               this.getinformation(passenger, p);
+               array.push(passenger);
+             } 
+            pool.close();
+            return array;
+       
+     
+      }
+
+    //#endregion
+
+   //#region GET INFORMATION
+
+   static getinformation(passenger, result) {
+
+    passenger.idcard = result.IDCard;
+    passenger.name = result.Names;
+    passenger.surname = result.LastName;
+    passenger.country = result.Country;
+    passenger.town = result.Town; 
+    passenger.address = result.Addresss;
+    passenger.phone = result.PhoneNumber; 
+    passenger.maill = result.Mail;
+    passenger.salt = result.Salt; 
+    passenger.password = result.Passwordd;
+    passenger.statee = result.Statee; 
+
+   }
+
+   //#endregion
 }
 module.exports = { DataPassenger };

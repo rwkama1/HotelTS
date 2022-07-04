@@ -17,7 +17,7 @@ let passengermaintenance=async()=>
             dtopassenger.town = "Town" + index.toString();
             dtopassenger.address = "Address" + index.toString();
             dtopassenger.phone = "111111111" + index.toString();
-            dtopassenger.mail ="email" + index.toString() + "@gmail.com";
+            dtopassenger.maill ="email" + index.toString() + "@gmail.com";
             const passh = HashPassword.hashPassword(dtopassenger.password);
             dtopassenger.password = passh.hash;
             dtopassenger.salt = passh.salt;

@@ -107,3 +107,7 @@ go
 --drop table Room
 --drop table Passenger
 --drop table Users
+
+select * from passenger
+
+delete from passenger
