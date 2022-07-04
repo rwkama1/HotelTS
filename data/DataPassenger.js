@@ -8,7 +8,7 @@ class DataPassenger
 
     static registerPassenger=async(dtopassenger)=>
     {
-   
+      let resultquery;
           let queryinsert = `
 
           IF  EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
@@ -47,13 +47,12 @@ class DataPassenger
           return resultquery;
   
     }
-
-    updatePassenger=async(dtopassenger)=>
+    static updatePassenger=async(dtopassenger)=>
     {
-      
+      let resultquery;
           let queryupdate = `
 
-          IF  NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
+          IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
           BEGIN
             select -1 as notexistpassenger
           END
@@ -88,7 +87,68 @@ class DataPassenger
           return resultquery;
        
     }
+    static updatePasswordPassenger=async(idcard,password,salt)=>
+    {
+           let resultquery;
+          let queryupdate = `
 
+          IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
+          BEGIN
+            select -1 as notexistpassenger
+          END
+          ELSE
+          BEGIN
+            Update Passenger 
+            Set Salt=@Salt,Passwordd=@Passwordd where IDCard=@IDCard
+            select 1 as updatesuccess
+          END
+
+          `;
+          let pool = await Conection.conection();
+          const result = await pool.request()
+          .input('IDCard', VarChar, idcard)
+          .input('Salt', VarChar, salt)
+          .input('Passwordd', VarChar, password)
+          .query(queryupdate)
+          resultquery = result.recordset[0].notexistpassenger;
+          if(resultquery===undefined)
+          {
+              resultquery = result.recordset[0].updatesuccess;
+          }
+          pool.close();
+          return resultquery;
+       
+    }
+    static inactivePassenger=async(idcard)=>
+    {
+          let resultquery;
+          let queryupdate =`
+
+          IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
+          BEGIN
+            select -1 as notexistpassenger
+          END
+          ELSE
+          BEGIN
+            Update Passenger Set Statee='Inactive' where IDCard=@IDCard
+            select 1 as updatesuccess
+          END
+
+          `;
+          let pool = await Conection.conection();  
+          const result = await pool.request()
+          .input('IDCard', VarChar,idcard)
+          .query(queryupdate)
+          resultquery = result.recordset[0].notexistpassenger;
+          if(resultquery===undefined)
+          {
+              resultquery = result.recordset[0].updatesuccess;
+          }
+          pool.close();
+          return resultquery;
+  
+    }
+    
     //#endregion
 }
 module.exports = { DataPassenger };
