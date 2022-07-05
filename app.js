@@ -1,40 +1,209 @@
 
 const { DataPassenger } = require("./data/DataPassenger");
+const { DataUser } = require("./data/DataUser");
 const { DTOPassenger } = require("./DTO/DTOPassenger");
+const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
+const { LoginPassenger } = require("./Hash_Login/LoginPassenger");
 
 //#region Passenger
 let passengermaintenance=async()=>
 {
 
-    async function registerPassenger() {
-        for (let index = 1; index < 100; index++) {
-            let dtopassenger =new DTOPassenger();
-            dtopassenger.idcard = "11111111111111" + index.toString();
-            dtopassenger.name = "NamePassenger" + index.toString();
-            dtopassenger.surname = "SurnamePassenger" + index.toString();
-            dtopassenger.country = "Country" + index.toString();
-            dtopassenger.town = "Town" + index.toString();
-            dtopassenger.address = "Address" + index.toString();
-            dtopassenger.phone = "111111111" + index.toString();
-            dtopassenger.maill ="email" + index.toString() + "@gmail.com";
-            const passh = HashPassword.hashPassword(dtopassenger.password);
-            dtopassenger.password = passh.hash;
-            dtopassenger.salt = passh.salt;
-            let registerPassenger = await DataPassenger.registerPassenger(dtopassenger);
-            if (registerPassenger===-1) {
-                throw new Error("The passenger already exists");
-            }
-            console.log("The passenger registered successfully");
-        }
-    }
-     await registerPassenger();
+    // async function registerPassenger() {
+    //     for (let index = 1; index < 100; index++) {
+    //         let dtopassenger =new DTOPassenger();
+    //         dtopassenger.idcard = "11111111111111" + index.toString();
+    //         dtopassenger.name = "NamePassenger" + index.toString();
+    //         dtopassenger.surname = "SurnamePassenger" + index.toString();
+    //         dtopassenger.country = "Country" + index.toString();
+    //         dtopassenger.password = "Password" + index.toString();
+    //         dtopassenger.town = "Town" + index.toString();
+    //         dtopassenger.address = "Address" + index.toString();
+    //         dtopassenger.phone = "111111111" + index.toString();
+    //         dtopassenger.maill ="email" + index.toString() + "@gmail.com";
+    //         const passh = HashPassword.hashPassword(dtopassenger.password);
+    //         dtopassenger.password = passh.hash;
+    //         dtopassenger.salt = passh.salt;
+    //         let registerPassenger = await DataPassenger.registerPassenger(dtopassenger);
+    //         if (registerPassenger===-1) {
+    //             throw new Error("The passenger already exists");
+    //         }
+    //         console.log("The passenger registered successfully");
+    //     }
+    // }
+    //  await registerPassenger();
 
-}
+    
+    // async function updatePassenger() {
+    //     let dtopassenger = new DTOPassenger();
+    //     dtopassenger.idcard = "111111111111111"; 
+    //      dtopassenger.name = "NamePassengerUpdate" ;
+    //      dtopassenger.surname = "SurnamePassgerUpdate"; 
+    //      dtopassenger.country = "CountryUpdate"; 
+    //     dtopassenger.town = "TownUpdate";
+    //     dtopassenger.address = "AddressUpdate";
+    //     dtopassenger.phone = "11111111125";
+    //      dtopassenger.maill ="emailupdate@gmail.com";
+    //     let updatePassenger = await DataPassenger.updatePassenger(dtopassenger);
+    //      if (updatePassenger===-1) {
+    //             throw new Error("The passenger does not exists");
+    //     }
+    //     console.log("The passenger updated successfully");
+    // }
+    // await updatePassenger();
+
+// async function updateUserNamePassword() {
+      
+//         const passh = HashPassword.hashPassword("Password2");
+//         let hashpassword = passh.hash;
+//         let salt = passh.salt;
+    
+//             let updateusernamepassword = await DataPassenger.updatePasswordPassenger("1111111111111112",hashpassword, salt);
+//             if (updateusernamepassword===-1) {
+//                 throw new Error("The passenger does not exists");
+//             }
+//             console.log("The password was updated successfully");
+
+//         }
+//       await updateUserNamePassword();
+
+
+    // async function inactivePassenger() {
+    
+    //         let inactivePassenger = await DataPassenger.inactivePassenger("111111111111111");
+    //         if (inactivePassenger===-1) {
+    //             throw new Error("The passenger does not exists");
+    //         }
+    //         console.log("The passenger was deleted successfully");
+
+    //     }
+    //   await inactivePassenger();
+
+    
+        // let loginPassenger = await LoginPassenger.loginPassenger('1111111111111112', 'Password2');
+        // console.log(loginPassenger);
+
+
+        // let getPassengerLogin = await LoginPassenger.getPassengerLogin();
+        // console.log(getPassengerLogin);
+
+        // let logout = await LoginPassenger.logoutPassenger();
+        // console.log(logout);
+    
+    // let getPassenger = await DataPassenger.getPassenger("1111111111111112");
+    // console.log(getPassenger);
+
+    //   let getPassengers = await DataPassenger.getPassengers("lastname");
+    // console.log(getPassengers);
+
+    //    let getSearchPassengers = await DataPassenger.getSearchPassengers("","",
+    //    "","","","","","country");
+    // console.log(getSearchPassengers);
+
+
+ }
 passengermaintenance().then()
 
 //#endregion
+//#region User
+let usermaintenace=async()=>
+{
 
+// async function registerUser() {
+//         for (let index = 1; index < 100; index++) {
+//             let dtouser =new DTOUser();
+//             dtouser.IDCard = "11111111111111" + index.toString();
+//             dtouser.NamesUser = "NameUser" + index.toString();
+//             dtouser.LastName = "SurnameUser" + index.toString();
+//             dtouser.PasswordUser = "Password" + index.toString();
+//             dtouser.Addresss = "Address" + index.toString();
+//             dtouser.PhoneNumber = "11111111" + index.toString();
+//             dtouser.TypeUser = "Town" + index.toString();
+//             dtouser.Mail ="email" + index.toString() + "@gmail.com";
+//             const passh = HashPassword.hashPassword(dtouser.PasswordUser);
+//             dtouser.PasswordUser = passh.hash;
+//             dtouser.Hashh = passh.salt;
+//             let registerUser = await DataUser.registerUser(dtouser);
+//             if (registerUser===-1) {
+//                 throw new Error("The user already exists");
+//             }
+//             console.log("The user registered successfully");
+//         }
+//     }
+//      await registerUser();
+
+
+    // async function updateUser() {
+    //         let dtouser = new DTOUser();
+    //         dtouser.IDCard = "111111111111111"; 
+    //         dtouser.NamesUser = "NameUserupd" ;
+    //         dtouser.LastName = "SurnameUserupd";
+    //         dtouser.Addresss = "Addressupdate" ;
+    //         dtouser.PhoneNumber = "111111112";
+    //         dtouser.TypeUser = "Townupdate" ;
+    //         dtouser.Mail ="emailupddate@gmail.com";
+    //         let updateUser = await DataUser.updateUser(dtouser);
+    //         if (updateUser===-1) {
+    //                 throw new Error("The user does not exists");
+    //         }
+    //     console.log("The user updated successfully");
+    // }
+    // await updateUser();
+
+// async function updatePasswordUser() {
+      
+//         const passh = HashPassword.hashPassword("Password2");
+//         let hashpassword = passh.hash;
+//         let salt = passh.salt;
+    
+//             let updatePasswordUser = await DataUser.updatePasswordUser("111111111111111",hashpassword, salt);
+//             if (updatePasswordUser===-1) {
+//                 throw new Error("The user does not exists");
+//             }
+//             console.log("The password was updated successfully");
+
+//         }
+//       await updatePasswordUser();
+
+
+    async function inactiveUser() {
+    
+            let inactiveUser = await DataUser.inactiveUser("111111111111119");
+            if (inactiveUser===-1) {
+                throw new Error("The user does not exists");
+            }
+            console.log("The user was deleted successfully");
+
+        }
+      await inactiveUser();
+
+    
+        // let loginPassenger = await LoginPassenger.loginPassenger('1111111111111112', 'Password2');
+        // console.log(loginPassenger);
+
+
+        // let getPassengerLogin = await LoginPassenger.getPassengerLogin();
+        // console.log(getPassengerLogin);
+
+        // let logout = await LoginPassenger.logoutPassenger();
+        // console.log(logout);
+    
+    // let getPassenger = await DataPassenger.getPassenger("1111111111111112");
+    // console.log(getPassenger);
+
+    //   let getPassengers = await DataPassenger.getPassengers("lastname");
+    // console.log(getPassengers);
+
+    //    let getSearchPassengers = await DataPassenger.getSearchPassengers("","",
+    //    "","","","","","country");
+    // console.log(getSearchPassengers);
+
+
+
+}
+usermaintenace().then()
+//#endregion
 //#region Others
 
 //const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");

@@ -1,4 +1,3 @@
-
 const { VarChar,Int } = require("mssql");
 const { DTOPassenger } = require("../DTO/DTOPassenger");
 const { Conection } = require("./Conection");
@@ -156,7 +155,7 @@ class DataPassenger
 
     static getPassenger=async(idcard)=>
     {
-            let resultquery=0;
+            let resultquery;
             let querysearch = `
 
             IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
@@ -186,13 +185,13 @@ class DataPassenger
     
      }
 
-     static getPassengers=async(orderby="idcard",ascdesc="desc")=>
+     static getPassengers=async(orderby="idcard")=>
     {
             let array=[];
             let querysearch = `
 
                SELECT * FROM Passenger WHERE Statee='Active'
-               ORDER BY ${orderby} ${ascdesc}
+               ORDER BY ${orderby} desc
 
             `
             let pool = await Conection.conection();
@@ -210,7 +209,7 @@ class DataPassenger
      }
 
      static getSearchPassengers=async(name="",lastname="",country="",town="",address="",phone="",mail=""
-     ,orderby="idcard",ascdesc="desc")=>
+     ,orderby="idcard")=>
      {
              let array=[];
              let querysearch = `
@@ -223,23 +222,10 @@ class DataPassenger
                 AND Addresss LIKE '%${address}%' 
                 AND PhoneNumber LIKE '%${phone}%' 
                 AND Mail LIKE '%${mail}%' 
-                ORDER BY ${orderby} ${ascdesc}
+                ORDER BY ${orderby} desc
              `
 
-            //  CREATE TABLE Passenger(
-            //   IDCard varchar(20) NOT NULL PRIMARY KEY ,
-            //   Names varchar(20) NOT NULL,
-            //   LastName varchar(20) NOT NULL,
-            //   Country varchar(20) NOT NULL,
-            //   Town varchar(20) NOT NULL,
-            //   Addresss varchar(20) NOT NULL,
-            //   PhoneNumber varchar(20) NOT NULL,
-            //     Mail varchar(50) NOT NULL,
-            //   Salt varchar(1000) not null,
-            //   Passwordd varchar(1000) not null,	
-            //   Statee varchar(20) not null,
-            // ) 
-            // go
+           
              let pool = await Conection.conection();
               const result = await pool.request()
               .query(querysearch)

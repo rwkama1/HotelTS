@@ -108,6 +108,7 @@ go
 --drop table Passenger
 --drop table Users
 
-select * from passenger
+select * from users order by namesuser desc
 
-delete from passenger
+delete from users
+
