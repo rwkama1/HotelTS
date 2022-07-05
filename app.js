@@ -5,6 +5,7 @@ const { DTOPassenger } = require("./DTO/DTOPassenger");
 const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
 const { LoginPassenger } = require("./Hash_Login/LoginPassenger");
+const { LoginUser } = require("./Hash_Login/LoginUser");
 
 //#region Passenger
 let passengermaintenance=async()=>
@@ -167,39 +168,37 @@ let usermaintenace=async()=>
 //       await updatePasswordUser();
 
 
-    async function inactiveUser() {
+    // async function inactiveUser() {
     
-            let inactiveUser = await DataUser.inactiveUser("111111111111119");
-            if (inactiveUser===-1) {
-                throw new Error("The user does not exists");
-            }
-            console.log("The user was deleted successfully");
+    //         let inactiveUser = await DataUser.inactiveUser("111111111111119");
+    //         if (inactiveUser===-1) {
+    //             throw new Error("The user does not exists");
+    //         }
+    //         console.log("The user was deleted successfully");
 
-        }
-      await inactiveUser();
+    //     }
+    //   await inactiveUser();
 
     
-        // let loginPassenger = await LoginPassenger.loginPassenger('1111111111111112', 'Password2');
-        // console.log(loginPassenger);
+        // let loginUser = await LoginUser.loginUser('111111111111111', 'Password2');
+        // console.log(loginUser);
 
 
-        // let getPassengerLogin = await LoginPassenger.getPassengerLogin();
-        // console.log(getPassengerLogin);
+        // let getUserLogin = await LoginUser.getUserLogin();
+        // console.log(getUserLogin);
 
-        // let logout = await LoginPassenger.logoutPassenger();
-        // console.log(logout);
+        // let logoutUser = await LoginUser.logoutUser();
+        // console.log(logoutUser);
     
-    // let getPassenger = await DataPassenger.getPassenger("1111111111111112");
-    // console.log(getPassenger);
+    // let getUser = await DataUser.getUser("1111111111111112");
+    // console.log(getUser);
 
-    //   let getPassengers = await DataPassenger.getPassengers("lastname");
-    // console.log(getPassengers);
+    //   let getUsers = await DataUser.getUsers("Mail");
+    // console.log(getUsers);
 
-    //    let getSearchPassengers = await DataPassenger.getSearchPassengers("","",
-    //    "","","","","","country");
-    // console.log(getSearchPassengers);
-
-
+    //    let getSearchUsers = await DataUser.getSearchUsers("","",
+    //    "","","","","mail");
+    // console.log(getSearchUsers);
 
 }
 usermaintenace().then()

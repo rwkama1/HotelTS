@@ -121,13 +121,13 @@ class DataUser
           let resultquery;
           let queryupdate =`
 
-          IF NOT EXISTS ( SELECT * FROM User WHERE IDCard=@IDCard and Statee='Active')
+          IF NOT EXISTS ( SELECT * FROM Users WHERE IDCard=@IDCard and Statee='Active')
           BEGIN
             select -1 as notexistuser
           END
           ELSE
           BEGIN
-            Update User Set Statee='Inactive' where IDCard=@IDCard
+            Update Users Set Statee='Inactive' where IDCard=@IDCard
             select 1 as updatesuccess
           END
 
@@ -220,7 +220,7 @@ class DataUser
              let pool = await Conection.conection();
               const result = await pool.request()
               .query(querysearch)
-              for (var p of result.recordset) {
+              for (var u of result.recordset) {
                 let user = new DTOUser();
               this.getinformation(user,u);
               array.push(user);
