@@ -2,6 +2,7 @@ USE hoteljs
 go
 ---------------------------------------------
 ----TABLES
+
 CREATE TABLE Users(
 	IDCard varchar(20) NOT NULL PRIMARY KEY ,
 	NamesUser varchar(20) NOT NULL,
@@ -37,11 +38,13 @@ CREATE TABLE Room(
 	Descriptionn varchar(1000) NOT NULL,
 	Value money NOT NULL,
 	Statee varchar(20) NOT NULL,
+	Squaremeter int not null, 
 	Imagee varchar(100) NOT NULL,
 ) 
 go
+
 CREATE TABLE Reservation(
-	NumberReservationn int NOT NULL PRIMARY KEY,
+	NumberReservationn int NOT NULL PRIMARY KEY Identity(1,1),
 	ReservationDate date NOT NULL,
 	ArrivalDate date NOT NULL,
 	DepartureDate  date NOT NULL,
@@ -53,12 +56,10 @@ CREATE TABLE Reservation(
 ) 
 go
 CREATE TABLE ReservationDetail(
-	NumberRD int NOT NULL,
+	NumberRD int NOT NULL primary key Identity(1,1),
 	Value money NOT NULL,
 	NumberReservation int not null Foreign Key References Reservation(NumberReservationn),
-	NumberRoom int not null Foreign Key References Room(NumberRoomm),
-	primary key(NumberRD,NumberReservation)
-	
+	NumberRoom int not null Foreign Key References Room(NumberRoomm)
 ) 
 go
 CREATE TABLE Servicee(
@@ -69,7 +70,7 @@ CREATE TABLE Servicee(
 ) 
 go
 CREATE TABLE PassengerServicee(
-	NumberPS int NOT NULL PRIMARY KEY,
+	NumberPS int NOT NULL PRIMARY KEY Identity(1,1)  ,
 	IDCardP varchar(20) not null Foreign Key References Passenger(IDCard),
 	StartDate date not null,
 	EndDate date not null,
@@ -78,11 +79,11 @@ CREATE TABLE PassengerServicee(
 ) 
 go
 CREATE TABLE DetailPassengerService(
-	IDDPassangerService int NOT NULL,
+	IDDPassangerService int NOT NULL primary key Identity(1,1)   ,
 	NumberPService int not null Foreign Key References PassengerServicee(NumberPS),
     IDServicee int not null Foreign Key References Servicee(IDService),
 	Amount money not null,
-	primary key(IDDPassangerService,NumberPService)
+	
 	
 ) 
 go
@@ -108,7 +109,13 @@ go
 --drop table Passenger
 --drop table Users
 
-select * from users order by namesuser desc
+select * from room where numberroomm in (14,13,12,20,150)
+select * from Users
+select * from Passenger
 
-delete from users
+
+--select * from ReservationDetail
+
+
+
 

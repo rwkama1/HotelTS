@@ -1,7 +1,10 @@
 
 const { DataPassenger } = require("./data/DataPassenger");
+const { DataRoom } = require("./data/DataRoom");
 const { DataUser } = require("./data/DataUser");
 const { DTOPassenger } = require("./DTO/DTOPassenger");
+const { DTOReservation } = require("./DTO/DTOReservation");
+const { DTORoom } = require("./DTO/DTORoom");
 const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
 const { LoginPassenger } = require("./Hash_Login/LoginPassenger");
@@ -202,6 +205,188 @@ let usermaintenace=async()=>
 
 }
 usermaintenace().then()
+//#endregion
+//#region Room
+
+let roommaintenance=async()=>
+{
+
+// async function registerRoom() {
+//         for (let index = 1; index < 100; index++) {
+//             let dtoroom =new DTORoom();
+//             dtoroom.Typee = "Typee" + index.toString();
+//             dtoroom.Typebed = "Typebed" + index.toString();
+//             dtoroom.Accommodation = "Accommodation" + index.toString();
+//             dtoroom.Descriptionn = "Descriptionn" + index.toString();
+//             dtoroom.Value = 99 + index;
+//             dtoroom.Imagee ="urlimage" + index.toString();
+//             dtoroom.Squaremeter = 42;
+//             let registerRoom = await DataRoom.registerRoom(dtoroom);
+//             console.log("The room registered successfully");
+//         }
+//     }
+//      await registerRoom();
+
+
+    // async function updateRoom() {
+    //         let dtoroom = new DTORoom();
+    //         dtoroom.NumberRoomm = 60;
+    //         dtoroom.Typee = "TypeeUpdate" 
+    //         dtoroom.Typebed = "Typebedupdate"
+    //          dtoroom.Accommodation = "AccommodationUp"
+    //           dtoroom.Descriptionn = "DescriptionnUP"
+    //         dtoroom.Value = 99 ;
+    //          dtoroom.Imagee ="urlimageup" 
+    //          dtoroom.Squaremeter = 38;
+    //         let updateRoom = await DataRoom.updateRoom(dtoroom);
+    //         if (updateRoom===-1) {
+    //          throw new Error("The room does not exists");
+    //         }
+    //     console.log("The room updated successfully");
+    // }
+    // await updateRoom();
+
+    // async function inactiveRoom() {
+    
+    //         let inactiveRoom = await DataRoom.inactiveRoom(5);
+    //         if (inactiveRoom===-1) {
+    //             throw new Error("The room does not exists");
+    //         }
+    //         console.log("The room was deleted successfully");
+
+    //     }
+    //  await inactiveRoom();
+
+    
+    // let getRoom = await DataRoom.getRoom(1);
+    // console.log(getRoom);
+
+    //   let getRooms = await DataRoom.getRooms("Value");
+    // console.log(getRooms);
+
+    //    let getSearchRoom = await DataRoom.getSearchRoom("","",
+    //    "",145,150,39,45,"value");
+    // console.log(getSearchRoom);
+
+}
+roommaintenance().then()
+
+//#endregion
+//#region  Reservation
+
+let reservationmaintenance=async()=>
+{
+
+    //#region  Hotel Reservation
+
+            let newreservation=new DTOReservation();
+
+            //Get passenger
+             let getPassenger = await DataPassenger.getPassenger("58656455446");
+             if (getPassenger===-1) {
+                throw new Error("The Passenger does not exists")
+             }
+             console.log(getPassenger);
+
+            // If the passenger does not exist
+            
+            
+            async function registerPassenger() {
+
+                let dtopassenger = new DTOPassenger();
+                dtopassenger.idcard = "58656455446";
+                dtopassenger.name = "NamePassenger";
+                dtopassenger.surname = "SurnamePassenger";
+                dtopassenger.country = "Country";
+                dtopassenger.password = "Password";
+                dtopassenger.town = "Town";
+                dtopassenger.address = "Address";
+                dtopassenger.phone = "111111111";
+                dtopassenger.maill = "email@gmail.com";
+                const passh = HashPassword.hashPassword(dtopassenger.password);
+                dtopassenger.password = passh.hash;
+                dtopassenger.salt = passh.salt;
+                let registerPassenger = await DataPassenger.registerPassenger(dtopassenger);
+                if (registerPassenger === -1) {
+                    throw new Error("The passenger already exists");
+                }
+                console.log("The passenger registered successfully");
+            }
+            await registerPassenger();
+
+            newreservation.Passengerr.idcard="58656455446";
+
+
+
+            
+
+
+
+   
+    //#endregion
+// async function registerRoom() {
+//         for (let index = 1; index < 100; index++) {
+//             let dtoroom =new DTORoom();
+//             dtoroom.Typee = "Typee" + index.toString();
+//             dtoroom.Typebed = "Typebed" + index.toString();
+//             dtoroom.Accommodation = "Accommodation" + index.toString();
+//             dtoroom.Descriptionn = "Descriptionn" + index.toString();
+//             dtoroom.Value = 99 + index;
+//             dtoroom.Imagee ="urlimage" + index.toString();
+//             dtoroom.Squaremeter = 42;
+//             let registerRoom = await DataRoom.registerRoom(dtoroom);
+//             console.log("The room registered successfully");
+//         }
+//     }
+//      await registerRoom();
+
+    
+
+
+    // async function updateRoom() {
+    //         let dtoroom = new DTORoom();
+    //         dtoroom.NumberRoomm = 60;
+    //         dtoroom.Typee = "TypeeUpdate" 
+    //         dtoroom.Typebed = "Typebedupdate"
+    //          dtoroom.Accommodation = "AccommodationUp"
+    //           dtoroom.Descriptionn = "DescriptionnUP"
+    //         dtoroom.Value = 99 ;
+    //          dtoroom.Imagee ="urlimageup" 
+    //          dtoroom.Squaremeter = 38;
+    //         let updateRoom = await DataRoom.updateRoom(dtoroom);
+    //         if (updateRoom===-1) {
+    //          throw new Error("The room does not exists");
+    //         }
+    //     console.log("The room updated successfully");
+    // }
+    // await updateRoom();
+
+    // async function inactiveRoom() {
+    
+    //         let inactiveRoom = await DataRoom.inactiveRoom(5);
+    //         if (inactiveRoom===-1) {
+    //             throw new Error("The room does not exists");
+    //         }
+    //         console.log("The room was deleted successfully");
+
+    //     }
+    //  await inactiveRoom();
+
+    
+    // let getRoom = await DataRoom.getRoom(1);
+    // console.log(getRoom);
+
+    //   let getRooms = await DataRoom.getRooms("Value");
+    // console.log(getRooms);
+
+    //    let getSearchRoom = await DataRoom.getSearchRoom("","",
+    //    "",145,150,39,45,"value");
+    // console.log(getSearchRoom);
+
+}
+reservationmaintenance().then()
+
+
 //#endregion
 //#region Others
 
