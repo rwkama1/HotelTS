@@ -1,7 +1,7 @@
 class HotelReservation
 {
 
-    //#region Propieties
+    //#region Properties
 
      static _roomarray = [];
 
@@ -16,7 +16,7 @@ class HotelReservation
 
   //#region Reservation
   
-    static registerRoom=async(numberroom)=>
+    static registerRoom=(numberroom)=>
     {
        let arrayroom=this.roomarray;
        if (arrayroom.includes(numberroom)) {
@@ -28,8 +28,14 @@ class HotelReservation
        }
        
     }
+    static calculateTotal=()=>
+    {
+
+    }
+
+    //************************************ */
     
-     static  getRoomsArray()
+     static  getNumberRoomsArray()
     {
         if(this.roomarray!=[])
         {
@@ -41,7 +47,7 @@ class HotelReservation
             throw new Error("The list of number of rooms is empty");
         }
     }
-     static cleanRoomsArray()
+     static cleanNumberRoomsArray()
     {
         if(this.roomarray!=[])
         {

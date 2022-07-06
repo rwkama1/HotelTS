@@ -106,6 +106,7 @@ let passengermaintenance=async()=>
     // console.log(getSearchPassengers);
 
 
+
  }
 passengermaintenance().then()
 
@@ -268,6 +269,9 @@ let roommaintenance=async()=>
     //    "",145,150,39,45,"value");
     // console.log(getSearchRoom);
 
+    //  let getRoomsMultipleNumbers = await DataRoom.getRoomsMultipleNumbers([2,5,6,8,9]);
+    // console.log(getRoomsMultipleNumbers);
+
 }
 roommaintenance().then()
 
@@ -279,42 +283,42 @@ let reservationmaintenance=async()=>
 
     //#region  Hotel Reservation
 
-            let newreservation=new DTOReservation();
+            // let newreservation=new DTOReservation();
 
-            //Get passenger
-             let getPassenger = await DataPassenger.getPassenger("58656455446");
-             if (getPassenger===-1) {
-                throw new Error("The Passenger does not exists")
-             }
-             console.log(getPassenger);
+            // //Get passenger
+            //  let getPassenger = await DataPassenger.getPassenger("58656455446");
+            //  if (getPassenger===-1) {
+            //     throw new Error("The Passenger does not exists")
+            //  }
+            //  console.log(getPassenger);
 
-            // If the passenger does not exist
+            // // If the passenger does not exist
             
             
-            async function registerPassenger() {
+            // async function registerPassenger() {
 
-                let dtopassenger = new DTOPassenger();
-                dtopassenger.idcard = "58656455446";
-                dtopassenger.name = "NamePassenger";
-                dtopassenger.surname = "SurnamePassenger";
-                dtopassenger.country = "Country";
-                dtopassenger.password = "Password";
-                dtopassenger.town = "Town";
-                dtopassenger.address = "Address";
-                dtopassenger.phone = "111111111";
-                dtopassenger.maill = "email@gmail.com";
-                const passh = HashPassword.hashPassword(dtopassenger.password);
-                dtopassenger.password = passh.hash;
-                dtopassenger.salt = passh.salt;
-                let registerPassenger = await DataPassenger.registerPassenger(dtopassenger);
-                if (registerPassenger === -1) {
-                    throw new Error("The passenger already exists");
-                }
-                console.log("The passenger registered successfully");
-            }
-            await registerPassenger();
+            //     let dtopassenger = new DTOPassenger();
+            //     dtopassenger.idcard = "58656455446";
+            //     dtopassenger.name = "NamePassenger";
+            //     dtopassenger.surname = "SurnamePassenger";
+            //     dtopassenger.country = "Country";
+            //     dtopassenger.password = "Password";
+            //     dtopassenger.town = "Town";
+            //     dtopassenger.address = "Address";
+            //     dtopassenger.phone = "111111111";
+            //     dtopassenger.maill = "email@gmail.com";
+            //     const passh = HashPassword.hashPassword(dtopassenger.password);
+            //     dtopassenger.password = passh.hash;
+            //     dtopassenger.salt = passh.salt;
+            //     let registerPassenger = await DataPassenger.registerPassenger(dtopassenger);
+            //     if (registerPassenger === -1) {
+            //         throw new Error("The passenger already exists");
+            //     }
+            //     console.log("The passenger registered successfully");
+            // }
+            // await registerPassenger();
 
-            newreservation.Passengerr.idcard="58656455446";
+            // newreservation.Passengerr.idcard="58656455446";
 
 
 
@@ -382,6 +386,8 @@ let reservationmaintenance=async()=>
     //    let getSearchRoom = await DataRoom.getSearchRoom("","",
     //    "",145,150,39,45,"value");
     // console.log(getSearchRoom);
+
+   
 
 }
 reservationmaintenance().then()

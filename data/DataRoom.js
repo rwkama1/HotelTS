@@ -190,6 +190,35 @@ class DataRoom
      
       }
 
+     static getRoomsMultipleNumbers=async(arrayroom,orderby="NumberRoomm")=>//used to reserve rooms
+    {
+            let array=[];
+            let querysearch = `
+
+               SELECT * FROM Room WHERE Statee='Active'
+               AND numberroomm in (
+                ${
+                  this.forinsidestring(arrayroom)
+                }
+                )
+               ORDER BY ${orderby} desc
+
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .query(querysearch)
+             for (var r of result.recordset) {
+              let room = new DTORoom();
+              this.getinformation(room,  r);
+              array.push(room);
+            } 
+           pool.close();
+           return array;
+      
+    
+     }
+
+
     //#endregion
 
    //#region GET INFORMATION
@@ -207,7 +236,23 @@ class DataRoom
     room.Squaremeter = result.Squaremeter; 
     
    }
-
+   static forinsidestring(array)
+   {
+    let stringelement="";
+    for (let index = 0; index < array.length; index++) {
+      const element = array[index];
+      if (index===array.length-1) {
+        stringelement=stringelement+element
+      }
+      else
+      {
+        stringelement=stringelement+element+","
+      }
+     
+    }
+    return stringelement
+   
+   }
    //#endregion
 }
 module.exports = { DataRoom };
