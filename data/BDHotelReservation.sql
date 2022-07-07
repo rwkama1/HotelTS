@@ -109,9 +109,11 @@ go
 --drop table Passenger
 --drop table Users
 
-select * from room where numberroomm in (14,13,12,20,150) and statee='Active'
-update room set statee='Inactive' where numberroomm=14
 
+
+select * from passenger
+
+select * from room
 
 --select * from ReservationDetail
 

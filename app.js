@@ -1,5 +1,6 @@
 
 const { DataPassenger } = require("./data/DataPassenger");
+const { DataReservation } = require("./data/DataReservation");
 const { DataRoom } = require("./data/DataRoom");
 const { DataUser } = require("./data/DataUser");
 const { DTOPassenger } = require("./DTO/DTOPassenger");
@@ -9,6 +10,7 @@ const { DTOUser } = require("./DTO/DTOUser");
 const { HashPassword } = require("./Hash_Login/hashPassword");
 const { LoginPassenger } = require("./Hash_Login/LoginPassenger");
 const { LoginUser } = require("./Hash_Login/LoginUser");
+const { Reservation } = require("./Reservation/reservation");
 
 //#region Passenger
 let passengermaintenance=async()=>
@@ -283,16 +285,16 @@ let reservationmaintenance=async()=>
 
     //#region  Hotel Reservation
 
-            // let newreservation=new DTOReservation();
+            let newreservation=new DTOReservation();
 
-            // //Get passenger
+            //Get passenger
             //  let getPassenger = await DataPassenger.getPassenger("58656455446");
             //  if (getPassenger===-1) {
             //     throw new Error("The Passenger does not exists")
             //  }
             //  console.log(getPassenger);
 
-            // // If the passenger does not exist
+            // If the passenger does not exist
             
             
             // async function registerPassenger() {
@@ -318,7 +320,65 @@ let reservationmaintenance=async()=>
             // }
             // await registerPassenger();
 
-            // newreservation.Passengerr.idcard="58656455446";
+            newreservation.Passengerr.idcard="111111111111111";
+
+            let registerRoom1=Reservation.registerRoom(1);
+            if (registerRoom1===-1) {
+                throw new Error("The number room already exist in the list")
+            }
+            console.log(registerRoom1);
+
+            let registerRoom2=Reservation.registerRoom(2);
+            if (registerRoom2===-1) {
+                throw new Error("The number room already exist in the list")
+            }
+            console.log(registerRoom2);
+
+            let registerRoom3=Reservation.registerRoom(3);
+            if (registerRoom3===-1) {
+                throw new Error("The number room already exist in the list")
+            }
+            console.log(registerRoom3);
+
+            let registerRoom4=Reservation.registerRoom(4);
+            if (registerRoom4===-1) {
+                throw new Error("The number room already exist in the list")
+            }
+            console.log(registerRoom4);
+
+            
+            let calculateTotal=await Reservation.calculateTotal();
+            if (calculateTotal===-1) {
+                throw new Error("The list of number of rooms is empty")
+            }
+            console.log(calculateTotal);
+
+
+
+//******************************************************* */
+
+            // let removeNumberRoomArray=Reservation.removeNumberRoomArray(2);
+            // if (removeNumberRoomArray===-1) {
+            //     throw new Error("The number room does not exist in the list")
+            // }
+            // console.log(removeNumberRoomArray);
+
+           
+
+            let getNumberRoomsArray=Reservation.getNumberRoomsArray();
+            if (getNumberRoomsArray===-1) {
+                throw new Error("The list of number rooms is empty")
+            }
+            console.log(getNumberRoomsArray);
+
+
+
+            // let cleanNumberRoomsArray=Reservation.cleanNumberRoomsArray();
+            // if (getNumberRoomsArray===-1) {
+            //     throw new Error("The list of number rooms is empty")
+            // }
+            // console.log(cleanNumberRoomsArray);
+
 
 
 

@@ -1,13 +1,16 @@
 const { VarChar,Int, Money } = require("mssql");
 const { DTORoom } = require("../DTO/DTORoom");
-
+const { DTOReservation } = require("../DTO/DTOReservation");
 const { Conection } = require("./Conection");
+const { DTOReservationDetail } = require("../DTO/DTOReservationDetail");
+const { DataRoom } = require("./DataRoom");
 
-class DataRoom
+
+class DataReservation
 {
     //#region CRUD
 
-    static registerRoom=async(dtoroom)=>
+    static registerReservation=async(dtoroom)=>
     {
           let queryinsert = `  
 
@@ -190,40 +193,61 @@ class DataRoom
      
       }
 
-     static getRoomsMultipleNumbers=async(arrayroom,orderby="NumberRoomm")=>
+     static getDetailReservationMultipleRooms=async(arrayroom,orderby="NumberRoomm")=>//used to reserve rooms
     {
             let array=[];
-            let querysearch = `
+             let querysearch =
+             `
+                 SELECT 
+                    *, 
+                    (
+                    select 
+                        SUM(value) as total 
+                    from 
+                        room 
+                    where 
+                        statee = 'Active' and 
+                        numberroomm in (
+                            ${
+                             this.forinsidestringrooms(arrayroom)
+                             }
+                        ) 
+                    
+                    ) as Total 
+                    FROM 
+                    room 
+                    WHERE 
+                    numberroomm IN 
+                    (
+                     ${
+                      this.forinsidestringrooms(arrayroom)
+                     }
+                    ) 
+                    AND  statee = 'Active'
+                    ORDER BY ${orderby} desc
+              
+             `
 
-               SELECT * FROM Room WHERE Statee='Active'
-               AND numberroomm in (
-                ${
-                  this.forinsidestring(arrayroom)
-                }
-                )
-               ORDER BY ${orderby} desc
-
-            `
             let pool = await Conection.conection();
              const result = await pool.request()
              .query(querysearch)
              for (var r of result.recordset) {
-              let room = new DTORoom();
-              this.getinformation(room,  r);
-              array.push(room);
+              let detailreservation = new DTOReservationDetail();
+              this.getinformationDetailReservationTotal(detailreservation,r);
+              array.push(detailreservation);
             } 
            pool.close();
            return array;
       
     
      }
-    
+
 
     //#endregion
 
    //#region GET INFORMATION
 
-   static getinformation(room, result) {
+   static getinformationReservation(room, result) {
 
     room.NumberRoomm = result.NumberRoomm;
     room.Typee = result.Typee;
@@ -236,8 +260,16 @@ class DataRoom
     room.Squaremeter = result.Squaremeter; 
     
    }
+   
+   static getinformationDetailReservationTotal(detailreservation, result) {
 
-   static forinsidestring(array)
+    detailreservation.Total=result.Total;
+    detailreservation.Value=result.Value;
+    detailreservation.Reservation=null;
+    DataRoom.getinformation(detailreservation.Room,result)
+
+   }
+   static forinsidestringrooms(array)//pass all numbers to string for sql query
    {
     let stringelement="";
     for (let index = 0; index < array.length; index++) {
@@ -254,6 +286,24 @@ class DataRoom
     return stringelement
    
    }
+
+//    static forinsidestring(array)//pass all numbers to string for sql query
+//    {
+//     let stringelement="";
+//     for (let index = 0; index < array.length; index++) {
+//       const element = array[index];
+//       if (index===array.length-1) {
+//         stringelement=stringelement+element
+//       }
+//       else
+//       {
+//         stringelement=stringelement+element+","
+//       }
+     
+//     }
+//     return stringelement
+   
+//    }
    //#endregion
 }
-module.exports = { DataRoom };
+module.exports = { DataReservation };
