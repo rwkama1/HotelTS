@@ -285,7 +285,6 @@ let reservationmaintenance=async()=>
 
     //#region  Hotel Reservation
 
-            let newreservation=new DTOReservation();
 
             //Get passenger
             //  let getPassenger = await DataPassenger.getPassenger("58656455446");
@@ -320,42 +319,62 @@ let reservationmaintenance=async()=>
             // }
             // await registerPassenger();
 
-            newreservation.Passengerr.idcard="111111111111111";
+           
 
-            let registerRoom1=Reservation.registerRoom(1);
-            if (registerRoom1===-1) {
-                throw new Error("The number room already exist in the list")
-            }
-            console.log(registerRoom1);
+        //     let registerRoom1=Reservation.registerRoom(1);
+        //     if (registerRoom1===-1) {
+        //         throw new Error("The number room already exist in the list")
+        //     }
+        //     console.log(registerRoom1);
 
-            let registerRoom2=Reservation.registerRoom(2);
-            if (registerRoom2===-1) {
-                throw new Error("The number room already exist in the list")
-            }
-            console.log(registerRoom2);
+        //     let registerRoom2=Reservation.registerRoom(2);
+        //     if (registerRoom2===-1) {
+        //         throw new Error("The number room already exist in the list")
+        //     }
+        //     console.log(registerRoom2);
 
-            let registerRoom3=Reservation.registerRoom(3);
-            if (registerRoom3===-1) {
-                throw new Error("The number room already exist in the list")
-            }
-            console.log(registerRoom3);
+        //     let registerRoom3=Reservation.registerRoom(3);
+        //     if (registerRoom3===-1) {
+        //         throw new Error("The number room already exist in the list")
+        //     }
+        //     console.log(registerRoom3);
 
-            let registerRoom4=Reservation.registerRoom(4);
-            if (registerRoom4===-1) {
-                throw new Error("The number room already exist in the list")
-            }
-            console.log(registerRoom4);
+        //     let registerRoom4=Reservation.registerRoom(4);
+        //     if (registerRoom4===-1) {
+        //         throw new Error("The number room already exist in the list")
+        //     }
+        //     console.log(registerRoom4);
 
             
-            let calculateTotal=await Reservation.calculateTotal();
-            if (calculateTotal===-1) {
-                throw new Error("The list of number of rooms is empty")
-            }
-            console.log(calculateTotal);
+        //     let calculateTotal=await Reservation.calculateTotal();
+        //     if (calculateTotal===-1) {
+        //         throw new Error("The list of number of rooms is empty")
+        //     }
+        //     console.log(calculateTotal);
 
+        //     let datenow=new Date();
+        //     let reservationdate=new Date(datenow.getFullYear(),
+        //         datenow.getMonth(),datenow.getDate())
+        //     let arrivaldate=new Date(2022,07,07);
+        //     let departuredate=new Date(2022,08,01);
+        //     if (arrivaldate>=departuredate) {
+        //       throw new Error("The departure date must be greater than the arrival date")
+        //     }
+            
+        //    let registerHotelReservation=await DataReservation.registerHotelReservation("111111111111111",
+        //     arrivaldate,departuredate,reservationdate,calculateTotal[0].Total,calculateTotal);
+        //     if (registerHotelReservation===-1) {
+        //         throw new Error("The Passanger does not exist")
+        //     }
+        //     console.log("The reservation was added successfully");
 
-
-//******************************************************* */
+            // let cleanNumberRoomsArray=Reservation.cleanNumberRoomsArray();
+            // if (getNumberRoomsArray===-1) {
+            //     throw new Error("The list of number rooms is empty")
+            // }
+            // console.log(cleanNumberRoomsArray);
+            
+        //******************************************************* */
 
             // let removeNumberRoomArray=Reservation.removeNumberRoomArray(2);
             // if (removeNumberRoomArray===-1) {
@@ -365,30 +384,91 @@ let reservationmaintenance=async()=>
 
            
 
-            let getNumberRoomsArray=Reservation.getNumberRoomsArray();
-            if (getNumberRoomsArray===-1) {
-                throw new Error("The list of number rooms is empty")
-            }
-            console.log(getNumberRoomsArray);
-
-
-
-            // let cleanNumberRoomsArray=Reservation.cleanNumberRoomsArray();
+            // let getNumberRoomsArray=Reservation.getNumberRoomsArray();
             // if (getNumberRoomsArray===-1) {
-            //     throw new Error("The list of number rooms is empty")
+            //     throw new Error("The passenger does not exists");
             // }
-            // console.log(cleanNumberRoomsArray);
+            // console.log(getNumberRoomsArray);
 
+    //#endregion
+    //#region  Online Reservation
 
+        //  let loginPassenger = await LoginPassenger.loginPassenger('111111111111111', 'Password1');
+        // console.log(loginPassenger);
 
+    
+        //     let registerRoom1=Reservation.registerRoom(1);
+        //     if (registerRoom1===-1) {
+        //         throw new Error("The number room already exist in the list")
+        //     }
+        //     console.log(registerRoom1);
 
             
+        //     let calculateTotal=await Reservation.calculateTotal();
+        //     if (calculateTotal===-1) {
+        //         throw new Error("The list of number of rooms is empty")
+        //     }
+        //     console.log(calculateTotal);
+
+        //     let datenow=new Date();
+        //     let reservationdate=new Date(datenow.getFullYear(),
+        //         datenow.getMonth(),datenow.getDate())
+        //     let arrivaldate=new Date(2022,07,07);
+        //     let departuredate=new Date(2022,08,01);
+        //     if (arrivaldate>=departuredate) {
+        //       throw new Error("The departure date must be greater than the arrival date")
+        //     }
+            
+        //    let registerOnlineReservation=await DataReservation.registerOnlineReservation(loginPassenger.idcard,
+        //     arrivaldate,departuredate,reservationdate,calculateTotal[0].Total,calculateTotal);
+        //     if (registerOnlineReservation===-1) {
+        //         throw new Error("The Passanger does not exist")
+        //     }
+        //     console.log("The reservation was added successfully");
+
+        //     let cleanNumberRoomsArray=Reservation.cleanNumberRoomsArray();
+        //     if (cleanNumberRoomsArray===-1) {
+        //         throw new Error("The list of number rooms is empty")
+        //     }
+        //     console.log(cleanNumberRoomsArray);
+            
+//******************************************************* */
+
+            // // let removeNumberRoomArray=Reservation.removeNumberRoomArray(2);
+            // // if (removeNumberRoomArray===-1) {
+            // //     throw new Error("The number room does not exist in the list")
+            // // }
+            // // console.log(removeNumberRoomArray);
+
+           
+
+        //     let getNumberRoomsArray=Reservation.getNumberRoomsArray();
+        //     if (getNumberRoomsArray===-1) {
+        //         throw new Error("The passenger does not exists");
+        //     }
+        //     console.log(getNumberRoomsArray);
 
 
+        // let logout = await LoginPassenger.logoutPassenger();
+        // console.log(logout);
+    
 
-   
+    //#endregion 
+    //#region  Maintenance
+
+               let calculateTotal=await DataReservation.calculateTotal();
+            if (calculateTotal===-1) {
+                throw new Error("The list of number of rooms is empty")
+            }
+            console.log(calculateTotal);
+
     //#endregion
-// async function registerRoom() {
+
+
+
+
+
+    // async function registerRoom() {
 //         for (let index = 1; index < 100; index++) {
 //             let dtoroom =new DTORoom();
 //             dtoroom.Typee = "Typee" + index.toString();

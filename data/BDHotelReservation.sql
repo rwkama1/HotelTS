@@ -113,10 +113,14 @@ go
 
 select * from passenger
 
-select * from room
 
---select * from ReservationDetail
+delete  from ReservationDetail
+
+delete  from Reservation
+
+select * from ReservationDetail
 
 
+select * from Reservation
 
-
+SELECT * FROM ReservationDetail WHERE NumberRoom=4 and NumberReservation=6

@@ -49,7 +49,7 @@ class DataPassenger
     }
     static updatePassenger=async(dtopassenger)=>
     {
-      let resultquery;
+          let resultquery;
           let queryupdate = `
 
           IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
@@ -174,7 +174,7 @@ class DataPassenger
              .query(querysearch)
               resultquery = result.recordset[0].notexistpassenger; 
             if (resultquery===undefined) {
-              resultrecordset=result.recordset[0];
+              let resultrecordset=result.recordset[0];
               let passenger = new DTOPassenger();
               this.getinformation(passenger, resultrecordset);
               resultquery=passenger

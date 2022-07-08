@@ -1,6 +1,6 @@
 class DTORoom
 {
-    NumberRoomm="";
+    NumberRoomm=0;
     Typee="";
     Typebed="";
     Accommodation="";
