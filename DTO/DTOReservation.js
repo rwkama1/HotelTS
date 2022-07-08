@@ -2,7 +2,7 @@ const { DTOPassenger } = require("./DTOPassenger");
 
 class DTOReservation
 {
-    NumberReservationn="";
+    NumberReservationn=0;
     ReservationDate=new Date();
     ArrivalDate=new Date();
     DepartureDate=new Date();

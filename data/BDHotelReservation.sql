@@ -123,4 +123,6 @@ select * from ReservationDetail
 
 select * from Reservation
 
-SELECT * FROM ReservationDetail WHERE NumberRoom=4 and NumberReservation=6
+  SELECT * FROM Reservation WHERE ArrivalDate
+                  BETWEEN '2022-08-10' and '2022-08-06'
+                   

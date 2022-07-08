@@ -4,6 +4,7 @@ const { DTOReservation } = require("../DTO/DTOReservation");
 const { Conection } = require("./Conection");
 const { DTOReservationDetail } = require("../DTO/DTOReservationDetail");
 const { DataRoom } = require("./DataRoom");
+const { DataPassenger } = require("./DataPassenger");
 
 
 class DataReservation
@@ -164,6 +165,39 @@ class DataReservation
     }
 
     // Detail Reservation
+
+    static addDetailReservation=async(numberreservation,numberrom)=>
+    {
+          let resultquery;
+          let queryupdate = `
+
+          IF EXISTS ( SELECT * FROM ReservationDetail WHERE NumberRoom=@NumberRoom and NumberReservation=@NumberReservation)
+          BEGIN
+            select -1 as existreservationdetail
+          END
+          ELSE
+          BEGIN
+             DELETE FROM ReservationDetail WHERE NumberRoom=@NumberRoom and NumberReservation=@NumberReservation
+             select 1 as insertsuccess
+          END
+
+          `;
+          let pool = await Conection.conection();
+         
+          const result = await pool.request()
+          .input('NumberRoom', Int, numberrom)
+          .input('NumberReservation', Int,numberreservation)
+          .query(queryupdate)
+          resultquery = result.recordset[0].existreservationdetail;
+          if(resultquery===undefined)
+          {
+              resultquery = result.recordset[0].insertsuccess;
+          }
+          pool.close();
+          return resultquery;
+       
+    }
+   
     static removeDetailReservation=async(numberreservation,numberrom)=>
     {
           let resultquery;
@@ -203,32 +237,32 @@ class DataReservation
 
     //#region GETS
 
-    static getRoom=async(numberoom)=>
+    static getReservation=async(numberreservation)=>
     {
             let resultquery;
             let querysearch = `
 
-            IF NOT EXISTS ( SELECT * FROM Room WHERE NumberRoomm=@NumberRoomm and Statee='Active')
+            IF NOT EXISTS ( SELECT * FROM Reservation WHERE NumberReservationn=@NumberReservationn)
             BEGIN
-              select -1 as notexistroom
+              select -1 as notexistreservation
             END
             ELSE
             BEGIN
-                SELECT * FROM Room
-                WHERE NumberRoomm=@NumberRoomm and Statee='Active'
+                SELECT * FROM Reservation
+                WHERE NumberReservationn=@NumberReservationn
             END
 
             `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .input('NumberRoomm', Int, numberoom)
+             .input('NumberReservationn', Int, numberreservation)
              .query(querysearch)
-            resultquery = result.recordset[0].notexistroom; 
+            resultquery = result.recordset[0].notexistreservation; 
             if (resultquery===undefined) {
              let resultrecordset=result.recordset[0];
-              let room = new DTORoom();
-              this.getinformation(room, resultrecordset);
-              resultquery=room
+              let resr = new DTOReservation();
+              this.getinformation(resr, resultrecordset);
+              resultquery=resr
             }
            pool.close();
            return resultquery;
@@ -236,6 +270,207 @@ class DataReservation
     
      }
 
+
+     static getReservations=async(orderby="NumberReservationn")=>
+     {
+             let resultquery;
+             let querysearch = `
+
+                 SELECT * FROM Reservation
+                 ORDER BY ${orderby} desc
+
+             `
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .query(querysearch)        
+              for (var r of result.recordset) {
+                let reserv = new DTOReservation();
+                this.getinformationReservation(reserv,  r);
+                array.push(reserv);
+              } 
+            pool.close();
+            return resultquery;
+       
+     
+      }
+    static getConfirmedReservations=async(orderby="NumberReservationn")=>
+      {
+              let resultquery;
+              let querysearch = `
+                  SELECT * FROM Reservation where ProcessStatus='Confirmed'
+                  ORDER BY ${orderby} desc
+              `
+              let pool = await Conection.conection();
+               const result = await pool.request()
+               .query(querysearch)        
+               for (var r of result.recordset) {
+                 let reserv = new DTOReservation();
+                 this.getinformationReservation(reserv,  r);
+                 array.push(reserv);
+               } 
+             pool.close();
+             return resultquery;
+        
+      
+       }
+    static getPendingReservations=async(orderby="NumberReservationn")=>
+       {
+               let resultquery;
+               let querysearch = `
+                   SELECT * FROM Reservation where ProcessStatus='Pending'
+                   ORDER BY ${orderby} desc
+               `
+               let pool = await Conection.conection();
+                const result = await pool.request()
+                .query(querysearch)        
+                for (var r of result.recordset) {
+                  let reserv = new DTOReservation();
+                  this.getinformationReservation(reserv,  r);
+                  array.push(reserv);
+                } 
+              pool.close();
+              return resultquery;
+         
+       
+        }
+    static getCanceledReservations=async(orderby="NumberReservationn")=>
+     {
+             let resultquery;
+             let querysearch = `
+                 SELECT * FROM Reservation where ProcessStatus='Canceled'
+                 ORDER BY ${orderby} desc
+             `
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .query(querysearch)        
+              for (var r of result.recordset) {
+                let reserv = new DTOReservation();
+                this.getinformationReservation(reserv,  r);
+                array.push(reserv);
+              } 
+            pool.close();
+            return resultquery;
+       
+     
+      }  
+    static getReservationsByPassenger=async(idcardpassenger,orderby="NumberReservationn")=>
+      {
+              let resultquery;
+              let querysearch = `
+
+                  SELECT * FROM Reservation WHERE
+                   IDCardPassengerr=@IDCardPassengerr
+                  ORDER BY ${orderby} desc
+              `
+              let pool = await Conection.conection();
+               const result = await pool.request()
+               .input('IDCardPassengerr', Int, idcardpassenger)
+               .query(querysearch)        
+               for (var r of result.recordset) {
+                 let reserv = new DTOReservation();
+                 this.getinformationReservation(reserv,  r);
+                 array.push(reserv);
+               } 
+             pool.close();
+             return resultquery;
+        
+      
+       }  
+    static getReservationsPendingByPassenger=async(idcardpassenger,orderby="NumberReservationn")=>
+       {
+               let resultquery;
+               let querysearch = `
+ 
+                   SELECT * FROM Reservation WHERE
+                    IDCardPassengerr=@IDCardPassengerr AND ProcessStatus='Pending'
+                   ORDER BY ${orderby} desc
+               `
+               let pool = await Conection.conection();
+                const result = await pool.request()
+                .input('IDCardPassengerr', Int, idcardpassenger)
+                .query(querysearch)        
+                for (var r of result.recordset) {
+                  let reserv = new DTOReservation();
+                  this.getinformationReservation(reserv,  r);
+                  array.push(reserv);
+                } 
+              pool.close();
+              return resultquery;
+         
+       
+        }  
+    static getReservationsBetweenReservationDates=async(date1,date2,orderby="NumberReservationn")=>
+        {
+                let resultquery;
+                let querysearch = `
+  
+                SELECT * FROM Reservation WHERE ReservationDate
+                BETWEEN  @Date1 and @Date2 
+                ORDER BY ${orderby} desc
+                `
+                let pool = await Conection.conection();
+                 const result = await pool.request()
+                 .input('Date1', Date, date1)
+                 .input('Date2', Date, date2)
+                 .query(querysearch)        
+                 for (var r of result.recordset) {
+                   let reserv = new DTOReservation();
+                   this.getinformationReservation(reserv,  r);
+                   array.push(reserv);
+                 } 
+               pool.close();
+               return resultquery;
+          
+        
+         }  
+     static getReservationsBetweenArrivalDates=async(date1,date2,orderby="NumberReservationn")=>
+        {
+                let resultquery;
+                let querysearch = `
+  
+                SELECT * FROM Reservation WHERE ArrivalDate
+                BETWEEN  @Date1 and @Date2 
+                ORDER BY ${orderby} desc
+                `
+                let pool = await Conection.conection();
+                 const result = await pool.request()
+                 .input('Date1', Date, date1)
+                 .input('Date2', Date, date2)
+                 .query(querysearch)        
+                 for (var r of result.recordset) {
+                   let reserv = new DTOReservation();
+                   this.getinformationReservation(reserv,  r);
+                   array.push(reserv);
+                 } 
+               pool.close();
+               return resultquery;
+          
+        
+         } 
+     static getReservationsBetweenDepartureDates=async(date1,date2,orderby="NumberReservationn")=>
+         {
+                 let resultquery;
+                 let querysearch = `
+   
+                 SELECT * FROM Reservation WHERE DepartureDate
+                 BETWEEN  @Date1 and @Date2 
+                 ORDER BY ${orderby} desc
+                 `
+                 let pool = await Conection.conection();
+                  const result = await pool.request()
+                  .input('Date1', Date, date1)
+                  .input('Date2', Date, date2)
+                  .query(querysearch)        
+                  for (var r of result.recordset) {
+                    let reserv = new DTOReservation();
+                    this.getinformationReservation(reserv,  r);
+                    array.push(reserv);
+                  } 
+                pool.close();
+                return resultquery;
+           
+         
+          }       
     
 
 
@@ -243,17 +478,18 @@ class DataReservation
 
    //#region GET INFORMATION
 
-   static getinformationReservation(room, result) {
+   static getinformationReservation(reservation, result) {
 
-    room.NumberRoomm = result.NumberRoomm;
-    room.Typee = result.Typee;
-    room.Typebed = result.Typebed;
-    room.Accommodation = result.Accommodation;
-    room.Descriptionn = result.Descriptionn; 
-    room.Value = result.Value;
-    room.Statee = result.Statee; 
-    room.Imagee = result.Imagee;
-    room.Squaremeter = result.Squaremeter; 
+
+    reservation.NumberReservationn=result.NumberReservationn;
+    reservation.ReservationDate=result.ReservationDate;
+    reservation.ArrivalDate=result.ArrivalDate;
+    reservation.DepartureDate=result.DepartureDate;
+    reservation.ProcessStatus=result.ProcessStatus;
+    reservation.ConfirmationStatus=result.ConfirmationStatus;
+    reservation.Origin=result.Origin;
+    reservation.Total=result.Total;
+    DataPassenger.getinformation(reservation.Passengerr,result)
     
    }
    
