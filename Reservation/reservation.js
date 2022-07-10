@@ -36,7 +36,7 @@ class Reservation
     {
       
         let arrayroom=this.roomarray;
-        if(arrayroom!=[])
+        if(arrayroom.length>0)
         {
            let getDetailReservations=await DataReservation.getDetailReservationMultipleRooms(arrayroom);
            return getDetailReservations

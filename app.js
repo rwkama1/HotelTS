@@ -368,77 +368,96 @@ let reservationmaintenance=async()=>
         //     }
         //     console.log("The reservation was added successfully");
 
-            // let cleanNumberRoomsArray=Reservation.cleanNumberRoomsArray();
-            // if (getNumberRoomsArray===-1) {
-            //     throw new Error("The list of number rooms is empty")
-            // }
-            // console.log(cleanNumberRoomsArray);
-            
-        //******************************************************* */
-
-            // let removeNumberRoomArray=Reservation.removeNumberRoomArray(2);
-            // if (removeNumberRoomArray===-1) {
-            //     throw new Error("The number room does not exist in the list")
-            // }
-            // console.log(removeNumberRoomArray);
-
-           
-
-            // let getNumberRoomsArray=Reservation.getNumberRoomsArray();
-            // if (getNumberRoomsArray===-1) {
-            //     throw new Error("The passenger does not exists");
-            // }
-            // console.log(getNumberRoomsArray);
-
-    //#endregion
-    //#region  Online Reservation
-
-        //  let loginPassenger = await LoginPassenger.loginPassenger('111111111111111', 'Password1');
-        // console.log(loginPassenger);
-
-    
-        //     let registerRoom1=Reservation.registerRoom(1);
-        //     if (registerRoom1===-1) {
-        //         throw new Error("The number room already exist in the list")
-        //     }
-        //     console.log(registerRoom1);
-
-            
-        //     let calculateTotal=await Reservation.calculateTotal();
-        //     if (calculateTotal===-1) {
-        //         throw new Error("The list of number of rooms is empty")
-        //     }
-        //     console.log(calculateTotal);
-
-        //     let datenow=new Date();
-        //     let reservationdate=new Date(datenow.getFullYear(),
-        //         datenow.getMonth(),datenow.getDate())
-        //     let arrivaldate=new Date(2022,07,07);
-        //     let departuredate=new Date(2022,08,01);
-        //     if (arrivaldate>=departuredate) {
-        //       throw new Error("The departure date must be greater than the arrival date")
-        //     }
-            
-        //    let registerOnlineReservation=await DataReservation.registerOnlineReservation(loginPassenger.idcard,
-        //     arrivaldate,departuredate,reservationdate,calculateTotal[0].Total,calculateTotal);
-        //     if (registerOnlineReservation===-1) {
-        //         throw new Error("The Passanger does not exist")
-        //     }
-        //     console.log("The reservation was added successfully");
-
         //     let cleanNumberRoomsArray=Reservation.cleanNumberRoomsArray();
         //     if (cleanNumberRoomsArray===-1) {
         //         throw new Error("The list of number rooms is empty")
         //     }
         //     console.log(cleanNumberRoomsArray);
             
-//******************************************************* */
+        // //******************************************************* */
 
-            // // let removeNumberRoomArray=Reservation.removeNumberRoomArray(2);
-            // // if (removeNumberRoomArray===-1) {
-            // //     throw new Error("The number room does not exist in the list")
-            // // }
-            // // console.log(removeNumberRoomArray);
+        //     // let removeNumberRoomArray=Reservation.removeNumberRoomArray(2);
+        //     // if (removeNumberRoomArray===-1) {
+        //     //     throw new Error("The number room does not exist in the list")
+        //     // }
+        //     // console.log(removeNumberRoomArray);
+
+           
+
+        //     let getNumberRoomsArray=Reservation.getNumberRoomsArray();
+        //     if (getNumberRoomsArray===-1) {
+        //         throw new Error("The passenger does not exists");
+        //     }
+        //     console.log(getNumberRoomsArray);
+
+    //#endregion
+    //#region  Online Reservation
+
+//          let loginPassenger = await LoginPassenger.loginPassenger('111111111111111', 'Password1');
+//         console.log(loginPassenger);
+
+    
+// //             let registerRoom1=Reservation.registerRoom(25);
+// //             if (registerRoom1===-1) {
+// //                 throw new Error("The number room already exist in the list")
+// //             }
+// //             console.log(registerRoom1);
+
+//                 let registerRoom2=Reservation.registerRoom(6);
+//                             if (registerRoom2===-1) {
+//                                 throw new Error("The number room already exist in the list")
+//                             }
+//                             console.log(registerRoom2);
+
+//                 let registerRoom3=Reservation.registerRoom(7);
+//                             if (registerRoom3===-1) {
+//                                 throw new Error("The number room already exist in the list")
+//                             }
+//                             console.log(registerRoom3);
+
+//                 let registerRoom4=Reservation.registerRoom(8);
+//                             if (registerRoom4===-1) {
+//                                 throw new Error("The number room already exist in the list")
+//                             }
+//                             console.log(registerRoom4);
+
+
+            
+//             let calculateTotal=await Reservation.calculateTotal();
+//             if (calculateTotal===-1) {
+//                 throw new Error("The list of number of rooms is empty")
+//             }
+//             console.log(calculateTotal);
+
+//             let datenow=new Date();
+//             let reservationdate=new Date(datenow.getFullYear(),
+//                 datenow.getMonth(),datenow.getDate())
+//             let arrivaldate=new Date(2022,07,07);
+//             let departuredate=new Date(2022,08,01);
+//             if (arrivaldate>=departuredate) {
+//               throw new Error("The departure date must be greater than the arrival date")
+//             }
+            
+//            let registerOnlineReservation=await DataReservation.registerOnlineReservation(loginPassenger.idcard,
+//             arrivaldate,departuredate,reservationdate,calculateTotal[0].Total,calculateTotal);
+//             if (registerOnlineReservation===-1) {
+//                 throw new Error("The Passanger does not exist")
+//             }
+//             console.log("The reservation was added successfully");
+
+//             let cleanNumberRoomsArray=Reservation.cleanNumberRoomsArray();
+//             if (cleanNumberRoomsArray===-1) {
+//                 throw new Error("The list of number rooms is empty")
+//             }
+//             console.log(cleanNumberRoomsArray);
+            
+////*************************************************************** */ */
+
+            // let removeNumberRoomArray=Reservation.removeNumberRoomArray(2);
+            // if (removeNumberRoomArray===-1) {
+            //     throw new Error("The number room does not exist in the list")
+            // }
+            // console.log(removeNumberRoomArray);
 
            
 
@@ -456,14 +475,58 @@ let reservationmaintenance=async()=>
     //#endregion 
     //#region  Maintenance
 
-               let calculateTotal=await DataReservation.calculateTotal();
-            if (calculateTotal===-1) {
-                throw new Error("The list of number of rooms is empty")
-            }
-            console.log(calculateTotal);
+    // let cancelReservation=await DataReservation.cancelReservation(12);
+    // if (cancelReservation===-1) {
+    //     throw new Error("The Reservation does not exists")
+    // }
+    // console.log("Reservation Canceled");
+
+
+    // let confirmReservation=await DataReservation.confirmReservation(14);
+    // if (confirmReservation===-1) {
+    //     throw new Error("The Reservation does not exists")
+    // }
+    // console.log("Reservation Confirmed");
+
+
+    
 
     //#endregion
+    //#region  Detail Reservation
 
+    // let addDetailReservation=await DataReservation.addDetailReservation(14,9);
+    //     if (addDetailReservation===-1) {
+    //         throw new Error("Detail Reservation already exists")
+    //     }
+    //     if (addDetailReservation===-2) {
+    //         throw new Error("Reservation does not exists")
+    //     }
+    //     if (addDetailReservation===-3) {
+    //         throw new Error("Room is not active")
+    //     }
+    //     console.log("Detail Reservation Added");
+
+
+    
+    // let removeDetailReservation=await DataReservation.removeDetailReservation(14,9);
+    //     if (removeDetailReservation===-1) {
+    //         throw new Error("Detail Reservation not exists")
+    //     }
+    //     if (removeDetailReservation===-2) {
+    //         throw new Error("Reservation does not exists")
+    //     }
+    //     if (removeDetailReservation===-3) {
+    //         throw new Error("Room is active")
+    //     }
+    //     console.log("Detail Reservation deleted");
+
+  let getDetailReservationByReservation = await DataReservation.getDetailReservationByReservation(14,"Value");
+    console.log(getDetailReservationByReservation);
+
+
+
+    
+    //#endregion
 
 
 

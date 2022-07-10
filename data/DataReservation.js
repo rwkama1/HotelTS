@@ -36,7 +36,7 @@ class DataReservation
                 BEGIN  
                 COMMIT TRANSACTION  
                 END   
-            END       
+          END       
          
             
           `;
@@ -108,13 +108,14 @@ class DataReservation
           let resultquery;
           let queryupdate = `
 
-          IF NOT EXISTS ( SELECT * FROM Reservation WHERE  NumberReservation=@NumberReservation)
-          BEGIN
-            select -1 as notexistreservation
-          END
+          IF NOT EXISTS ( SELECT * FROM Reservation WHERE  NumberReservationn=@NumberReservation)
+            BEGIN
+              select -1 as notexistreservation
+            END
           ELSE
           BEGIN
-             UPDATE Reservation SET processtatus='Canceled',confirmationstatus='NotConfirmed' WHERE NumberReservation=@NumberReservation
+             UPDATE Reservation SET processstatus='Canceled',confirmationstatus='NotConfirmed' 
+             WHERE NumberReservationn=@NumberReservation
              select 1 as canceledsuccess
           END
 
@@ -138,14 +139,32 @@ class DataReservation
           let resultquery;
           let queryupdate = `
 
-          IF NOT EXISTS ( SELECT * FROM Reservation WHERE  NumberReservation=@NumberReservation)
+          IF NOT EXISTS ( SELECT * FROM Reservation WHERE  NumberReservationn=@NumberReservation)
           BEGIN
             select -1 as notexistreservation
           END
           ELSE
           BEGIN
-             UPDATE Reservation SET processstatus='Confirmed',confirmationstatus='Confirmed' WHERE NumberReservation=@NumberReservation
-             select 1 as confirmsucess
+            BEGIN TRANSACTION  
+              UPDATE Reservation SET processstatus='Confirmed',confirmationstatus='Confirmed' WHERE NumberReservationn=@NumberReservation
+              UPDATE Rom
+              SET 
+              Rom.statee='Inactive'
+              FROM Room Rom
+              INNER JOIN
+              ReservationDetail RD
+              ON RD.NumberRoom = Rom.NumberRoomm
+              WHERE RD.NumberReservation=@NumberReservation
+              select 1 as confirmsucess
+            IF(@@ERROR > 0)  
+            BEGIN  
+                ROLLBACK TRANSACTION  
+            END  
+            ELSE  
+            BEGIN  
+             COMMIT TRANSACTION  
+            END   
+           
           END
 
           `;
@@ -177,8 +196,43 @@ class DataReservation
           END
           ELSE
           BEGIN
-             DELETE FROM ReservationDetail WHERE NumberRoom=@NumberRoom and NumberReservation=@NumberReservation
-             select 1 as insertsuccess
+          
+            IF NOT  EXISTS ( SELECT * FROM Reservation WHERE  NumberReservationn=@NumberReservation)
+            BEGIN
+              select -2 as notexistreservation
+            END
+            ELSE
+            BEGIN
+              IF NOT EXISTS ( SELECT * FROM Room WHERE  NumberRoomm=@NumberRoom and Statee='Active')
+              BEGIN
+                select -3 as notexistroom
+              END
+              ELSE
+              BEGIN
+                BEGIN TRANSACTION  
+
+                  INSERT INTO  ReservationDetail
+                  SELECT Value,NumberReservationn,NumberRoomm 
+                  FROM Reservation,Room			 
+                  WHERE NumberRoomm=@NumberRoom and NumberReservationn=@NumberReservation
+
+                  UPDATE Reservation SET Total=Total+Value FROM Reservation,Room
+                  WHERE NumberRoomm=@NumberRoom and NumberReservationn=@NumberReservation
+
+                  UPDATE Room SET Room.statee='Inactive' where NumberRoomm=@NumberRoom
+
+                  select 1 as insertsuccess 
+
+                IF(@@ERROR > 0)  
+                BEGIN  
+                    ROLLBACK TRANSACTION  
+                END  
+                ELSE  
+                BEGIN  
+                 COMMIT TRANSACTION  
+                END  
+              END 
+            END
           END
 
           `;
@@ -187,11 +241,21 @@ class DataReservation
           const result = await pool.request()
           .input('NumberRoom', Int, numberrom)
           .input('NumberReservation', Int,numberreservation)
+         
           .query(queryupdate)
           resultquery = result.recordset[0].existreservationdetail;
           if(resultquery===undefined)
           {
-              resultquery = result.recordset[0].insertsuccess;
+              resultquery = result.recordset[0].notexistreservation;
+              if(resultquery===undefined)
+              {
+                  resultquery = result.recordset[0].notexistroom;
+                  if(resultquery===undefined)
+                  {
+                      resultquery = result.recordset[0].insertsuccess;
+                  }
+              }
+              
           }
           pool.close();
           return resultquery;
@@ -205,12 +269,46 @@ class DataReservation
 
           IF NOT EXISTS ( SELECT * FROM ReservationDetail WHERE NumberRoom=@NumberRoom and NumberReservation=@NumberReservation)
           BEGIN
-            select -1 as notexistreservationdetail
+            select -1 as existreservationdetail
           END
           ELSE
           BEGIN
-             DELETE FROM ReservationDetail WHERE NumberRoom=@NumberRoom and NumberReservation=@NumberReservation
-             select 1 as deletesuccess
+          
+            IF NOT  EXISTS ( SELECT * FROM Reservation WHERE  NumberReservationn=@NumberReservation)
+            BEGIN
+              select -2 as notexistreservation
+            END
+            ELSE
+            BEGIN
+              IF NOT EXISTS ( SELECT * FROM Room WHERE  NumberRoomm=@NumberRoom and Statee='Inactive')
+              BEGIN
+                select -3 as notexistroom
+              END
+              ELSE
+              BEGIN
+                BEGIN TRANSACTION  
+
+                  DELETE FROM ReservationDetail WHERE NumberRoom=@NumberRoom 
+                  and NumberReservation=@NumberReservation
+
+
+                  UPDATE Reservation SET Total=Total-Value FROM Reservation,Room
+                  WHERE NumberRoomm=@NumberRoom and NumberReservationn=@NumberReservation
+
+                  UPDATE Room SET Room.statee='Active' where NumberRoomm=@NumberRoom
+
+                  select 1 as deletesuccess 
+
+                  IF(@@ERROR > 0)  
+                  BEGIN  
+                      ROLLBACK TRANSACTION  
+                  END  
+                  ELSE  
+                  BEGIN  
+                     COMMIT TRANSACTION  
+                  END  
+              END 
+            END
           END
 
           `;
@@ -220,16 +318,106 @@ class DataReservation
           .input('NumberRoom', Int, numberrom)
           .input('NumberReservation', Int,numberreservation)
           .query(queryupdate)
-          resultquery = result.recordset[0].notexistreservationdetail;
+          resultquery = result.recordset[0].existreservationdetail;
           if(resultquery===undefined)
           {
-              resultquery = result.recordset[0].deletesuccess;
+              resultquery = result.recordset[0].notexistreservation;
+              if(resultquery===undefined)
+              {
+                  resultquery = result.recordset[0].notexistroom;
+                  if(resultquery===undefined)
+                  {
+                      resultquery = result.recordset[0].deletesuccess;
+                  }
+              }
+              
           }
           pool.close();
           return resultquery;
        
     }
-   
+
+
+    static getDetailReservationMultipleRooms=async(arrayroom,orderby="NumberRoomm")=>//used to reserve rooms
+    {
+            let array=[];
+             let querysearch =
+             `
+                 SELECT 
+                    *, 
+                    (
+                    select 
+                        SUM(value) as total 
+                    from 
+                        room 
+                    where 
+                        statee = 'Active' and 
+                        numberroomm in (
+                            ${
+                             this.forinsidestringrooms(arrayroom)
+                             }
+                        ) 
+                    
+                    ) as Total 
+                    FROM 
+                    room 
+                    WHERE 
+                    numberroomm IN 
+                    (
+                     ${
+                      this.forinsidestringrooms(arrayroom)
+                     }
+                    ) 
+                    AND  statee = 'Active'
+                    ORDER BY ${orderby} desc
+              
+             `
+
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .query(querysearch)
+             for (var r of result.recordset) {
+              let detailreservation = new DTOReservationDetail();
+              this.getinformationDetailReservationTotal(detailreservation,r);
+              array.push(detailreservation);
+            } 
+           pool.close();
+           return array;
+
+
+     }
+
+     static getDetailReservationByReservation=async(numberreservation,orderby="NumberReservation")=>
+     {
+             let array=[];
+              let querysearch =
+              `
+
+              SELECT 
+              * 
+              FROM ReservationDetail 
+              INNER JOIN Room
+              on Room.NumberRoomm=ReservationDetail.NumberRoom
+              INNER JOIN Reservation on Reservation.NumberReservationn=ReservationDetail.NumberReservation
+              WHERE ReservationDetail.NumberReservation=${numberreservation}
+              ORDER BY ${orderby} desc
+
+              
+              `
+ 
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .query(querysearch)
+              for (var r of result.recordset) {
+               let detailreservation = new DTOReservationDetail();
+               this.getinformationDetailReservationTotal(detailreservation,r);
+               array.push(detailreservation);
+             } 
+            pool.close();
+            return array;
+ 
+ 
+      }
    
     
     
@@ -261,7 +449,7 @@ class DataReservation
             if (resultquery===undefined) {
              let resultrecordset=result.recordset[0];
               let resr = new DTOReservation();
-              this.getinformation(resr, resultrecordset);
+              this.getinformationReservation(resr, resultrecordset);
               resultquery=resr
             }
            pool.close();
@@ -269,8 +457,35 @@ class DataReservation
       
     
      }
+     static getReservationsByRoom=async(numberroom)=>
+     {
+             let resultquery;
+             let querysearch = `
 
-
+             SELECT 
+             Reservation.* 
+           FROM 
+             Reservation 
+             inner join ReservationDetail on Reservation.NumberReservationn = ReservationDetail.NumberReservation 
+             WHERE 
+             NumberRoom = ${numberroom}
+             
+             `
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .input('Date1', Date, date1)
+              .input('Date2', Date, date2)
+              .query(querysearch)        
+              for (var r of result.recordset) {
+                let reserv = new DTOReservation();
+                this.getinformationReservation(reserv,  r);
+                array.push(reserv);
+              } 
+            pool.close();
+            return resultquery;
+       
+     
+      }     
      static getReservations=async(orderby="NumberReservationn")=>
      {
              let resultquery;
@@ -407,6 +622,7 @@ class DataReservation
                 SELECT * FROM Reservation WHERE ReservationDate
                 BETWEEN  @Date1 and @Date2 
                 ORDER BY ${orderby} desc
+
                 `
                 let pool = await Conection.conection();
                  const result = await pool.request()
@@ -470,7 +686,8 @@ class DataReservation
                 return resultquery;
            
          
-          }       
+          }  
+         
     
 
 
@@ -501,6 +718,16 @@ class DataReservation
     DataRoom.getinformation(detailreservation.Room,result)
 
    }
+   static getinformationDetailReservation(detailreservation, result) {
+
+  
+    detailreservation.Value=result.Value;
+    DataReservation.getinformation(detailreservation.Reservation,result)
+    DataRoom.getinformation(detailreservation.Room,result)
+
+   }
+   //#region Others
+
    static forinsidestringrooms(array)//pass all numbers to string for sql query
    {
     let stringelement="";
@@ -518,7 +745,6 @@ class DataReservation
     return stringelement
    
    }
-
    static forAddDetailReservation(array)
    {
     let stringelement="";
@@ -530,6 +756,27 @@ class DataReservation
         `
         insert into ReservationDetail values (${element.Value},IDENT_CURRENT('Reservation'),
         ${element.Room.NumberRoomm})
+
+        UPDATE room set statee='Inactive' where numberroomm=${element.Room.NumberRoomm}
+
+        `
+      
+     
+    }
+    return stringelement
+   
+   }
+   static forInactiveRoomRservationOnline(array)
+   {
+    let stringelement="";
+    for (let index = 0; index < array.length; index++) {
+      const element = array[index];
+     
+
+        stringelement=stringelement+
+        `
+        UPDATE room set statee='Inactive' where numberroomm=${element.Room.NumberRoomm}
+
         `
       
      

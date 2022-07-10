@@ -113,6 +113,13 @@ go
 
 select * from passenger
 
+  SELECT Reservation.* FROM Reservation inner join
+  ReservationDetail on Reservation.NumberReservationn=ReservationDetail.NumberReservation
+  WHERE NumberRoom=1
+
+   WHERE DepartureDate
+                  BETWEEN  @Date1 and @Date2
+
 
 delete  from ReservationDetail
 
@@ -120,9 +127,39 @@ delete  from Reservation
 
 select * from ReservationDetail
 
-
 select * from Reservation
 
-  SELECT * FROM Reservation WHERE ArrivalDate
-                  BETWEEN '2022-08-10' and '2022-08-06'
-                   
+select * from room
+
+
+delete from ReservationDetail where NumberReservation=14 and NumberRoom=36
+                  INSERT INTO  ReservationDetail 
+                  SELECT * from Reser where numberroomm=@NumberRoom
+
+					  INSERT INTO  ReservationDetail
+					  SELECT Value,NumberReservationn,NumberRoomm 
+					  FROM Reservation,Room			 
+					  WHERE NumberRoomm=36 and NumberReservationn=14
+	
+						 UPDATE Reservation SET Total=Total+Value FROM Reservation,Room
+						 WHERE NumberRoomm=36 and NumberReservationn=14 
+
+					  UPDATE Room SET Room.statee='Inactive' where NumberRoomm in(6,7,8)
+
+
+
+					  INNER JOIN
+					  ReservationDetail RD
+					  ON RD.NumberRoom = Rom.NumberRoomm
+					  WHERE RD.NumberReservation=@NumberReservation
+
+				   IF(@@ERROR > 0)  
+                BEGIN  
+                    ROLLBACK TRANSACTION  
+                END  
+                ELSE  
+                BEGIN  
+                 COMMIT TRANSACTION  
+                END  
+
+				 BEGIN TRANSACTION  
