@@ -625,13 +625,17 @@ class DataReservation
               let array=[];
                let querysearch = `
  
-                   SELECT * FROM Reservation WHERE
+               SELECT Reservation.*, 
+               Passenger.* 
+               FROM 
+               Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+               WHERE
                     IDCardPassengerr=@IDCardPassengerr AND ProcessStatus='Pending'
                    ORDER BY ${orderby} desc
                `
                let pool = await Conection.conection();
                 const result = await pool.request()
-                .input('IDCardPassengerr', Int, idcardpassenger)
+                .input('IDCardPassengerr', VarChar, idcardpassenger)
                 .query(querysearch)        
                 for (var r of result.recordset) {
                   let reserv = new DTOReservation();
@@ -645,10 +649,14 @@ class DataReservation
         }  
     static getReservationsBetweenReservationDates=async(date1,date2,orderby="NumberReservationn")=>
         {
-          let array=[];
+                let array=[];
                 let querysearch = `
   
-                SELECT * FROM Reservation WHERE ReservationDate
+                SELECT Reservation.*, 
+                Passenger.* 
+                FROM 
+                Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+                WHERE ReservationDate
                 BETWEEN  @Date1 and @Date2 
                 ORDER BY ${orderby} desc
 
@@ -673,7 +681,11 @@ class DataReservation
           let array=[];
                 let querysearch = `
   
-                SELECT * FROM Reservation WHERE ArrivalDate
+                SELECT Reservation.*, 
+                Passenger.* 
+                FROM 
+                Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+                WHERE ArrivalDate
                 BETWEEN  @Date1 and @Date2 
                 ORDER BY ${orderby} desc
                 `
@@ -697,7 +709,11 @@ class DataReservation
           let array=[];
                  let querysearch = `
    
-                 SELECT * FROM Reservation WHERE DepartureDate
+                SELECT Reservation.*, 
+               Passenger.* 
+               FROM 
+               Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+               WHERE DepartureDate
                  BETWEEN  @Date1 and @Date2 
                  ORDER BY ${orderby} desc
                  `
@@ -716,10 +732,6 @@ class DataReservation
            
          
           }  
-         
-    
-
-
     //#endregion
 
    //#region GET INFORMATION

@@ -126,23 +126,14 @@ select * from room
 
 
 
-CREATE TABLE ReservationDetail(
-	NumberRD int NOT NULL primary key Identity(1,1),
-	Value money NOT NULL,
-	NumberReservation int not null Foreign Key References Reservation(NumberReservationn),
-	NumberRoom int not null Foreign Key References Room(NumberRoomm)
-) 
-go
+                SELECT Reservation.*, 
+                Passenger.* 
+                FROM 
+                Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+                WHERE ReservationDate
+                BETWEEN  '2022-07-08' and '2022-08-08' 
+                ORDER BY ${orderby} desc
 
-
-             SELECT 
-             Reservation.*, 
-             Passenger.* 
-             FROM 
-             Reservation 
-             inner join ReservationDetail on Reservation.NumberReservationn = ReservationDetail.NumberReservation
-             inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
-             where NumberRoom = ${numberroom}
-
+            
 
               

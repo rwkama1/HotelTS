@@ -544,6 +544,23 @@ let reservationmaintenance=async()=>
         //   let getReservationsByPassenger = await DataReservation.getReservationsByPassenger("111111111111111");
         // console.log(getReservationsByPassenger);
 
+        //   let getReservationsByPassenger = await DataReservation.getReservationsPendingByPassenger("111111111111111");
+        // console.log(getReservationsByPassenger);
+
+        // let date1=new Date(2022,06,07)
+        // let date2=new Date(2022,08,09)
+ 
+        //    let getReservationsBetweenReservationDates = await DataReservation.getReservationsBetweenReservationDates(date1,date2);
+        // console.log(getReservationsBetweenReservationDates);
+
+    //  let getReservationsBetweenArrivalDates = await DataReservation.getReservationsBetweenArrivalDates(date1,date2);
+    //     console.log(getReservationsBetweenArrivalDates);
+
+   
+    //  let getReservationsBetweenDepartureDates = await DataReservation.getReservationsBetweenDepartureDates(date1,date2);
+    //     console.log(getReservationsBetweenDepartureDates);
+         
+
     //#endregion
 
 
