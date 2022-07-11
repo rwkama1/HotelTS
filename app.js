@@ -520,12 +520,30 @@ let reservationmaintenance=async()=>
     //     }
     //     console.log("Detail Reservation deleted");
 
-  let getDetailReservationByReservation = await DataReservation.getDetailReservationByReservation(14,"Value");
-    console.log(getDetailReservationByReservation);
+    //   let getDetailReservationByReservation = await DataReservation.getDetailReservationByReservation(14,"Value");
+    //     console.log(getDetailReservationByReservation);
 
+    // let getReservation = await DataReservation.getReservation(14);
+    // console.log(getReservation);
 
+        // let getReservationsByRoom = await DataReservation.getReservationsByRoom(25);
+        // console.log(getReservationsByRoom);
 
-    
+        //    let getReservations = await DataReservation.getReservations();
+        // console.log(getReservations);
+  
+        //    let getConfirmedReservations = await DataReservation.getConfirmedReservations();
+        // console.log(getConfirmedReservations);
+
+        // let getPendingReservations = await DataReservation.getPendingReservations();
+        // console.log(getPendingReservations);
+
+        // let getCanceledReservations = await DataReservation.getCanceledReservations();
+        // console.log(getCanceledReservations);
+
+        //   let getReservationsByPassenger = await DataReservation.getReservationsByPassenger("111111111111111");
+        // console.log(getReservationsByPassenger);
+
     //#endregion
 
 

@@ -392,9 +392,15 @@ class DataReservation
              let array=[];
               let querysearch =
               `
-
               SELECT 
-              * 
+              Reservation.*,
+      
+              ReservationDetail.NumberRD,
+              ReservationDetail.NumberReservation,
+              ReservationDetail.NumberRoom,
+      
+              Room.*
+          
               FROM ReservationDetail 
               INNER JOIN Room
               on Room.NumberRoomm=ReservationDetail.NumberRoom
@@ -410,7 +416,7 @@ class DataReservation
               .query(querysearch)
               for (var r of result.recordset) {
                let detailreservation = new DTOReservationDetail();
-               this.getinformationDetailReservationTotal(detailreservation,r);
+               this.getinformationDetailReservation(detailreservation,r);
                array.push(detailreservation);
              } 
             pool.close();
@@ -436,7 +442,8 @@ class DataReservation
             END
             ELSE
             BEGIN
-                SELECT * FROM Reservation
+                SELECT * FROM Reservation inner join Passenger
+                on Reservation.IDCardPassengerr=Passenger.IDCard
                 WHERE NumberReservationn=@NumberReservationn
             END
 
@@ -459,22 +466,21 @@ class DataReservation
      }
      static getReservationsByRoom=async(numberroom)=>
      {
-             let resultquery;
+             let array=[];
              let querysearch = `
 
              SELECT 
-             Reservation.* 
-           FROM 
+             Reservation.*, 
+             Passenger.* 
+             FROM 
              Reservation 
-             inner join ReservationDetail on Reservation.NumberReservationn = ReservationDetail.NumberReservation 
-             WHERE 
-             NumberRoom = ${numberroom}
+             inner join ReservationDetail on Reservation.NumberReservationn = ReservationDetail.NumberReservation
+             inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+             where NumberRoom = ${numberroom}
              
              `
              let pool = await Conection.conection();
               const result = await pool.request()
-              .input('Date1', Date, date1)
-              .input('Date2', Date, date2)
               .query(querysearch)        
               for (var r of result.recordset) {
                 let reserv = new DTOReservation();
@@ -482,16 +488,20 @@ class DataReservation
                 array.push(reserv);
               } 
             pool.close();
-            return resultquery;
+            return array;
        
      
       }     
      static getReservations=async(orderby="NumberReservationn")=>
      {
-             let resultquery;
+              let array=[];
              let querysearch = `
 
-                 SELECT * FROM Reservation
+                 SELECT  
+                Reservation.*, 
+                 Passenger.* 
+                 FROM 
+                 Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
                  ORDER BY ${orderby} desc
 
              `
@@ -504,15 +514,21 @@ class DataReservation
                 array.push(reserv);
               } 
             pool.close();
-            return resultquery;
+            return array;
        
      
       }
     static getConfirmedReservations=async(orderby="NumberReservationn")=>
       {
-              let resultquery;
+               let array=[];
               let querysearch = `
-                  SELECT * FROM Reservation where ProcessStatus='Confirmed'
+
+                  SELECT 
+                  Reservation.*, 
+                 Passenger.* 
+                 FROM 
+                 Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+                  where ProcessStatus='Confirmed'
                   ORDER BY ${orderby} desc
               `
               let pool = await Conection.conection();
@@ -524,15 +540,19 @@ class DataReservation
                  array.push(reserv);
                } 
              pool.close();
-             return resultquery;
-        
+             return array;
       
        }
     static getPendingReservations=async(orderby="NumberReservationn")=>
        {
-               let resultquery;
-               let querysearch = `
-                   SELECT * FROM Reservation where ProcessStatus='Pending'
+                let array=[];
+               let querysearch = `   
+                  SELECT 
+                  Reservation.*, 
+                 Passenger.* 
+                 FROM 
+                 Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+                   where ProcessStatus='Pending'
                    ORDER BY ${orderby} desc
                `
                let pool = await Conection.conection();
@@ -544,16 +564,21 @@ class DataReservation
                   array.push(reserv);
                 } 
               pool.close();
-              return resultquery;
+              return array;
          
        
         }
     static getCanceledReservations=async(orderby="NumberReservationn")=>
      {
-             let resultquery;
+            let array=[];
              let querysearch = `
-                 SELECT * FROM Reservation where ProcessStatus='Canceled'
-                 ORDER BY ${orderby} desc
+             SELECT 
+             Reservation.*, 
+            Passenger.* 
+            FROM 
+            Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+            where ProcessStatus='Canceled'
+             ORDER BY ${orderby} desc
              `
              let pool = await Conection.conection();
               const result = await pool.request()
@@ -564,22 +589,26 @@ class DataReservation
                 array.push(reserv);
               } 
             pool.close();
-            return resultquery;
+            return array;
        
      
       }  
     static getReservationsByPassenger=async(idcardpassenger,orderby="NumberReservationn")=>
       {
-              let resultquery;
+               let array=[];
               let querysearch = `
 
-                  SELECT * FROM Reservation WHERE
+                  SELECT Reservation.*, 
+                  Passenger.* 
+                  FROM 
+                  Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+                   WHERE
                    IDCardPassengerr=@IDCardPassengerr
                   ORDER BY ${orderby} desc
               `
               let pool = await Conection.conection();
                const result = await pool.request()
-               .input('IDCardPassengerr', Int, idcardpassenger)
+               .input('IDCardPassengerr', VarChar, idcardpassenger)
                .query(querysearch)        
                for (var r of result.recordset) {
                  let reserv = new DTOReservation();
@@ -587,13 +616,13 @@ class DataReservation
                  array.push(reserv);
                } 
              pool.close();
-             return resultquery;
+             return array;
         
       
        }  
     static getReservationsPendingByPassenger=async(idcardpassenger,orderby="NumberReservationn")=>
        {
-               let resultquery;
+              let array=[];
                let querysearch = `
  
                    SELECT * FROM Reservation WHERE
@@ -610,13 +639,13 @@ class DataReservation
                   array.push(reserv);
                 } 
               pool.close();
-              return resultquery;
+              return array;
          
        
         }  
     static getReservationsBetweenReservationDates=async(date1,date2,orderby="NumberReservationn")=>
         {
-                let resultquery;
+          let array=[];
                 let querysearch = `
   
                 SELECT * FROM Reservation WHERE ReservationDate
@@ -635,13 +664,13 @@ class DataReservation
                    array.push(reserv);
                  } 
                pool.close();
-               return resultquery;
+               return array;
           
         
          }  
      static getReservationsBetweenArrivalDates=async(date1,date2,orderby="NumberReservationn")=>
         {
-                let resultquery;
+          let array=[];
                 let querysearch = `
   
                 SELECT * FROM Reservation WHERE ArrivalDate
@@ -659,13 +688,13 @@ class DataReservation
                    array.push(reserv);
                  } 
                pool.close();
-               return resultquery;
+               return  array;
           
         
          } 
      static getReservationsBetweenDepartureDates=async(date1,date2,orderby="NumberReservationn")=>
          {
-                 let resultquery;
+          let array=[];
                  let querysearch = `
    
                  SELECT * FROM Reservation WHERE DepartureDate
@@ -683,7 +712,7 @@ class DataReservation
                     array.push(reserv);
                   } 
                 pool.close();
-                return resultquery;
+                return array;
            
          
           }  
@@ -720,12 +749,12 @@ class DataReservation
    }
    static getinformationDetailReservation(detailreservation, result) {
 
-  
-    detailreservation.Value=result.Value;
-    DataReservation.getinformation(detailreservation.Reservation,result)
+    detailreservation.NumberRD=result.NumberRD;
+    DataReservation.getinformationReservation(detailreservation.Reservation,result)
     DataRoom.getinformation(detailreservation.Room,result)
 
    }
+
    //#region Others
 
    static forinsidestringrooms(array)//pass all numbers to string for sql query

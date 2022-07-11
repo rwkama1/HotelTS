@@ -113,13 +113,6 @@ go
 
 select * from passenger
 
-  SELECT Reservation.* FROM Reservation inner join
-  ReservationDetail on Reservation.NumberReservationn=ReservationDetail.NumberReservation
-  WHERE NumberRoom=1
-
-   WHERE DepartureDate
-                  BETWEEN  @Date1 and @Date2
-
 
 delete  from ReservationDetail
 
@@ -132,34 +125,24 @@ select * from Reservation
 select * from room
 
 
-delete from ReservationDetail where NumberReservation=14 and NumberRoom=36
-                  INSERT INTO  ReservationDetail 
-                  SELECT * from Reser where numberroomm=@NumberRoom
 
-					  INSERT INTO  ReservationDetail
-					  SELECT Value,NumberReservationn,NumberRoomm 
-					  FROM Reservation,Room			 
-					  WHERE NumberRoomm=36 and NumberReservationn=14
-	
-						 UPDATE Reservation SET Total=Total+Value FROM Reservation,Room
-						 WHERE NumberRoomm=36 and NumberReservationn=14 
-
-					  UPDATE Room SET Room.statee='Inactive' where NumberRoomm in(6,7,8)
+CREATE TABLE ReservationDetail(
+	NumberRD int NOT NULL primary key Identity(1,1),
+	Value money NOT NULL,
+	NumberReservation int not null Foreign Key References Reservation(NumberReservationn),
+	NumberRoom int not null Foreign Key References Room(NumberRoomm)
+) 
+go
 
 
+             SELECT 
+             Reservation.*, 
+             Passenger.* 
+             FROM 
+             Reservation 
+             inner join ReservationDetail on Reservation.NumberReservationn = ReservationDetail.NumberReservation
+             inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+             where NumberRoom = ${numberroom}
 
-					  INNER JOIN
-					  ReservationDetail RD
-					  ON RD.NumberRoom = Rom.NumberRoomm
-					  WHERE RD.NumberReservation=@NumberReservation
 
-				   IF(@@ERROR > 0)  
-                BEGIN  
-                    ROLLBACK TRANSACTION  
-                END  
-                ELSE  
-                BEGIN  
-                 COMMIT TRANSACTION  
-                END  
-
-				 BEGIN TRANSACTION  
+              
