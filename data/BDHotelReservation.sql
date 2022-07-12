@@ -63,7 +63,7 @@ CREATE TABLE ReservationDetail(
 ) 
 go
 CREATE TABLE Servicee(
-	IDService int NOT NULL PRIMARY KEY Identity(1,1)  ,
+	IDService int NOT NULL PRIMARY KEY Identity(1,1) ,
 	NameS varchar(20) NOT NULL,
 	Value money not null,
 	Statee varchar(20) NOT NULL,
@@ -124,16 +124,13 @@ select * from Reservation
 
 select * from room
 
+select * from servicee
+
+select * from PassengerServicee
 
 
-                SELECT Reservation.*, 
-                Passenger.* 
-                FROM 
-                Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
-                WHERE ReservationDate
-                BETWEEN  '2022-07-08' and '2022-08-08' 
-                ORDER BY ${orderby} desc
 
+            
             
 
               

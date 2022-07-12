@@ -2,6 +2,7 @@
 const { DataPassenger } = require("./data/DataPassenger");
 const { DataReservation } = require("./data/DataReservation");
 const { DataRoom } = require("./data/DataRoom");
+const { DataService } = require("./data/DataService");
 const { DataUser } = require("./data/DataUser");
 const { DTOPassenger } = require("./DTO/DTOPassenger");
 const { DTOReservation } = require("./DTO/DTOReservation");
@@ -563,73 +564,56 @@ let reservationmaintenance=async()=>
 
     //#endregion
 
-
-
-
-    // async function registerRoom() {
-//         for (let index = 1; index < 100; index++) {
-//             let dtoroom =new DTORoom();
-//             dtoroom.Typee = "Typee" + index.toString();
-//             dtoroom.Typebed = "Typebed" + index.toString();
-//             dtoroom.Accommodation = "Accommodation" + index.toString();
-//             dtoroom.Descriptionn = "Descriptionn" + index.toString();
-//             dtoroom.Value = 99 + index;
-//             dtoroom.Imagee ="urlimage" + index.toString();
-//             dtoroom.Squaremeter = 42;
-//             let registerRoom = await DataRoom.registerRoom(dtoroom);
-//             console.log("The room registered successfully");
-//         }
-//     }
-//      await registerRoom();
-
-    
-
-
-    // async function updateRoom() {
-    //         let dtoroom = new DTORoom();
-    //         dtoroom.NumberRoomm = 60;
-    //         dtoroom.Typee = "TypeeUpdate" 
-    //         dtoroom.Typebed = "Typebedupdate"
-    //          dtoroom.Accommodation = "AccommodationUp"
-    //           dtoroom.Descriptionn = "DescriptionnUP"
-    //         dtoroom.Value = 99 ;
-    //          dtoroom.Imagee ="urlimageup" 
-    //          dtoroom.Squaremeter = 38;
-    //         let updateRoom = await DataRoom.updateRoom(dtoroom);
-    //         if (updateRoom===-1) {
-    //          throw new Error("The room does not exists");
-    //         }
-    //     console.log("The room updated successfully");
-    // }
-    // await updateRoom();
-
-    // async function inactiveRoom() {
-    
-    //         let inactiveRoom = await DataRoom.inactiveRoom(5);
-    //         if (inactiveRoom===-1) {
-    //             throw new Error("The room does not exists");
-    //         }
-    //         console.log("The room was deleted successfully");
-
-    //     }
-    //  await inactiveRoom();
-
-    
-    // let getRoom = await DataRoom.getRoom(1);
-    // console.log(getRoom);
-
-    //   let getRooms = await DataRoom.getRooms("Value");
-    // console.log(getRooms);
-
-    //    let getSearchRoom = await DataRoom.getSearchRoom("","",
-    //    "",145,150,39,45,"value");
-    // console.log(getSearchRoom);
-
-   
-
 }
 reservationmaintenance().then()
 
+//#endregion
+//#region Services
+
+let servicemaintenance=async()=>
+{
+    // for (let index = 0; index < 10; index++) {
+
+    //     let servicemaintenance=DataService.registerService(`Service${index}`,20+index);
+    //     if (servicemaintenance) {
+    //         console.log("Service Added");
+    //     }
+       
+    // }
+
+    //  let servicemaintenance=await DataService.updateService(1,50,`ServiceUpdated`);
+    //     if (servicemaintenance) {
+    //         console.log("Service Updated");
+    //     }
+
+    
+    //  let servicemaintenance=DataService.disableService(1);
+    //     if (servicemaintenance) {
+    //         console.log("Service Disabled");
+    //     }
+
+    //   let getService=await DataService.getService(2);
+    //   if (getService===-1) {
+    //     throw new Error("Service does not exists")
+    //   }
+    //   console.log(getService);
+    
+   
+    //   let getServices=await DataService.getServices();
+    //   console.log(getServices);
+
+    //   let getServicesBetweenValues=await DataService.getServicesBetweenValues(23,40);
+    //    console.log(getServicesBetweenValues);
+
+    //     let arrayidservices=[2,5,8];
+    //   let getServicesMultipleID=await DataService.getServicesMultipleID(arrayidservices);
+    //    console.log(getServicesMultipleID);
+
+ 
+    
+   
+}
+servicemaintenance().then()
 
 //#endregion
 //#region Others
