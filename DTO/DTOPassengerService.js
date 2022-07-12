@@ -1,14 +1,18 @@
+const { DTOPassenger } = require("./DTOPassenger");
+
 class DTOPassengerService
 {
-    NumberRD =0;
-    Value=0;
-    Reservation=new DTOReservation();
-    Room=new DTORoom();
+    NumberPS =0;
+    Passenger=new DTOPassenger();
+    StartDate=new Date();
+    EndDate=new Date();
+    Total=0;
+    Observations="";
     
     constructor()
     {
 
     }
-   
+  
 }
 module.exports = { DTOPassengerService };

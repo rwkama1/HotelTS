@@ -12,6 +12,7 @@ const { HashPassword } = require("./Hash_Login/hashPassword");
 const { LoginPassenger } = require("./Hash_Login/LoginPassenger");
 const { LoginUser } = require("./Hash_Login/LoginUser");
 const { Reservation } = require("./Reservation/reservation");
+const { Services } = require("./Services/services");
 
 //#region Passenger
 let passengermaintenance=async()=>
@@ -616,6 +617,88 @@ let servicemaintenance=async()=>
 servicemaintenance().then()
 
 //#endregion
+//#region Passenger Services
+
+let passengerservicemaintenance=async()=>
+{
+ 
+       //Get passenger
+            //  let getPassenger = await DataPassenger.getPassenger("58656455446");
+            //  if (getPassenger===-1) {
+            //     throw new Error("The Passenger does not exists")
+            //  }
+            //  console.log(getPassenger);
+
+            // If the passenger does not exist
+            
+            
+            // async function registerPassenger() {
+
+            //     let dtopassenger = new DTOPassenger();
+            //     dtopassenger.idcard = "58656455446";
+            //     dtopassenger.name = "NamePassenger";
+            //     dtopassenger.surname = "SurnamePassenger";
+            //     dtopassenger.country = "Country";
+            //     dtopassenger.password = "Password";
+            //     dtopassenger.town = "Town";
+            //     dtopassenger.address = "Address";
+            //     dtopassenger.phone = "111111111";
+            //     dtopassenger.maill = "email@gmail.com";
+            //     const passh = HashPassword.hashPassword(dtopassenger.password);
+            //     dtopassenger.password = passh.hash;
+            //     dtopassenger.salt = passh.salt;
+            //     let registerPassenger = await DataPassenger.registerPassenger(dtopassenger);
+            //     if (registerPassenger === -1) {
+            //         throw new Error("The passenger already exists");
+            //     }
+            //     console.log("The passenger registered successfully");
+            // }
+            // await registerPassenger();
+
+           
+
+            let registerService=Services.registerService(2);
+            if (registerService===-1) {
+                throw new Error("The number service already exist in the list")
+            }
+            console.log(registerService);
+
+            let registerService2=Services.registerService(3);
+            if (registerService2===-1) {
+                throw new Error("The number service already exist in the list")
+            }
+            console.log(registerService2);
+
+   
+
+            
+            let calculateTotal=await Services.calculateTotal();
+            if (calculateTotal===-1) {
+                throw new Error("The list of number of services is empty")
+            }
+            console.log(calculateTotal);
+
+        //     let datenow=new Date();
+        //     let reservationdate=new Date(datenow.getFullYear(),
+        //         datenow.getMonth(),datenow.getDate())
+        //     let arrivaldate=new Date(2022,07,07);
+        //     let departuredate=new Date(2022,08,01);
+        //     if (arrivaldate>=departuredate) {
+        //       throw new Error("The departure date must be greater than the arrival date")
+        //     }
+            
+        //    let registerHotelReservation=await DataReservation.registerHotelReservation("111111111111111",
+        //     arrivaldate,departuredate,reservationdate,calculateTotal[0].Total,calculateTotal);
+        //     if (registerHotelReservation===-1) {
+        //         throw new Error("The Passanger does not exist")
+        //     }
+        //     console.log("The reservation was added successfully");
+   
+}
+passengerservicemaintenance().then()
+
+//#endregion
+
 //#region Others
 
 //const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");

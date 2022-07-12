@@ -1,7 +1,9 @@
 const { VarChar,Int, Money } = require("mssql");
+const { DTODetailPassengerService } = require("../DTO/DTODetailPassengerService");
 
 
 const { Conection } = require("./Conection");
+const { DataService } = require("./DataService");
 
 class DataPassengerService
 {
@@ -105,7 +107,7 @@ class DataPassengerService
 
     //#region GETS
 
-    static getMultiplePassengerServices=async(arrayservices,orderby="numberps")=>
+    static getMultiplePassengerServices=async(arrayservices,orderby="idservice")=>
     {
             let array=[];
              let querysearch =
@@ -144,9 +146,9 @@ class DataPassengerService
              const result = await pool.request()
              .query(querysearch)
              for (var r of result.recordset) {
-              let detailreservation = new DTOReservationDetail();
-              this.getinformationDetailReservationTotal(detailreservation,r);
-              array.push(detailreservation);
+              let dtodps = new DTODetailPassengerService();
+              this.getinformationDetailPSTotal(dtodps,r);
+              array.push(dtodps);
             } 
            pool.close();
            return array;
@@ -172,7 +174,14 @@ class DataPassengerService
     room.Squaremeter = result.Squaremeter; 
     
    }
+   static getinformationDetailPSTotal(detailps, result) {
 
+    detailps.Total=result.Total;
+    detailps.Amount=result.Amount;
+    detailps.PassengerService=null;
+    DataService.getinformation(detailps.Servicee,result)
+
+   }
    static forinsidestring(array)
    {
     let stringelement="";

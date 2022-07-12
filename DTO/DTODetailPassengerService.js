@@ -3,8 +3,8 @@ const { DTOService } = require("./DTOService");
 
 class DTODetailPassengerService
 {
-    IDDPassangerService 
-	NumberPService =new DTOPassengerService();
+    IDDPassangerService =0;
+	PassengerService =new DTOPassengerService();
     Servicee=new DTOService();
 	Amount=0;
     

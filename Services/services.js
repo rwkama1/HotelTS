@@ -1,3 +1,5 @@
+const { DataPassengerService } = require("../data/DataPassengerService");
+
 
 
 class Services
@@ -21,7 +23,7 @@ class Services
     static registerService=(idservice)=>
     {
        let arrayservices=this.servicesarray;
-       if (servicesarray.includes(idservice)) {
+       if (arrayservices.includes(idservice)) {
          return -1
        } 
        else
@@ -37,8 +39,8 @@ class Services
         let arrayservices=this.servicesarray;
         if(arrayservices.length>0)
         {
-           let getDetailReservations=await DataReservation.getDetailReservationMultipleRooms(arrayroom);
-           return getDetailReservations
+           let getMultiplePassengerServices=await DataPassengerService.getMultiplePassengerServices(arrayservices);
+           return getMultiplePassengerServices
         }
         else
         {
@@ -101,4 +103,4 @@ class Services
     //#endregion
 
 }
-module.exports = { Reservation };
+module.exports = { Services };
