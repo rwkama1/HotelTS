@@ -198,7 +198,30 @@ class DataService
         
       
        }
-
+       static getSearchServices=async(name="",value1=0,value2=99999,orderby="idservice")=>
+       {
+               let array=[];
+               let querysearch = `
+   
+                  SELECT * FROM Servicee WHERE Statee='Active'
+                  AND  NameS LIKE '%${name}%' 
+                  AND Value BETWEEN ${value1} AND ${value2} 
+                  ORDER BY ${orderby} desc
+   
+               `
+               let pool = await Conection.conection();
+                const result = await pool.request()
+                .query(querysearch)
+                for (var r of result.recordset) {
+                 let service = new DTOService();
+                 this.getinformation(service,  r);
+                 array.push(service);
+               } 
+              pool.close();
+              return array;
+         
+       
+        }
 
     //#endregion
     //#region  Get Information

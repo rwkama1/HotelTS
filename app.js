@@ -611,6 +611,9 @@ let servicemaintenance=async()=>
     //   let getServicesMultipleID=await DataService.getServicesMultipleID(arrayidservices);
     //    console.log(getServicesMultipleID);
 
+    //       let getSearchServices=await DataService.getSearchServices();
+    //    console.log(getSearchServices);
+
  
     
    
@@ -747,8 +750,33 @@ let passengerservicemaintenance=async()=>
             //  let getPassengerServices=await DataPassengerService.getPassengerServices();
             //   console.log(getPassengerServices);
 
-            //       let getPassengerService=await DataPassengerService.getPassengerService(1);
+            //    let getPassengerService=await DataPassengerService.getPassengerService(1);
             //   console.log(getPassengerService);
+
+            //    let getPassengerServiceByService=await DataPassengerService.getPassengerServiceByService(6);
+            //   console.log(getPassengerServiceByService);
+
+            //      let getPassengerServiceByService=await DataPassengerService.getPassengerServiceByPassenger("111111111111111");
+            //   console.log(getPassengerServiceByService);
+
+               
+            // let date1=new Date(2022,07,07);
+            // let date2=new Date(2022,09,01);
+            // if (date1>=date2) {
+            //   throw new Error("The first date must be greater than the second date")
+            // }
+
+            //   let getPassengerServiceBetweenStartDate=await DataPassengerService.getPassengerServiceBetweenStartDate(date1,date2);
+            //   console.log(getPassengerServiceBetweenStartDate);
+
+            //     let getPassengerServiceBetweenEndDate=await DataPassengerService.getPassengerServiceBetweenEndDate(date1,date2);
+            //   console.log(getPassengerServiceBetweenEndDate);
+
+            // let arraynumberps=[1,2];
+
+            // let getPassengerServicesMultipleNumber=await DataPassengerService.getPassengerServicesMultipleNumber(arraynumberps);
+            //   console.log(getPassengerServicesMultipleNumber);
+            
             
             //#endregion
 

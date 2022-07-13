@@ -464,6 +464,7 @@ class DataReservation
       
     
      }
+     
      static getReservationsByRoom=async(numberroom)=>
      {
              let array=[];
@@ -731,7 +732,34 @@ class DataReservation
                 return array;
            
          
-          }  
+          } 
+          
+    static getSearchReservations=async(orderby="NumberReservationn")=>
+          {
+                   let array=[];
+                  let querysearch = `
+     
+                      SELECT  
+                     Reservation.*, 
+                      Passenger.* 
+                      FROM 
+                      Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
+                      ORDER BY ${orderby} desc
+     
+                  `
+                  let pool = await Conection.conection();
+                   const result = await pool.request()
+                   .query(querysearch)        
+                   for (var r of result.recordset) {
+                     let reserv = new DTOReservation();
+                     this.getinformationReservation(reserv,  r);
+                     array.push(reserv);
+                   } 
+                 pool.close();
+                 return array;
+            
+          
+           }
     //#endregion
 
    //#region GET INFORMATION

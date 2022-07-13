@@ -245,7 +245,54 @@ class DataPassengerService
 
 
      }
-
+    static getMultipleDetailPassengerServices=async(arrayservices,orderby="idservice")=>
+     {
+             let array=[];
+              let querysearch =
+              `
+                  SELECT 
+                     *, 
+                     (
+                     select 
+                         SUM(value) as total 
+                     from 
+                         servicee 
+                     where 
+                         statee = 'Active' and 
+                         idservice in (
+                             ${
+                              this.forinsidestring(arrayservices)
+                              }
+                         ) 
+                     
+                     ) as Total 
+                     FROM 
+                     servicee 
+                     WHERE 
+                     idservice IN 
+                     (
+                      ${
+                       this.forinsidestring(arrayservices)
+                      }
+                     ) 
+                     AND  statee = 'Active'
+                     ORDER BY ${orderby} desc
+               
+              `
+ 
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .query(querysearch)
+              for (var r of result.recordset) {
+               let dtodps = new DTODetailPassengerService();
+               this.getinformationDetailPSTotal(dtodps,r);
+               array.push(dtodps);
+             } 
+            pool.close();
+            return array;
+ 
+ 
+      }
 
     //#endregion
     //#region GETS
@@ -286,54 +333,40 @@ class DataPassengerService
 
 
      
-    static getMultipleDetailPassengerServices=async(arrayservices,orderby="idservice")=>
+    static getPassengerServicesMultipleNumber=async(arraynumberps,orderby="numberps")=>
     {
-            let array=[];
-             let querysearch =
-             `
-                 SELECT 
-                    *, 
-                    (
-                    select 
-                        SUM(value) as total 
-                    from 
-                        servicee 
-                    where 
-                        statee = 'Active' and 
-                        idservice in (
-                            ${
-                             this.forinsidestring(arrayservices)
-                             }
-                        ) 
-                    
-                    ) as Total 
-                    FROM 
-                    servicee 
-                    WHERE 
-                    idservice IN 
-                    (
-                     ${
-                      this.forinsidestring(arrayservices)
-                     }
-                    ) 
-                    AND  statee = 'Active'
-                    ORDER BY ${orderby} desc
-              
-             `
+             let array=[];
+            let querysearch = `
 
+                SELECT  
+                PassengerServicee.*, 
+                Passenger.* 
+                FROM 
+                PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.IDCardP
+                WHERE numberps in
+                (
+                  ${
+                    this.forinsidestring(arraynumberps)
+                    }
+                )
+
+                ORDER BY ${orderby} desc
+
+            `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .query(querysearch)
-             for (var r of result.recordset) {
-              let dtodps = new DTODetailPassengerService();
-              this.getinformationDetailPSTotal(dtodps,r);
-              array.push(dtodps);
-            } 
+             .query(querysearch)        
+             for (var ps of result.recordset) {
+               let dtops  = new DTOPassengerService();
+               this.getinformationPS(dtops,ps);
+               array.push(dtops);
+             } 
            pool.close();
            return array;
-
-
+      
+    
      }
+ 
     static getPassengerServices=async(orderby="numberps")=>
       {
                let array=[];
@@ -360,6 +393,121 @@ class DataPassengerService
         
       
        }
+    static getPassengerServiceByService=async(idservice)=>
+       {
+               let array=[];
+               let querysearch = `
+  
+               SELECT 
+               PassengerServicee.*, 
+               Passenger.* 
+               FROM 
+               PassengerServicee 
+               inner join DetailPassengerService on PassengerServicee.numberps = DetailPassengerService.numberpservice
+               inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
+               where idservicee = ${idservice}
+               
+               `
+               let pool = await Conection.conection();
+                const result = await pool.request()
+                .query(querysearch)        
+                for (var ps of result.recordset) {
+                  let dtops  = new DTOPassengerService();
+                  this.getinformationPS(dtops,ps);
+                  array.push(dtops);
+                } 
+              pool.close();
+              return array;
+         
+       
+    } 
+    static getPassengerServiceByPassenger=async(idcardpassenger,orderby="numberps")=>
+    {
+             let array=[];
+            let querysearch = `
+
+                SELECT 
+                PassengerServicee.*, 
+                 Passenger.* 
+                FROM 
+                PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
+                 WHERE
+                 idcardp=@IDCardPassengerr
+                ORDER BY ${orderby} desc
+            `
+            let pool = await Conection.conection();
+             const result = await pool.request()
+             .input('IDCardPassengerr', VarChar, idcardpassenger)
+             .query(querysearch)        
+             for (var ps of result.recordset) {
+              let dtops  = new DTOPassengerService();
+              this.getinformationPS(dtops,ps);
+              array.push(dtops);
+            } 
+           pool.close();
+           return array;
+      
+    
+     } 
+     static getPassengerServiceBetweenStartDate=async(date1,date2,orderby="numberps")=>
+     {
+             let array=[];
+             let querysearch = `
+
+             SELECT 
+             PassengerServicee.*, 
+             Passenger.* 
+             FROM 
+             PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
+             WHERE startdate
+             BETWEEN  @Date1 and @Date2 
+             ORDER BY ${orderby} desc
+             `
+             let pool = await Conection.conection();
+              const result = await pool.request()
+              .input('Date1', Date, date1)
+              .input('Date2', Date, date2)
+              .query(querysearch)        
+              for (var ps of result.recordset) {
+                let dtops  = new DTOPassengerService();
+                this.getinformationPS(dtops,ps);
+                array.push(dtops);
+              } 
+            pool.close();
+            return  array;
+       
+     
+      } 
+    static getPassengerServiceBetweenEndDate=async(date1,date2,orderby="numberps")=>
+      {
+              let array=[];
+              let querysearch = `
+ 
+              SELECT 
+              PassengerServicee.*, 
+              Passenger.* 
+              FROM 
+              PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
+              WHERE enddate
+              BETWEEN  @Date1 and @Date2 
+              ORDER BY ${orderby} desc
+              `
+              let pool = await Conection.conection();
+               const result = await pool.request()
+               .input('Date1', Date, date1)
+               .input('Date2', Date, date2)
+               .query(querysearch)        
+               for (var ps of result.recordset) {
+                 let dtops  = new DTOPassengerService();
+                 this.getinformationPS(dtops,ps);
+                 array.push(dtops);
+               } 
+             pool.close();
+             return  array;
+        
+      
+       } 
+
 
     //#endregion
 
@@ -383,7 +531,6 @@ class DataPassengerService
     DataService.getinformation(detailps.Servicee,result)
     detailps.Amount=detailps.Servicee.value;
    }
-
    static getinformationDetailPSTotal(detailps, result) {
 
     detailps.Total=result.Total;
@@ -395,6 +542,7 @@ class DataPassengerService
    //#endregion
 
    //#region OTHERS
+
    static forinsidestring(array)
    {
     let stringelement="";

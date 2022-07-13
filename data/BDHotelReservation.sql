@@ -134,9 +134,7 @@ select * from DetailPassengerService
 
 update Servicee set statee='Active'
 
-				 SELECT numberps,idservice,value 
-                  FROM PassengerServicee,servicee			 
-                  WHERE idservice=5 and numberps=1
+				
             
             
 
