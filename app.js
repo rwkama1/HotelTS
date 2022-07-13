@@ -1,5 +1,6 @@
 
 const { DataPassenger } = require("./data/DataPassenger");
+const { DataPassengerService } = require("./data/DataPassengerService");
 const { DataReservation } = require("./data/DataReservation");
 const { DataRoom } = require("./data/DataRoom");
 const { DataService } = require("./data/DataService");
@@ -657,43 +658,101 @@ let passengerservicemaintenance=async()=>
 
            
 
-            let registerService=Services.registerService(2);
-            if (registerService===-1) {
-                throw new Error("The number service already exist in the list")
-            }
-            console.log(registerService);
-
-            let registerService2=Services.registerService(3);
-            if (registerService2===-1) {
-                throw new Error("The number service already exist in the list")
-            }
-            console.log(registerService2);
-
-   
-
-            
-            let calculateTotal=await Services.calculateTotal();
-            if (calculateTotal===-1) {
-                throw new Error("The list of number of services is empty")
-            }
-            console.log(calculateTotal);
-
-        //     let datenow=new Date();
-        //     let reservationdate=new Date(datenow.getFullYear(),
-        //         datenow.getMonth(),datenow.getDate())
-        //     let arrivaldate=new Date(2022,07,07);
-        //     let departuredate=new Date(2022,08,01);
-        //     if (arrivaldate>=departuredate) {
-        //       throw new Error("The departure date must be greater than the arrival date")
+        //     let registerService=Services.registerService(2);
+        //     if (registerService===-1) {
+        //         throw new Error("The number service already exist in the list")
         //     }
-            
-        //    let registerHotelReservation=await DataReservation.registerHotelReservation("111111111111111",
-        //     arrivaldate,departuredate,reservationdate,calculateTotal[0].Total,calculateTotal);
-        //     if (registerHotelReservation===-1) {
+        //     console.log(registerService);
+
+        //     let registerService2=Services.registerService(3);
+        //     if (registerService2===-1) {
+        //         throw new Error("The number service already exist in the list")
+        //     }
+        //     console.log(registerService2);
+
+        //     let calculateTotal=await Services.calculateTotal();
+        //     if (calculateTotal===-1) {
+        //         throw new Error("The list of number of services is empty")
+        //     }
+        //     console.log(calculateTotal);
+
+        
+          
+        //     let startdate=new Date(2022,07,07);
+        //     let enddate=new Date(2022,08,01);
+        //     if (startdate>=enddate) {
+        //       throw new Error("The end date must be greater than the start date")
+        //     }
+        //    let registerPassengerService=await DataPassengerService.registerPassengerService("1111111111111113",
+        //    startdate,enddate,calculateTotal[0].Total,"Obs1",calculateTotal);
+        //     if (registerPassengerService===-1) {
         //         throw new Error("The Passanger does not exist")
         //     }
-        //     console.log("The reservation was added successfully");
-   
+        //     console.log("The Passenger service was added successfully");
+
+            //   let cleanNumberServiceArray=Services.cleanNumberServiceArray();
+            // if (cleanNumberServiceArray===-1) {
+            //     throw new Error("The list of number services is empty")
+            // }
+            // console.log(cleanNumberServiceArray);
+    
+
+            // let removeNumberServiceArray=Services.removeNumberServiceArray(2);
+            // if (removeNumberServiceArray===-1) {
+            //     throw new Error("The number service does not exist in the list")
+            // }
+            // console.log(removeNumberServiceArray);
+
+           
+
+            // let getNumberServiceArray=Services.getNumberServiceArray();
+            // if (getNumberServiceArray===-1) {
+            //     throw new Error("The number services list is empty");
+            // }
+            // console.log(getNumberServiceArray);
+
+            //******************************************************************************* */
+
+            // let addDetailPS=await DataPassengerService.addDetailPS(1,6);
+            // if (addDetailPS===-1) {
+            //     throw new Error("Detail Passenger Service already exists")
+            // }
+            // if (addDetailPS===-2) {
+            //     throw new Error("Passenger Service does not exists")
+            // }
+            // if (addDetailPS===-3) {
+            //     throw new Error("Servicee is not active")
+            // }
+            // console.log("Detail Passenger Service Added");
+
+            
+                // let removeDetailPS=await DataPassengerService.removeDetailPS(1,3);
+                // if (removeDetailPS===-1) {
+                //     throw new Error("Detail Passenger Service does not exists")
+                // }
+                // if (removeDetailPS===-2) {
+                //        throw new Error("Passenger Service does not exists")
+                // }
+                // if (removeDetailPS===-3) {
+                //     throw new Error("Servicee is not active")
+                // }
+                // console.log("Detail Passenger Service deleted");
+
+                // let getDetailPSByPassengerService=await DataPassengerService.getDetailPSByPassengerService(1);
+                // console.log(getDetailPSByPassengerService);
+                
+
+            //#region GETS
+
+            //  let getPassengerServices=await DataPassengerService.getPassengerServices();
+            //   console.log(getPassengerServices);
+
+            //       let getPassengerService=await DataPassengerService.getPassengerService(1);
+            //   console.log(getPassengerService);
+            
+            //#endregion
+
+
 }
 passengerservicemaintenance().then()
 

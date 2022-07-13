@@ -39,7 +39,7 @@ class Services
         let arrayservices=this.servicesarray;
         if(arrayservices.length>0)
         {
-           let getMultiplePassengerServices=await DataPassengerService.getMultiplePassengerServices(arrayservices);
+           let getMultiplePassengerServices=await DataPassengerService.getMultipleDetailPassengerServices(arrayservices);
            return getMultiplePassengerServices
         }
         else
@@ -50,19 +50,19 @@ class Services
 
     //************************************ */
 
-    static  removeNumberRoomArray(numberroom)
+    static  removeNumberServiceArray(numberservice)
     {
-        let arrayroom=this.roomarray;
-        if(this.arrayroom!=[])
+        let arrayservice=this.servicesarray;
+        if(this.arrayservice!=[])
         {
-            if (!arrayroom.includes(numberroom)) {
-                throw new Error("That room number does not exist in the list");
+            if (!arrayservice.includes(numberservice)) {
+                throw new Error("That service number does not exist in the list");
               } 
-             for( var i = 0; i < arrayroom.length; i++){ 
+             for( var i = 0; i < arrayservice.length; i++){ 
     
-                if ( arrayroom[i] === numberroom) { 
+                if ( arrayservice[i] === numberservice) { 
             
-                    arrayroom.splice(i, 1); 
+                    arrayservice.splice(i, 1); 
                 }
             
             }
@@ -73,11 +73,11 @@ class Services
            return -1
         }
     }
-     static  getNumberRoomsArray()
+     static  getNumberServiceArray()
     {
-        if(this.roomarray!=[])
+        if(this.servicesarray!=[])
         {
-            return this.roomarray;
+            return this.servicesarray;
              
         }
         else
@@ -86,11 +86,11 @@ class Services
         }
     }
 
-     static cleanNumberRoomsArray()
+     static cleanNumberServiceArray()
     {
-        if(this.roomarray!=[])
+        if(this.servicesarray!=[])
         {
-            this.roomarray=[];
+            this.servicesarray=[];
             return 1
              
         }
