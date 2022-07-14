@@ -562,6 +562,14 @@ let reservationmaintenance=async()=>
    
     //  let getReservationsBetweenDepartureDates = await DataReservation.getReservationsBetweenDepartureDates(date1,date2);
     //     console.log(getReservationsBetweenDepartureDates);
+
+    //    let getSearchReservations = await DataReservation.getSearchReservations(
+    //     0,99999,0,9999,0,9999,"Conf","",0,9999,"",new Date(2021,08,08),
+    //     new Date(2022,12,03),new Date(2021,08,08),
+    //     new Date(2022,12,03),new Date(2021,08,08),
+    //     new Date(2022,12,03),
+    //    );
+    //     console.log(getSearchReservations);
          
 
     //#endregion
@@ -681,8 +689,8 @@ let passengerservicemaintenance=async()=>
 
         
           
-        //     let startdate=new Date(2022,07,07);
-        //     let enddate=new Date(2022,08,01);
+            // let startdate=new Date(2022,07,07);
+            // let enddate=new Date(2022,08,01);
         //     if (startdate>=enddate) {
         //       throw new Error("The end date must be greater than the start date")
         //     }
@@ -777,6 +785,14 @@ let passengerservicemaintenance=async()=>
             // let getPassengerServicesMultipleNumber=await DataPassengerService.getPassengerServicesMultipleNumber(arraynumberps);
             //   console.log(getPassengerServicesMultipleNumber);
             
+
+            //     let getSearchPassengerService = await DataPassengerService.getSearchPassengerService(
+            //                0,99999,0,9999,0,9999,"",
+            //             new Date(2021,12,03),new Date(2022,08,08),
+            //             new Date(2021,12,03),new Date(2022,08,08),
+            //            0,9999,"amount"
+            // );
+            //     console.log(getSearchPassengerService);
             
             //#endregion
 
@@ -785,7 +801,13 @@ let passengerservicemaintenance=async()=>
 passengerservicemaintenance().then()
 
 //#endregion
-
+//#region  Payment
+let paymentmaintenace=async()=>
+{
+    
+}
+paymentmaintenace().then()
+//#endregion
 //#region Others
 
 //const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");

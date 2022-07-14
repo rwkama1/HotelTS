@@ -134,8 +134,20 @@ select * from DetailPassengerService
 
 update Servicee set statee='Active'
 
-				
-            
+
+			
+
+   CREATE TABLE PassengerServicee(
+	NumberPS int NOT NULL PRIMARY KEY Identity(1,1)  ,
+	IDCardP varchar(20) not null Foreign Key References Passenger(IDCard),
+	StartDate date not null,
+	EndDate date not null,
+	Total money not null,
+	Observations varchar(1000) not null,
+) 
+go
+
+              
             
 
               

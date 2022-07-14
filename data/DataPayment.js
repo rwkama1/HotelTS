@@ -1,13 +1,4 @@
-const { VarChar,Int, Money ,Date} = require("mssql");
-const { DTODetailPassengerService } = require("../DTO/DTODetailPassengerService");
-const { DTOPassengerService } = require("../DTO/DTOPassengerService");
-
-
-const { Conection } = require("./Conection");
-const { DataPassenger } = require("./DataPassenger");
-const { DataService } = require("./DataService");
-
-class DataPassengerService
+class DataPayment
 {
     //#region CRUD
 
@@ -632,4 +623,4 @@ class DataPassengerService
    }
    //#endregion
 }
-module.exports = { DataPassengerService };
+module.exports = { DataPayment };

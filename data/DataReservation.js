@@ -734,26 +734,54 @@ class DataReservation
          
           } 
           
-    static getSearchReservations=async(orderby="NumberReservationn")=>
+    static getSearchReservations=async(valueroom1=0,valueroom2=9999,
+      numberroom1=0,numberroom2=9999
+      ,numberres1=0,numberres2=0,
+      processstatus="",origin="",total1=0,total2=99999,idpassenger=""
+      ,departdate1='2000-08-08',departdate2='2100-08-08',
+      arrdate1='2000-08-08',arrdate2='2100-08-08',
+      reservdate1='2000-08-08',reservdate2='2100-08-08',
+      orderby="NumberReservationn")=>
           {
                    let array=[];
                   let querysearch = `
-     
-                      SELECT  
-                     Reservation.*, 
-                      Passenger.* 
-                      FROM 
-                      Reservation inner join Passenger on Passenger.idcard=Reservation.IDCardPassengerr
-                      ORDER BY ${orderby} desc
+   	
+                  SELECT 
+                  Reservation.*,
+                  ReservationDetail.NumberRD,
+                  ReservationDetail.NumberReservation,
+                  ReservationDetail.NumberRoom,
+                  Room.*
+                  FROM ReservationDetail 
+                  INNER JOIN Room
+                  on Room.NumberRoomm=ReservationDetail.NumberRoom
+                  INNER JOIN Reservation on Reservation.NumberReservationn=ReservationDetail.NumberReservation
+                  WHERE NumberReservationn between ${numberres1} and ${numberres2}
+                  and ReservationDate between @reservdate1 and @reservdate2
+                  and ArrivalDate between @arrdate1 and @arrdate2 
+                  and DepartureDate between  @departdate1  and @departdate2 
+                  and ProcessStatus like '%${processstatus}%'
+                  and Origin like '%${origin}%'
+                  and Total between ${total1} and ${total2}
+                  and IDCardPassengerr like '%${idpassenger}%'
+                  and ReservationDetail.Value between ${valueroom1} and ${valueroom2}
+                  and ReservationDetail.NumberRoom between ${numberroom1} and ${numberroom2}
+                  ORDER BY ${orderby} desc
      
                   `
                   let pool = await Conection.conection();
                    const result = await pool.request()
+                   .input('reservdate1', Date, reservdate1)
+                    .input('reservdate2', Date, reservdate2)
+                    .input('arrdate1', Date, arrdate1)
+                    .input('arrdate2', Date, arrdate2)
+                    .input('departdate1', Date, departdate1)
+                    .input('departdate2', Date, departdate2)
                    .query(querysearch)        
                    for (var r of result.recordset) {
-                     let reserv = new DTOReservation();
-                     this.getinformationReservation(reserv,  r);
-                     array.push(reserv);
+                    let detailreservation = new DTOReservationDetail();
+                    this.getinformationDetailReservation(detailreservation,r);
+                    array.push(detailreservation);
                    } 
                  pool.close();
                  return array;
