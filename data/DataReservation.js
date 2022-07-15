@@ -1,5 +1,5 @@
 const { VarChar,Int, Money, Date } = require("mssql");
-const { DTORoom } = require("../DTO/DTORoom");
+
 const { DTOReservation } = require("../DTO/DTOReservation");
 const { Conection } = require("./Conection");
 const { DTOReservationDetail } = require("../DTO/DTOReservationDetail");
@@ -182,7 +182,51 @@ class DataReservation
           return resultquery;
        
     }
+    static updateDepartureDateReservation=async(numberreservation,enddate)=>
+    {
+          let resultquery;
+          let queryupdate = `
 
+          IF NOT EXISTS ( SELECT * FROM Reservation WHERE  NumberReservationn=@NumberReservation)
+          BEGIN
+            select -1 as notexistreservation
+          END
+          ELSE
+          BEGIN   
+              IF  EXISTS ( SELECT * FROM Reservation WHERE arrivaldate>=@DepartureDate and NumberReservationn=@NumberReservation)
+              BEGIN
+                select -2 as dateincorrect
+              END
+              ELSE
+              BEGIN 
+                  UPDATE Reservation SET DepartureDate=@DepartureDate
+                  WHERE NumberReservationn=@NumberReservation
+                  select 1 as confirmsuccess
+              END
+             
+          END
+
+          `;
+          let pool = await Conection.conection();
+         
+          const result = await pool.request()
+          .input('NumberReservation', Int,numberreservation)
+          .input('DepartureDate', Date,enddate)
+          .query(queryupdate)
+          resultquery = result.recordset[0].notexistreservation;
+          if(resultquery===undefined)
+          {
+            resultquery = result.recordset[0].dateincorrect;
+            if(resultquery===undefined)
+              {
+                  resultquery = result.recordset[0].confirmsuccess;
+              }
+             
+          }
+          pool.close();
+          return resultquery;
+       
+    }
     // Detail Reservation
 
     static addDetailReservation=async(numberreservation,numberrom)=>
@@ -336,8 +380,6 @@ class DataReservation
           return resultquery;
        
     }
-
-
     static getDetailReservationMultipleRooms=async(arrayroom,orderby="NumberRoomm")=>//used to reserve rooms
     {
             let array=[];
@@ -387,7 +429,7 @@ class DataReservation
 
      }
 
-     static getDetailReservationByReservation=async(numberreservation,orderby="NumberReservation")=>
+    static getDetailReservationByReservation=async(numberreservation,orderby="NumberReservation")=>
      {
              let array=[];
               let querysearch =

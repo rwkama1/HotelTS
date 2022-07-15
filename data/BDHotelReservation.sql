@@ -120,34 +120,16 @@ delete  from Reservation
 
 select * from ReservationDetail
 
-select * from Reservation
 
-select * from room
+              select * from reservation
 
-select * from servicee
 
 select * from PassengerServicee
+
 
 
 select * from DetailPassengerService
 
 
-update Servicee set statee='Active'
+insert into  
 
-
-			
-
-   CREATE TABLE PassengerServicee(
-	NumberPS int NOT NULL PRIMARY KEY Identity(1,1)  ,
-	IDCardP varchar(20) not null Foreign Key References Passenger(IDCard),
-	StartDate date not null,
-	EndDate date not null,
-	Total money not null,
-	Observations varchar(1000) not null,
-) 
-go
-
-              
-            
-
-              

@@ -12,8 +12,6 @@ class DTOReservation
     Total=0;
     Passengerr=new DTOPassenger();
   
-  
-    
     constructor()
     {
 

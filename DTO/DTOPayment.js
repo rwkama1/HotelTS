@@ -1,4 +1,6 @@
-const { DTOPassenger } = require("./DTOPassenger")
+const { DTOPassenger } = require("./DTOPassenger");
+const { DTOPassengerService } = require("./DTOPassengerService");
+const { DTOReservation } = require("./DTOReservation");
 
 
 class DTOPayment
@@ -11,10 +13,14 @@ class DTOPayment
 	TotalRS=0;
 	Datee=new Date();
     
+
+   
+
     constructor()
     {
 
     }
+
    
 }
 module.exports = { DTOPayment };

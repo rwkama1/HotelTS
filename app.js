@@ -491,8 +491,24 @@ let reservationmaintenance=async()=>
     // }
     // console.log("Reservation Confirmed");
 
-
+    // let departuredate=new Date(2022,07,20);
+    // let now=new Date();
+    // let datenow=new Date(now.getFullYear(),now.getMonth()
+    // ,now.getDate());
     
+    // if (departuredate<=datenow) {
+    //     throw new Error("DepartureDate must be greater than DateNow")
+    // }
+    //  let updateDepartureDateReservation=await DataReservation.updateDepartureDateReservation(14,departuredate);
+    // if (updateDepartureDateReservation===-1) {
+    //     throw new Error("The Reservation does not exists")
+    // }
+    // if (updateDepartureDateReservation===-2) {
+    //     throw new Error("DepartureDate must be grater than ArrivalDate")
+    // }
+    
+    // console.log("Reservation Departure Date updated");
+
 
     //#endregion
     //#region  Detail Reservation
@@ -749,6 +765,24 @@ let passengerservicemaintenance=async()=>
                 // }
                 // console.log("Detail Passenger Service deleted");
 
+            //  let departuredate=new Date(2022,07,20);
+            // let now=new Date();
+            // let datenow=new Date(now.getFullYear(),now.getMonth()
+            // ,now.getDate());
+            
+            // if (departuredate<=datenow) {
+            //     throw new Error("DepartureDate must be greater than DateNow")
+            // }
+            //  let updateEndDatePassengerService=await DataPassengerService.updateEndDatePassengerService(1,departuredate);
+            // if (updateEndDatePassengerService===-1) {
+            //     throw new Error("The Passenger Service does not exists")
+            // }
+            // if (updateEndDatePassengerService===-2) {
+            //     throw new Error("EndDate must be grater than ArrivalDate")
+            // }
+            
+            // console.log("Passenger Service End Date updated");
+
                 // let getDetailPSByPassengerService=await DataPassengerService.getDetailPSByPassengerService(1);
                 // console.log(getDetailPSByPassengerService);
                 
@@ -802,12 +836,16 @@ passengerservicemaintenance().then()
 
 //#endregion
 //#region  Payment
+
 let paymentmaintenace=async()=>
 {
     
 }
 paymentmaintenace().then()
 //#endregion
+
+
+
 //#region Others
 
 //const {FactoryLogic}=require("./Hotel/dist/logic/FactoryLogic");

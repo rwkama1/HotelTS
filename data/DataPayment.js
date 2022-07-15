@@ -2,7 +2,7 @@ class DataPayment
 {
     //#region CRUD
 
-    static registerPassengerService=async(idcardpassenger,startdate,enddate,total,observation,arraydetailps)=>
+    static register=async(idcardpassenger,startdate,enddate,total,observation,arraydetailps)=>
     {
       let resultquery;
        let queryinsert = `  

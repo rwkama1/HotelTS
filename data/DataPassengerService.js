@@ -55,7 +55,51 @@ class DataPassengerService
           return resultquery;
   
     }
+    static updateEndDatePassengerService=async(idpassengerservice,enddate)=>
+    {
+          let resultquery;
+          let queryupdate = `
 
+          IF NOT EXISTS ( SELECT * FROM PassengerServicee WHERE  numberps=@numberps)
+          BEGIN
+            select -1 as notexistps
+          END
+          ELSE
+          BEGIN   
+              IF  EXISTS ( SELECT * FROM PassengerServicee WHERE startdate>=@enddate and numberps=@numberps)
+              BEGIN
+                select -2 as dateincorrect
+              END
+              ELSE
+              BEGIN 
+                  UPDATE PassengerServicee SET enddate=@enddate
+                  WHERE numberps=@numberps
+                  select 1 as confirmsuccess
+              END
+             
+          END
+
+          `;
+          let pool = await Conection.conection();
+         
+          const result = await pool.request()
+          .input('numberps', Int,idpassengerservice)
+          .input('enddate', Date,enddate)
+          .query(queryupdate)
+          resultquery = result.recordset[0].notexistps;
+          if(resultquery===undefined)
+          {
+            resultquery = result.recordset[0].dateincorrect;
+            if(resultquery===undefined)
+              {
+                  resultquery = result.recordset[0].confirmsuccess;
+              }
+             
+          }
+          pool.close();
+          return resultquery;
+       
+    }
     
     //#endregion
     //#region  Detail Passenger Services
