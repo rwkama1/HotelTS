@@ -1,47 +1,52 @@
+const { VarChar,Int, Money, Date } = require("mssql");
+const { Conection } = require("./Conection");
 class DataPayment
 {
     //#region CRUD
 
-    static register=async(idcardpassenger,startdate,enddate,total,observation,arraydetailps)=>
+    static registerPayment=async(idpassenger,numberreservation,
+      numberps,passengeramount,datee,totalrs)=>
     {
       let resultquery;
-       let queryinsert = `  
-
-          IF NOT EXISTS ( SELECT * FROM Passenger WHERE IDCard=@IDCard and Statee='Active')
-          BEGIN
-            select -1 as notexistpassenger
-          END
-          ELSE
-          BEGIN
-            BEGIN TRANSACTION  
-                insert into PassengerServicee values (@IDCard,@startdate,@enddate,@Total,@observation)
-                  ${this.forAddDetailPS(arraydetailps)}
+       let queryinsert = `   
+       
+            IF NOT EXISTS ( SELECT NumberReservationn FROM Reservation WHERE NumberReservationn=@NumberReservationn AND IDCardPassengerr=@IDCard)
+            BEGIN
+              select -1 as noexistreservation
+            END
+            ELSE
+            BEGIN
+                IF NOT EXISTS ( SELECT NumberPS FROM PassengerServicee WHERE NumberPS=@NumberPS AND idcardp=@IDCard)
+                BEGIN
+                  select -2 as notexistpassengerservice
+                END
+                ELSE
+                BEGIN
+                  insert into Payment values 
+                  (@NumberReservationn,@IDCard,@NumberPS,
+                    @PassengerAmount,@TotalRS,@Datee)
                     select 1 as insertsuccess
-                IF(@@ERROR > 0)  
-                BEGIN  
-                    ROLLBACK TRANSACTION  
-                END  
-                ELSE  
-                BEGIN  
-                COMMIT TRANSACTION  
-                END   
-          END       
-         
-            
+                END
+             END       
           `;
           let pool = await Conection.conection();
           const result = await pool.request()
-          .input('IDCard', VarChar, idcardpassenger)
-          .input('startdate', Date, startdate)
-          .input('enddate', Date, enddate)
-          .input('observation', VarChar, observation)
-          .input('Total', Money, total)
+          .input('IDCard', VarChar, idpassenger)
+          .input('NumberReservationn', Int, numberreservation)
+          .input('PassengerAmount', Money, passengeramount)
+          .input('Datee', Date, datee)
+          .input('TotalRS', Money, totalrs)
+          .input('NumberPS', Int, numberps)
           .query(queryinsert)
-          resultquery = result.recordset[0].notexistpassenger;
+          resultquery = result.recordset[0].noexistreservation;
           if(resultquery===undefined)
           {
-              resultquery = result.recordset[0].insertsuccess;
-          }
+            resultquery = result.recordset[0].notexistpassengerservice;
+            if(resultquery===undefined)
+            {
+                resultquery = result.recordset[0].insertsuccess;
+            }          
+          }                                                              
           pool.close();
           return resultquery;
   

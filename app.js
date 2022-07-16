@@ -1,6 +1,8 @@
 
+const { off } = require("npm");
 const { DataPassenger } = require("./data/DataPassenger");
 const { DataPassengerService } = require("./data/DataPassengerService");
+const { DataPayment } = require("./data/DataPayment");
 const { DataReservation } = require("./data/DataReservation");
 const { DataRoom } = require("./data/DataRoom");
 const { DataService } = require("./data/DataService");
@@ -538,7 +540,8 @@ let reservationmaintenance=async()=>
     //         throw new Error("Room is active")
     //     }
     //     console.log("Detail Reservation deleted");
-
+//#endregion
+    //#region GET
     //   let getDetailReservationByReservation = await DataReservation.getDetailReservationByReservation(14,"Value");
     //     console.log(getDetailReservationByReservation);
 
@@ -839,9 +842,37 @@ passengerservicemaintenance().then()
 
 let paymentmaintenace=async()=>
 {
-    
+    let datenow=new Date();
+    let paymentdate=new Date(datenow.getFullYear(),
+    datenow.getMonth(),datenow.getDate());
+
+    let getReservation = await DataReservation.getReservation(14);
+    console.log(getReservation);
+
+
+    let getPassengerService = await DataPassengerService.getPassengerService(1);
+    console.log(getPassengerService);
+ 
+
+    let totalpayment=getReservation.TotalWithNumberDays().totalwithdays+getPassengerService.TotalWithNumberDays().totalwithdays;
+    console.log(totalpayment);
+    let passengeramount=5000;
+    if (totalpayment>passengeramount) {
+        throw new Error("The Passenger Amount must be greater than TotalPayment");
+    }
+     let registerPayment=await DataPayment.registerPayment("111111111111111"
+     ,getReservation.NumberReservationn,getPassengerService.NumberPS
+      ,passengeramount,paymentdate,totalpayment );
+     if (registerPayment===-1) {
+        throw new Error("Reservation does not exist");
+         }
+     if (registerPayment===-2) {
+        throw new Error("Passenger Service does not exist");
+         }
+     console.log(registerPayment);
 }
 paymentmaintenace().then()
+
 //#endregion
 
 

@@ -126,10 +126,12 @@ select * from ReservationDetail
 
 select * from PassengerServicee
 
-
+select * from Payment
 
 select * from DetailPassengerService
 
 
-insert into  
+ 
 
+
+ SELECT NumberReservationn FROM Reservation WHERE NumberReservationn=11 AND IDCardPassengerr='111111111111111'
