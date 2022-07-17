@@ -1,4 +1,5 @@
 const { VarChar,Int, Money, Date } = require("mssql");
+const { DTOPayment } = require("../DTO/DTOPayment");
 const { Conection } = require("./Conection");
 class DataPayment
 {
@@ -51,298 +52,129 @@ class DataPayment
           return resultquery;
   
     }
-
-    
     //#endregion
-    //#region  Detail Passenger Services
 
-    static addDetailPS=async(numberps,idservice)=>
-    {
-          let resultquery;
-          let queryupdate = `
-
-          IF EXISTS ( SELECT * FROM DetailPassengerService WHERE IdServicee=@idservice and numberpservice=@numberps)
-          BEGIN
-            select -1 as existdetailps
-          END
-          ELSE
-          BEGIN
-          
-            IF NOT  EXISTS ( SELECT * FROM PassengerServicee WHERE  numberps=@numberps)
-            BEGIN
-              select -2 as notexistpassengerservice
-            END
-            ELSE
-            BEGIN
-              IF NOT EXISTS ( SELECT * FROM servicee WHERE  idservice=@idservice and Statee='Active')
-              BEGIN
-                select -3 as notexistservice
-              END
-              ELSE
-              BEGIN
-                BEGIN TRANSACTION  
-
-                  INSERT INTO  DetailPassengerService
-                  SELECT numberps,idservice,value 
-                  FROM PassengerServicee,servicee			 
-                  WHERE idservice=@idservice and numberps=@numberps
-
-                  UPDATE PassengerServicee SET Total=Total+Value FROM PassengerServicee,Servicee
-                  WHERE idservice=@idservice and numberps=@numberps
-
-
-                  select 1 as insertsuccess 
-
-                IF(@@ERROR > 0)  
-                BEGIN  
-                    ROLLBACK TRANSACTION  
-                END  
-                ELSE  
-                BEGIN  
-                 COMMIT TRANSACTION  
-                END  
-              END 
-            END
-          END
-
-          `;
-          let pool = await Conection.conection();
-         
-          const result = await pool.request()
-          .input('idservice', Int, idservice)
-          .input('numberps', Int,numberps)
-         
-          .query(queryupdate)
-          resultquery = result.recordset[0].existdetailps;
-          if(resultquery===undefined)
-          {
-              resultquery = result.recordset[0].notexistpassengerservice;
-              if(resultquery===undefined)
-              {
-                  resultquery = result.recordset[0].notexistservice;
-                  if(resultquery===undefined)
-                  {
-                      resultquery = result.recordset[0].insertsuccess;
-                  }
-              }
-              
-          }
-          pool.close();
-          return resultquery;
-       
-    } 
-    static removeDetailPS=async(numberps,idservice)=>
-    {
-          let resultquery;
-          let queryupdate = `
-
-          IF NOT EXISTS ( SELECT * FROM DetailPassengerService WHERE idservicee=@idservice and numberpservice=@numberps)
-          BEGIN
-            select -1 as notexistdetailps
-          END
-          ELSE
-          BEGIN
-          
-            IF NOT EXISTS ( SELECT * FROM PassengerServicee WHERE  numberps=@numberps)
-            BEGIN
-              select -2 as noexistpservice
-            END
-            ELSE
-            BEGIN
-              IF NOT EXISTS ( SELECT * FROM servicee WHERE  idservice=@idservice and Statee='Active')
-              BEGIN
-                select -3 as notexistservice
-              END
-              ELSE
-              BEGIN
-                BEGIN TRANSACTION  
-
-                  DELETE FROM DetailPassengerService WHERE idservicee=@idservice 
-                  and numberpservice=@numberps
-
-
-                  UPDATE PassengerServicee SET Total=Total-Value FROM PassengerServicee,servicee
-                  WHERE idservice=@idservice and numberps=@numberps
-
-                  select 1 as deletesuccess 
-
-                  IF(@@ERROR > 0)  
-                  BEGIN  
-                      ROLLBACK TRANSACTION  
-                  END  
-                  ELSE  
-                  BEGIN  
-                     COMMIT TRANSACTION  
-                  END  
-              END 
-            END
-          END
-
-          `;
-          let pool = await Conection.conection();
-         
-          const result = await pool.request()
-          .input('idservice', Int, idservice)
-          .input('numberps', Int,numberps)
-          .query(queryupdate)
-          resultquery = result.recordset[0].notexistdetailps;
-          if(resultquery===undefined)
-          {
-              resultquery = result.recordset[0].noexistpservice;
-              if(resultquery===undefined)
-              {
-                  resultquery = result.recordset[0].notexistservice;
-                  if(resultquery===undefined)
-                  {
-                      resultquery = result.recordset[0].deletesuccess;
-                  }
-              }
-              
-          }
-          pool.close();
-          return resultquery;
-       
-    }
-    static getDetailPSByPassengerService=async(numberps,orderby="iddpassangerservice")=>
-    {
-            let array=[];
-             let querysearch =
-             `
-             SELECT 
-             PassengerServicee.*,
-     
-             DetailPassengerService.IDDPassangerService,
-             DetailPassengerService.numberpservice,
-             DetailPassengerService.idservicee,
-     
-             Servicee.*
-         
-             FROM DetailPassengerService 
-             INNER JOIN Servicee
-             on Servicee.idservice=DetailPassengerService.idservicee
-             INNER JOIN PassengerServicee on PassengerServicee.numberps=DetailPassengerService.numberpservice
-             WHERE DetailPassengerService.numberpservice=${numberps}
-             ORDER BY ${orderby} desc
-
-             
-             `
-
-            let pool = await Conection.conection();
-             const result = await pool.request()
-             .query(querysearch)
-             for (var r of result.recordset) {
-               let dtodps = new DTODetailPassengerService();
-             this.getinformationDetailPS(dtodps,r);
-             array.push(dtodps);
-             
-            } 
-           pool.close();
-           return array;
-
-
-     }
-    static getMultipleDetailPassengerServices=async(arrayservices,orderby="idservice")=>
-     {
-             let array=[];
-              let querysearch =
-              `
-                  SELECT 
-                     *, 
-                     (
-                     select 
-                         SUM(value) as total 
-                     from 
-                         servicee 
-                     where 
-                         statee = 'Active' and 
-                         idservice in (
-                             ${
-                              this.forinsidestring(arrayservices)
-                              }
-                         ) 
-                     
-                     ) as Total 
-                     FROM 
-                     servicee 
-                     WHERE 
-                     idservice IN 
-                     (
-                      ${
-                       this.forinsidestring(arrayservices)
-                      }
-                     ) 
-                     AND  statee = 'Active'
-                     ORDER BY ${orderby} desc
-               
-              `
- 
-             let pool = await Conection.conection();
-              const result = await pool.request()
-              .query(querysearch)
-              for (var r of result.recordset) {
-               let dtodps = new DTODetailPassengerService();
-               this.getinformationDetailPSTotal(dtodps,r);
-               array.push(dtodps);
-             } 
-            pool.close();
-            return array;
- 
- 
-      }
-
-    //#endregion
     //#region GETS
 
-    static getPassengerService=async(numberps)=>
+    static getPayment=async(idpayment)=>
     {
+            let array=[];
             let resultquery;
             let querysearch = `
-
-            IF NOT EXISTS ( SELECT * FROM PassengerServicee WHERE numberps=@numberps)
-            BEGIN
-              select -1 as notexistpassengerservice
-            END
+            IF NOT EXISTS ( SELECT IDPaymentt FROM Payment WHERE IDPaymentt=${idpayment})
+              BEGIN
+                select -1 as noexistpayment
+              END
             ELSE
             BEGIN
-                SELECT * FROM PassengerServicee inner join Passenger
-                on PassengerServicee.idcardp=Passenger.IDCard
-                WHERE numberps=@numberps
-            END
 
+              SELECT
+
+              p.IDPaymentt,
+              p.NumberReservation,
+              p.IDCardPa,
+              p.IDPassangerServicee,
+              p.PassengerAmount,
+              p.TotalRS as TotalPayment,
+              p.Datee,
+            
+              rd.NumberRD,
+              rd.Value,
+              rd.NumberRoom,
+            
+              r.ReservationDate,
+              r.ArrivalDate, 
+              r.DepartureDate, 
+              r.ProcessStatus, 
+              r.ConfirmationStatus,
+              r.Origin,
+              r.Total as TotalReservation,
+            
+              dps.IDDPassangerService,
+              dps.IDServicee,
+              dps.Amount,
+            
+              ps.StartDate,
+              ps.EndDate,
+              ps.Total as TotalPS ,
+              ps.Observations
+              
+              FROM 
+              Payment as p INNER JOIN ReservationDetail rd
+              ON p.NumberReservation=rd.NumberReservation
+              INNER JOIN Reservation r ON r.NumberReservationn=rd.NumberReservation
+              INNER JOIN DetailPassengerService dps ON dps.NumberPService=p.IDPassangerServicee
+              INNER JOIN PassengerServicee ps ON ps.NumberPS=dps.NumberPService
+              WHERE idpaymentt=${idpayment}
+            
+            END
             `
             let pool = await Conection.conection();
              const result = await pool.request()
-             .input('numberps', Int, numberps)
+             .input('IDPaymentt', Int, idpayment)
              .query(querysearch)
-            resultquery = result.recordset[0].notexistpassengerservice; 
+            resultquery = result.recordset[0].noexistpayment; 
             if (resultquery===undefined) {
-             let resultrecordset=result.recordset[0];
-              let ps = new DTOPassengerService();
-              this.getinformationPS(ps, resultrecordset);
-              resultquery=ps
+              for (var precord of result.recordset) {
+                let dtop  = new DTOPayment();
+                this.getinformation(dtop,precord);
+                array.push(dtop);
+                
+              }
+              resultquery=array;
             }
+            
            pool.close();
            return resultquery;
       
     
-     }
-
-
-     
-    static getPassengerServicesMultipleNumber=async(arraynumberps,orderby="numberps")=>
+     }  
+    static getPaymentMultipleId=async(arrayidpayment,orderby="IDPaymentt")=>
     {
              let array=[];
             let querysearch = `
 
-                SELECT  
-                PassengerServicee.*, 
-                Passenger.* 
-                FROM 
-                PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.IDCardP
-                WHERE numberps in
+            SELECT
+
+            p.IDPaymentt,
+            p.NumberReservation,
+            p.IDCardPa,
+            p.IDPassangerServicee,
+            p.PassengerAmount,
+            p.TotalRS as TotalPayment,
+            p.Datee,
+          
+            rd.NumberRD,
+            rd.Value,
+            rd.NumberRoom,
+          
+            r.ReservationDate,
+            r.ArrivalDate, 
+            r.DepartureDate, 
+            r.ProcessStatus, 
+            r.ConfirmationStatus,
+            r.Origin,
+            r.Total as TotalReservation,
+          
+            dps.IDDPassangerService,
+            dps.IDServicee,
+            dps.Amount,
+          
+            ps.StartDate,
+            ps.EndDate,
+            ps.Total as TotalPS ,
+            ps.Observations
+            
+            FROM 
+            Payment as p INNER JOIN ReservationDetail rd
+            ON p.NumberReservation=rd.NumberReservation
+            INNER JOIN Reservation r ON r.NumberReservationn=rd.NumberReservation
+            INNER JOIN DetailPassengerService dps ON dps.NumberPService=p.IDPassangerServicee
+            INNER JOIN PassengerServicee ps ON ps.NumberPS=dps.NumberPService
+            WHERE idpaymentt in
                 (
                   ${
-                    this.forinsidestring(arraynumberps)
+                    this.forinsidestring(arrayidpayment)
                     }
                 )
 
@@ -352,246 +184,137 @@ class DataPayment
             let pool = await Conection.conection();
              const result = await pool.request()
              .query(querysearch)        
-             for (var ps of result.recordset) {
-               let dtops  = new DTOPassengerService();
-               this.getinformationPS(dtops,ps);
-               array.push(dtops);
-             } 
+             for (var precord of result.recordset) {
+              let dtop  = new DTOPayment();
+              this.getinformation(dtop,precord);
+              array.push(dtop);
+              
+            }
            pool.close();
            return array;
-      
-    
-     }
-    static getPassengerServices=async(orderby="numberps")=>
-      {
-               let array=[];
-              let querysearch = `
- 
-                  SELECT  
-                  PassengerServicee.*, 
-                  Passenger.* 
-                  FROM 
-                  PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.IDCardP
-                  ORDER BY ${orderby} desc
- 
-              `
-              let pool = await Conection.conection();
-               const result = await pool.request()
-               .query(querysearch)        
-               for (var ps of result.recordset) {
-                 let dtops  = new DTOPassengerService();
-                 this.getinformationPS(dtops,ps);
-                 array.push(dtops);
-               } 
-             pool.close();
-             return array;
-        
-      
-       }
-    static getPassengerServiceByService=async(idservice)=>
-       {
-               let array=[];
-               let querysearch = `
-  
-               SELECT 
-               PassengerServicee.*, 
-               Passenger.* 
-               FROM 
-               PassengerServicee 
-               inner join DetailPassengerService on PassengerServicee.numberps = DetailPassengerService.numberpservice
-               inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
-               where idservicee = ${idservice}
-               
-               `
-               let pool = await Conection.conection();
-                const result = await pool.request()
-                .query(querysearch)        
-                for (var ps of result.recordset) {
-                  let dtops  = new DTOPassengerService();
-                  this.getinformationPS(dtops,ps);
-                  array.push(dtops);
-                } 
-              pool.close();
-              return array;
-         
-       
-    } 
-    static getPassengerServiceByPassenger=async(idcardpassenger,orderby="numberps")=>
-    {
-             let array=[];
-            let querysearch = `
-
-                SELECT 
-                PassengerServicee.*, 
-                 Passenger.* 
-                FROM 
-                PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
-                 WHERE
-                 idcardp=@IDCardPassengerr
-                ORDER BY ${orderby} desc
-            `
-            let pool = await Conection.conection();
-             const result = await pool.request()
-             .input('IDCardPassengerr', VarChar, idcardpassenger)
-             .query(querysearch)        
-             for (var ps of result.recordset) {
-              let dtops  = new DTOPassengerService();
-              this.getinformationPS(dtops,ps);
-              array.push(dtops);
-            } 
-           pool.close();
-           return array;
-      
-    
-     } 
-     static getPassengerServiceBetweenStartDate=async(date1,date2,orderby="numberps")=>
-     {
-             let array=[];
-             let querysearch = `
-
-             SELECT 
-             PassengerServicee.*, 
-             Passenger.* 
-             FROM 
-             PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
-             WHERE startdate
-             BETWEEN  @Date1 and @Date2 
-             ORDER BY ${orderby} desc
-             `
-             let pool = await Conection.conection();
-              const result = await pool.request()
-              .input('Date1', Date, date1)
-              .input('Date2', Date, date2)
-              .query(querysearch)        
-              for (var ps of result.recordset) {
-                let dtops  = new DTOPassengerService();
-                this.getinformationPS(dtops,ps);
-                array.push(dtops);
-              } 
-            pool.close();
-            return  array;
-       
-     
-      } 
-    static getPassengerServiceBetweenEndDate=async(date1,date2,orderby="numberps")=>
+      }
+    static getSearchPayment=async(idpayment1=0,idpayment2=99999,
+      numberr1=0,numberr2=99999,idpassengerservice1=0,
+      idpassengerservice2=99999,idcardpassenger=""
+      ,date1='2000-08-08',date2='2100-08-08',orderby="IDPaymentt"
+      )=>
       {
               let array=[];
+              let resultquery;
               let querysearch = `
- 
-              SELECT 
-              PassengerServicee.*, 
-              Passenger.* 
-              FROM 
-              PassengerServicee inner join Passenger on Passenger.idcard=PassengerServicee.idcardp
-              WHERE enddate
-              BETWEEN  @Date1 and @Date2 
-              ORDER BY ${orderby} desc
+
+                SELECT
+  
+                p.IDPaymentt,
+                p.NumberReservation,
+                p.IDCardPa,
+                p.IDPassangerServicee,
+                p.PassengerAmount,
+                p.TotalRS as TotalPayment,
+                p.Datee,
+              
+                rd.NumberRD,
+                rd.Value,
+                rd.NumberRoom,
+              
+                r.ReservationDate,
+                r.ArrivalDate, 
+                r.DepartureDate, 
+                r.ProcessStatus, 
+                r.ConfirmationStatus,
+                r.Origin,
+                r.Total as TotalReservation,
+              
+                dps.IDDPassangerService,
+                dps.IDServicee,
+                dps.Amount,
+              
+                ps.StartDate,
+                ps.EndDate,
+                ps.Total as TotalPS ,
+                ps.Observations
+                
+                FROM 
+                Payment as p INNER JOIN ReservationDetail rd
+                ON p.NumberReservation=rd.NumberReservation
+                INNER JOIN Reservation r ON r.NumberReservationn=rd.NumberReservation
+                INNER JOIN DetailPassengerService dps ON dps.NumberPService=p.IDPassangerServicee
+                INNER JOIN PassengerServicee ps ON ps.NumberPS=dps.NumberPService
+                WHERE p.IDPaymentt between ${idpayment1} and ${idpayment2}
+                and p.NumberReservation between ${numberr1} and ${numberr2}
+                and p.IDPassangerServicee between ${idpassengerservice1} and ${idpassengerservice2}
+                and p.IDCardPa like '%${idcardpassenger}%'
+                and p.Datee between @date1 and @date2 
+
+                order by ${orderby} desc
+            
               `
               let pool = await Conection.conection();
                const result = await pool.request()
-               .input('Date1', Date, date1)
-               .input('Date2', Date, date2)
-               .query(querysearch)        
-               for (var ps of result.recordset) {
-                 let dtops  = new DTOPassengerService();
-                 this.getinformationPS(dtops,ps);
-                 array.push(dtops);
-               } 
+               .input('date1', Date, date1)
+               .input('date2', Date, date2)
+               .query(querysearch)
+              resultquery = result.recordset[0].noexistpayment; 
+              if (resultquery===undefined) {
+                for (var precord of result.recordset) {
+                  let dtop  = new DTOPayment();
+                  this.getinformation(dtop,precord);
+                  array.push(dtop);
+                  
+                }
+                resultquery=array;
+              }
+              
              pool.close();
-             return  array;
+             return resultquery;
         
       
-       } 
-    static getSearchPassengerService=async(
-      valueservice1=0,valueservice2=99999,
-      idservice1=0,idservice2=9999,
-      numberps1=0,numberps2=9999,idpassenger="",startdate1='2000-08-08',
-      startdate2='2100-08-08',enddate1='2000-08-08',
-      enddate2='2100-08-08',total1=0,total2=99999
-      ,orderby="numberps")=>
-       {
-               let array=[];
-                let querysearch =
-                `
-                SELECT 
-                PassengerServicee.*,
-        
-                DetailPassengerService.IDDPassangerService,
-                DetailPassengerService.numberpservice,
-                DetailPassengerService.idservicee,
-        
-                Servicee.*
-            
-                FROM DetailPassengerService 
-                INNER JOIN Servicee
-                on Servicee.idservice=DetailPassengerService.idservicee
-                INNER JOIN PassengerServicee on PassengerServicee.numberps=DetailPassengerService.numberpservice
-                WHERE
-                NumberPS between ${numberps1} and ${numberps2}
-                and IDCardP like '%${idpassenger}%'
-                and StartDate between @startdate1 and @startdate2 
-                and EndDate between  @enddate1 and @enddate2 
-                and Total between ${total1} and ${total2}
-                and DetailPassengerService.Amount between ${valueservice1} and ${valueservice2}
-                and DetailPassengerService.IDServicee between ${idservice1} and ${idservice2}
-                ORDER BY ${orderby} desc
-                `
+       }  
+    
    
-               let pool = await Conection.conection();
-                const result = await pool.request()
-                .input('startdate1', Date, startdate1)
-                .input('startdate2', Date, startdate2)
-                .input('enddate1', Date, enddate1)
-                .input('enddate2', Date, enddate2)
-                .query(querysearch)
-                for (var r of result.recordset) {
-                  let dtodps = new DTODetailPassengerService();
-                this.getinformationDetailPS(dtodps,r);
-                array.push(dtodps);
-                
-               } 
-              pool.close();
-              return array;
-   
-   
-        }
     
     //#endregion
 
    //#region GET INFORMATION
 
-   static getinformationPS(passengerservice, result) {
+   static getinformation(p, result) {
 
     
-    passengerservice.NumberPS=result.NumberPS;
-    passengerservice.StartDate=result.StartDate;
-    passengerservice.EndDate=result.EndDate;
-    passengerservice.Total=result.Total;
-    passengerservice.Observations=result.Observations;
-    DataPassenger.getinformation(passengerservice.Passenger,result)
+    p.IDPaymentt=result.IDPaymentt;
+    p.NumberReservation=result.NumberReservation;
+    p.IDCardPa=result.IDCardPa;
+    p.IDPassangerServicee=result.IDPassangerServicee;
+    p.PassengerAmount=result.PassengerAmount;
+    p.TotalPayment=result.TotalPayment;
+    p.Datee=result.Datee
+  
+    p.NumberRD=result.NumberRD
+    p.Value=result.Value
+    p.NumberRoom=result.NumberRoom
+  
+    p.ReservationDate=result.ReservationDate
+    p.ArrivalDate=result.ArrivalDate
+    p.DepartureDate=result.DepartureDate
+    p.ProcessStatus=result.ProcessStatus
+    p.ConfirmationStatus=result.ConfirmationStatus
+    p.Origin=result.Origin
+    p.TotalReservation=result.TotalReservation
+  
+    p.IDDPassangerService=result.IDDPassangerService
+    p.IDServicee=result.IDServicee
+    p.Amount=result.Amount
+  
+    p.StartDate=result.StartDate
+    p.EndDate=result.EndDate
+    p.TotalPS=result.TotalPS
+    p.Observations=result.Observations
+
     
    }
-   static getinformationDetailPS(detailps, result) {
+//#region Others
 
-    detailps.IDDPassangerService=result.IDDPassangerService;
-    this.getinformationPS(detailps.PassengerService,result)
-    DataService.getinformation(detailps.Servicee,result)
-    detailps.Amount=detailps.Servicee.value;
-   }
-   static getinformationDetailPSTotal(detailps, result) {
-
-    detailps.Total=result.Total;
-    detailps.Amount=result.Amount;
-    detailps.PassengerService=null;
-    DataService.getinformation(detailps.Servicee,result)
-
-   }
-   //#endregion
-
-   //#region OTHERS
-
-   static forinsidestring(array)
-   {
+  static forinsidestring(array)
+  {
     let stringelement="";
     for (let index = 0; index < array.length; index++) {
       const element = array[index];
@@ -602,30 +325,12 @@ class DataPayment
       {
         stringelement=stringelement+element+","
       }
-     
-    }
-    return stringelement
-   
-   }
-   static forAddDetailPS(array)
-   {
-    let stringelement="";
-    for (let index = 0; index < array.length; index++) {
-      const element = array[index];
-     
-
-        stringelement=stringelement+
-        `
-        insert into DetailPassengerService values (IDENT_CURRENT('PassengerServicee'),
-        ${element.Servicee.idservice},${element.Servicee.value})
-
-        `
       
-     
     }
     return stringelement
-   
-   }
-   //#endregion
+
+  }
+//#endregion
+
 }
 module.exports = { DataPayment };

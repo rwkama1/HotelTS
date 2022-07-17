@@ -1,17 +1,42 @@
-const { DTOPassenger } = require("./DTOPassenger");
-const { DTOPassengerService } = require("./DTOPassengerService");
-const { DTOReservation } = require("./DTOReservation");
-
 
 class DTOPayment
 {
-    IDPaymentt=0
-    Reservation=new DTOReservation();
-	Passenger=new DTOPassenger();
-	PassangerServicee=new DTOPassengerService();
-	PassengerAmount=0;
-	TotalRS=0;
-	Datee=new Date();
+    IDPaymentt=0;
+    NumberReservation=0;
+    IDCardPa="";
+    IDPassangerServicee=0;
+    PassengerAmount=0;
+    TotalPayment=0;
+    Datee=new Date();
+
+   //Detail Reservation
+
+    NumberRD=0;
+    Value=0;
+    NumberRoom=0;
+  
+    //Reservation 
+
+    ReservationDate=new Date();
+    ArrivalDate=new Date();
+    DepartureDate=new Date();
+    ProcessStatus="";
+    ConfirmationStatus="";
+    Origin="";
+    TotalReservation=0;
+
+    //Detail Passenger Service
+
+    IDDPassangerService=0;
+    IDServicee=0;
+    Amount=0;
+  
+    //Passenger Services
+    
+    StartDate=new Date();
+    EndDate=new Date();
+    TotalPS=0;
+    Observations="";
     
 
    
