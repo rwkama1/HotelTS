@@ -1,7 +1,6 @@
 # HOTEL
 
-This package contains a backend of what would be the logic of a hotel software, the architecture used is made in 3 layers
-
+This package contains a backend of what would be the logic of a hotel software
 ## Requirements
 
 #### User management for the system.
@@ -60,8 +59,6 @@ This package contains a backend of what would be the logic of a hotel software, 
 ## Usage
 
 ```Javascript
-
-
 
 const { DataPassenger } = require("./data/DataPassenger");
 const { DataPassengerService } = require("./data/DataPassengerService");
@@ -952,8 +949,6 @@ paymentmaintenace().then()
 
 //#endregion
 
-
-
-
-
 ```
+#  
+https://www.linkedin.com/in/carlos-andr%C3%A9s-rodr%C3%ADguez-p%C3%A9rez-6b3424191/

@@ -1,6 +1,6 @@
 {
   "name": "hotelts",
-  "version": "1.0.4",
+  "version": "1.0.9",
   "description": "This package contains a backend of what would be the logic of a hotel software",
   "main": "app.js",
 
